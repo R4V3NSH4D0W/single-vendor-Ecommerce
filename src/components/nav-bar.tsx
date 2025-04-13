@@ -2,13 +2,14 @@
 import { useIsMobile } from "@/hooks/use-mobile";
 import Link from "next/link";
 import React, { useState } from "react";
-import { ShoppingBag, User, Search, Menu, X } from "lucide-react";
+import { ShoppingBag, User, Menu, X } from "lucide-react";
 import { Button } from "./ui/button";
 import ThemeToggle from "./toogle-theme";
+import CartDrawer from "./cart/cart-drawer";
 
 const NAV_LINKS = [
   { id: 1, name: "Home", path: "/" },
-  { id: 2, name: "Shop", path: "/shop" },
+  { id: 2, name: "Shop", path: "/products" },
   { id: 3, name: "Collection", path: "/collection" },
   { id: 4, name: "About", path: "/about" },
   { id: 6, name: "Contact", path: "/contact" },
@@ -18,7 +19,7 @@ function Navbar() {
   const isMobile = useIsMobile();
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  //   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   return (
     <nav className="sticky top-0 z-50 bg-background/80 backdrop-blur-lg border-b">
@@ -42,14 +43,14 @@ function Navbar() {
           )}
 
           <div className="flex items-center space-x-4">
-            <Button
+            {/* <Button
               variant="ghost"
               size="icon"
               onClick={() => setIsSearchOpen(true)}
               aria-label="Search"
             >
               <Search className="h-5 w-5" />
-            </Button>
+            </Button> */}
 
             <Button variant="ghost" size="icon" aria-label="Account" asChild>
               <Link href="/signin">
@@ -104,8 +105,8 @@ function Navbar() {
           </div>
         )}
       </div>
-      {/* <CartDrawer isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
-<SearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} /> */}
+      <CartDrawer isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
+      {/* <SearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} /> */}
     </nav>
   );
 }
