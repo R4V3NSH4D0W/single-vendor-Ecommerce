@@ -1,0 +1,70 @@
+import Image from "next/image";
+import Link from "next/link";
+import React from "react";
+import { Badge } from "../ui/badge";
+import { Button } from "../ui/button";
+import { Heart, ShoppingBag } from "lucide-react";
+
+interface ProductCardProps {
+  product: {
+    id: number;
+    name: string;
+    price: number;
+    image: string;
+    category?: string;
+    isNew?: boolean;
+    badge?: string;
+  };
+}
+const ProductCard = ({ product }: ProductCardProps) => {
+  return (
+    <Link href={`/products/${product.id}`} className="group">
+      <div className="relative rounded-lg overflow-hidden bg-secondary aspect-[3/4] product-card-hover">
+        <Image
+          src={product.image}
+          alt={product.name}
+          fill
+          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+        />
+        {product.badge && (
+          <div className=" absolute top-2 left-2">
+            <Badge className=" py-1 px-2">{product.badge}</Badge>
+          </div>
+        )}
+        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors">
+          <div className="absolute bottom-0 left-0 right-0 p-4 flex justify-between items-center opacity-0 group-hover:opacity-100 transition-opacity">
+            <Button
+              size="sm"
+              variant="secondary"
+              //   onClick={handleAddToCart}
+              aria-label="Add to cart"
+              className="flex items-center gap-2"
+            >
+              <ShoppingBag className="h-4 w-4" />
+              Add to Cart
+            </Button>
+            <Button
+              size="icon"
+              variant="secondary"
+              //   onClick={handleToggleWishlist}
+              aria-label="Add to wishlist"
+            >
+              <Heart className="h-4 w-4" />
+            </Button>
+          </div>
+        </div>
+      </div>
+      <div className=" mt-4 space-y-1">
+        {product.category && (
+          <p className="text-xs uppercase tracking-wider text-muted-foreground">
+            {product.category}
+          </p>
+        )}
+        <h1 className=" font-medium">{product.name}</h1>
+        <p className=" font-medium">${product.price.toFixed(2)}</p>
+      </div>
+    </Link>
+  );
+};
+
+export default ProductCard;
