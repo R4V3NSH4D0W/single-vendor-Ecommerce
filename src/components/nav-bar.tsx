@@ -52,7 +52,7 @@ function Navbar() {
             </Button>
 
             <Button variant="ghost" size="icon" aria-label="Account" asChild>
-              <Link href="/account">
+              <Link href="/signin">
                 <User className="h-5 w-5" />
               </Link>
             </Button>
