@@ -18,9 +18,12 @@ import { z } from "zod";
 import Link from "next/link";
 import { RegisterSchema } from "../schema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRegister } from "../api/user-register";
 
 function SignUpCard() {
   const [showPassword, setShowPassword] = useState(false);
+  const { mutate, isPending } = useRegister();
+
   const form = useForm<z.infer<typeof RegisterSchema>>({
     resolver: zodResolver(RegisterSchema),
     defaultValues: {
@@ -30,7 +33,7 @@ function SignUpCard() {
     },
   });
   const onSubmit = (value: z.infer<typeof RegisterSchema>) => {
-    console.log("Form submitted:", value);
+    mutate({ json: value });
   };
 
   return (
@@ -112,7 +115,7 @@ function SignUpCard() {
               )}
             />
 
-            <Button size="lg" className=" w-full mt-2" type="submit">
+            <Button size="lg" className=" w-full mt-2" disabled={isPending}>
               Create Account
             </Button>
           </form>

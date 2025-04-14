@@ -6,6 +6,8 @@ import { ShoppingBag, User, Menu, X } from "lucide-react";
 import { Button } from "./ui/button";
 import ThemeToggle from "./toogle-theme";
 import CartDrawer from "./cart/cart-drawer";
+import { useCurrent } from "@/features/auth/api/use-current";
+import { UserButton } from "@/features/auth/components/user-button";
 
 const NAV_LINKS = [
   { id: 1, name: "Home", path: "/" },
@@ -19,8 +21,7 @@ function Navbar() {
   const isMobile = useIsMobile();
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  //   const [isSearchOpen, setIsSearchOpen] = useState(false);
-
+  const { data: user } = useCurrent();
   return (
     <nav className="sticky top-0 z-50 bg-background/80 backdrop-blur-lg border-b">
       <div className="container mx-auto px-4">
@@ -52,11 +53,15 @@ function Navbar() {
               <Search className="h-5 w-5" />
             </Button> */}
 
-            <Button variant="ghost" size="icon" aria-label="Account" asChild>
-              <Link href="/signin">
-                <User className="h-5 w-5" />
-              </Link>
-            </Button>
+            {!user ? (
+              <Button variant="ghost" size="icon" aria-label="Account" asChild>
+                <Link href="/signin">
+                  <User className="h-5 w-5" />
+                </Link>
+              </Button>
+            ) : (
+              <UserButton />
+            )}
 
             <ThemeToggle />
 
