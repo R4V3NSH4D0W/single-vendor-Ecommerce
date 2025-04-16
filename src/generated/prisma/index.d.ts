@@ -24,6 +24,11 @@ export type User = $Result.DefaultSelection<Prisma.$UserPayload>
  */
 export type Product = $Result.DefaultSelection<Prisma.$ProductPayload>
 /**
+ * Model Specification
+ * 
+ */
+export type Specification = $Result.DefaultSelection<Prisma.$SpecificationPayload>
+/**
  * Model Category
  * 
  */
@@ -191,6 +196,16 @@ export class PrismaClient<
     * ```
     */
   get product(): Prisma.ProductDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.specification`: Exposes CRUD operations for the **Specification** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Specifications
+    * const specifications = await prisma.specification.findMany()
+    * ```
+    */
+  get specification(): Prisma.SpecificationDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.category`: Exposes CRUD operations for the **Category** model.
@@ -643,6 +658,7 @@ export namespace Prisma {
   export const ModelName: {
     User: 'User',
     Product: 'Product',
+    Specification: 'Specification',
     Category: 'Category'
   };
 
@@ -662,7 +678,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "product" | "category"
+      modelProps: "user" | "product" | "specification" | "category"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -811,6 +827,80 @@ export namespace Prisma {
           count: {
             args: Prisma.ProductCountArgs<ExtArgs>
             result: $Utils.Optional<ProductCountAggregateOutputType> | number
+          }
+        }
+      }
+      Specification: {
+        payload: Prisma.$SpecificationPayload<ExtArgs>
+        fields: Prisma.SpecificationFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SpecificationFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SpecificationPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SpecificationFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SpecificationPayload>
+          }
+          findFirst: {
+            args: Prisma.SpecificationFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SpecificationPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SpecificationFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SpecificationPayload>
+          }
+          findMany: {
+            args: Prisma.SpecificationFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SpecificationPayload>[]
+          }
+          create: {
+            args: Prisma.SpecificationCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SpecificationPayload>
+          }
+          createMany: {
+            args: Prisma.SpecificationCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SpecificationCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SpecificationPayload>[]
+          }
+          delete: {
+            args: Prisma.SpecificationDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SpecificationPayload>
+          }
+          update: {
+            args: Prisma.SpecificationUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SpecificationPayload>
+          }
+          deleteMany: {
+            args: Prisma.SpecificationDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SpecificationUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.SpecificationUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SpecificationPayload>[]
+          }
+          upsert: {
+            args: Prisma.SpecificationUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SpecificationPayload>
+          }
+          aggregate: {
+            args: Prisma.SpecificationAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSpecification>
+          }
+          groupBy: {
+            args: Prisma.SpecificationGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SpecificationGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SpecificationCountArgs<ExtArgs>
+            result: $Utils.Optional<SpecificationCountAggregateOutputType> | number
           }
         }
       }
@@ -974,6 +1064,7 @@ export namespace Prisma {
   export type GlobalOmitConfig = {
     user?: UserOmit
     product?: ProductOmit
+    specification?: SpecificationOmit
     category?: CategoryOmit
   }
 
@@ -1065,33 +1156,33 @@ export namespace Prisma {
 
 
   /**
-   * Count Type UserCountOutputType
+   * Count Type ProductCountOutputType
    */
 
-  export type UserCountOutputType = {
-    products: number
+  export type ProductCountOutputType = {
+    specifications: number
   }
 
-  export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    products?: boolean | UserCountOutputTypeCountProductsArgs
+  export type ProductCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    specifications?: boolean | ProductCountOutputTypeCountSpecificationsArgs
   }
 
   // Custom InputTypes
   /**
-   * UserCountOutputType without action
+   * ProductCountOutputType without action
    */
-  export type UserCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProductCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the UserCountOutputType
+     * Select specific fields to fetch from the ProductCountOutputType
      */
-    select?: UserCountOutputTypeSelect<ExtArgs> | null
+    select?: ProductCountOutputTypeSelect<ExtArgs> | null
   }
 
   /**
-   * UserCountOutputType without action
+   * ProductCountOutputType without action
    */
-  export type UserCountOutputTypeCountProductsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ProductWhereInput
+  export type ProductCountOutputTypeCountSpecificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SpecificationWhereInput
   }
 
 
@@ -1302,8 +1393,6 @@ export namespace Prisma {
     password?: boolean
     role?: boolean
     createdAt?: boolean
-    products?: boolean | User$productsArgs<ExtArgs>
-    _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -1334,18 +1423,10 @@ export namespace Prisma {
   }
 
   export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "password" | "role" | "createdAt", ExtArgs["result"]["user"]>
-  export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    products?: boolean | User$productsArgs<ExtArgs>
-    _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
-  }
-  export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type UserIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
 
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
-    objects: {
-      products: Prisma.$ProductPayload<ExtArgs>[]
-    }
+    objects: {}
     scalars: $Extensions.GetPayloadResult<{
       id: string
       name: string
@@ -1747,7 +1828,6 @@ export namespace Prisma {
    */
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    products<T extends User$productsArgs<ExtArgs> = {}>(args?: Subset<T, User$productsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1800,10 +1880,6 @@ export namespace Prisma {
      */
     omit?: UserOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserInclude<ExtArgs> | null
-    /**
      * Filter, which User to fetch.
      */
     where: UserWhereUniqueInput
@@ -1822,10 +1898,6 @@ export namespace Prisma {
      */
     omit?: UserOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserInclude<ExtArgs> | null
-    /**
      * Filter, which User to fetch.
      */
     where: UserWhereUniqueInput
@@ -1843,10 +1915,6 @@ export namespace Prisma {
      * Omit specific fields from the User
      */
     omit?: UserOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserInclude<ExtArgs> | null
     /**
      * Filter, which User to fetch.
      */
@@ -1896,10 +1964,6 @@ export namespace Prisma {
      */
     omit?: UserOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserInclude<ExtArgs> | null
-    /**
      * Filter, which User to fetch.
      */
     where?: UserWhereInput
@@ -1948,10 +2012,6 @@ export namespace Prisma {
      */
     omit?: UserOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserInclude<ExtArgs> | null
-    /**
      * Filter, which Users to fetch.
      */
     where?: UserWhereInput
@@ -1994,10 +2054,6 @@ export namespace Prisma {
      * Omit specific fields from the User
      */
     omit?: UserOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserInclude<ExtArgs> | null
     /**
      * The data needed to create a User.
      */
@@ -2046,10 +2102,6 @@ export namespace Prisma {
      * Omit specific fields from the User
      */
     omit?: UserOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserInclude<ExtArgs> | null
     /**
      * The data needed to update a User.
      */
@@ -2117,10 +2169,6 @@ export namespace Prisma {
      */
     omit?: UserOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserInclude<ExtArgs> | null
-    /**
      * The filter to search for the User to update in case it exists.
      */
     where: UserWhereUniqueInput
@@ -2147,10 +2195,6 @@ export namespace Prisma {
      */
     omit?: UserOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserInclude<ExtArgs> | null
-    /**
      * Filter which User to delete.
      */
     where: UserWhereUniqueInput
@@ -2171,30 +2215,6 @@ export namespace Prisma {
   }
 
   /**
-   * User.products
-   */
-  export type User$productsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Product
-     */
-    select?: ProductSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Product
-     */
-    omit?: ProductOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ProductInclude<ExtArgs> | null
-    where?: ProductWhereInput
-    orderBy?: ProductOrderByWithRelationInput | ProductOrderByWithRelationInput[]
-    cursor?: ProductWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: ProductScalarFieldEnum | ProductScalarFieldEnum[]
-  }
-
-  /**
    * User without action
    */
   export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2206,10 +2226,6 @@ export namespace Prisma {
      * Omit specific fields from the User
      */
     omit?: UserOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserInclude<ExtArgs> | null
   }
 
 
@@ -2242,10 +2258,10 @@ export namespace Prisma {
     price: number | null
     stock: number | null
     sku: string | null
+    careInstruction: string | null
     categoryId: string | null
     createdAt: Date | null
     updatedAt: Date | null
-    ownerId: string | null
   }
 
   export type ProductMaxAggregateOutputType = {
@@ -2255,10 +2271,10 @@ export namespace Prisma {
     price: number | null
     stock: number | null
     sku: string | null
+    careInstruction: string | null
     categoryId: string | null
     createdAt: Date | null
     updatedAt: Date | null
-    ownerId: string | null
   }
 
   export type ProductCountAggregateOutputType = {
@@ -2271,10 +2287,12 @@ export namespace Prisma {
     variants: number
     tags: number
     images: number
+    sizes: number
+    features: number
+    careInstruction: number
     categoryId: number
     createdAt: number
     updatedAt: number
-    ownerId: number
     _all: number
   }
 
@@ -2296,10 +2314,10 @@ export namespace Prisma {
     price?: true
     stock?: true
     sku?: true
+    careInstruction?: true
     categoryId?: true
     createdAt?: true
     updatedAt?: true
-    ownerId?: true
   }
 
   export type ProductMaxAggregateInputType = {
@@ -2309,10 +2327,10 @@ export namespace Prisma {
     price?: true
     stock?: true
     sku?: true
+    careInstruction?: true
     categoryId?: true
     createdAt?: true
     updatedAt?: true
-    ownerId?: true
   }
 
   export type ProductCountAggregateInputType = {
@@ -2325,10 +2343,12 @@ export namespace Prisma {
     variants?: true
     tags?: true
     images?: true
+    sizes?: true
+    features?: true
+    careInstruction?: true
     categoryId?: true
     createdAt?: true
     updatedAt?: true
-    ownerId?: true
     _all?: true
   }
 
@@ -2428,10 +2448,12 @@ export namespace Prisma {
     variants: string[]
     tags: string[]
     images: string[]
+    sizes: string[]
+    features: string[]
+    careInstruction: string | null
     categoryId: string
     createdAt: Date
     updatedAt: Date
-    ownerId: string | null
     _count: ProductCountAggregateOutputType | null
     _avg: ProductAvgAggregateOutputType | null
     _sum: ProductSumAggregateOutputType | null
@@ -2463,12 +2485,15 @@ export namespace Prisma {
     variants?: boolean
     tags?: boolean
     images?: boolean
+    sizes?: boolean
+    features?: boolean
+    careInstruction?: boolean
     categoryId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    ownerId?: boolean
     category?: boolean | CategoryDefaultArgs<ExtArgs>
-    owner?: boolean | Product$ownerArgs<ExtArgs>
+    specifications?: boolean | Product$specificationsArgs<ExtArgs>
+    _count?: boolean | ProductCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["product"]>
 
   export type ProductSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -2481,12 +2506,13 @@ export namespace Prisma {
     variants?: boolean
     tags?: boolean
     images?: boolean
+    sizes?: boolean
+    features?: boolean
+    careInstruction?: boolean
     categoryId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    ownerId?: boolean
     category?: boolean | CategoryDefaultArgs<ExtArgs>
-    owner?: boolean | Product$ownerArgs<ExtArgs>
   }, ExtArgs["result"]["product"]>
 
   export type ProductSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -2499,12 +2525,13 @@ export namespace Prisma {
     variants?: boolean
     tags?: boolean
     images?: boolean
+    sizes?: boolean
+    features?: boolean
+    careInstruction?: boolean
     categoryId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    ownerId?: boolean
     category?: boolean | CategoryDefaultArgs<ExtArgs>
-    owner?: boolean | Product$ownerArgs<ExtArgs>
   }, ExtArgs["result"]["product"]>
 
   export type ProductSelectScalar = {
@@ -2517,31 +2544,32 @@ export namespace Prisma {
     variants?: boolean
     tags?: boolean
     images?: boolean
+    sizes?: boolean
+    features?: boolean
+    careInstruction?: boolean
     categoryId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    ownerId?: boolean
   }
 
-  export type ProductOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "price" | "stock" | "sku" | "variants" | "tags" | "images" | "categoryId" | "createdAt" | "updatedAt" | "ownerId", ExtArgs["result"]["product"]>
+  export type ProductOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "price" | "stock" | "sku" | "variants" | "tags" | "images" | "sizes" | "features" | "careInstruction" | "categoryId" | "createdAt" | "updatedAt", ExtArgs["result"]["product"]>
   export type ProductInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     category?: boolean | CategoryDefaultArgs<ExtArgs>
-    owner?: boolean | Product$ownerArgs<ExtArgs>
+    specifications?: boolean | Product$specificationsArgs<ExtArgs>
+    _count?: boolean | ProductCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ProductIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     category?: boolean | CategoryDefaultArgs<ExtArgs>
-    owner?: boolean | Product$ownerArgs<ExtArgs>
   }
   export type ProductIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     category?: boolean | CategoryDefaultArgs<ExtArgs>
-    owner?: boolean | Product$ownerArgs<ExtArgs>
   }
 
   export type $ProductPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Product"
     objects: {
       category: Prisma.$CategoryPayload<ExtArgs>
-      owner: Prisma.$UserPayload<ExtArgs> | null
+      specifications: Prisma.$SpecificationPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -2553,10 +2581,12 @@ export namespace Prisma {
       variants: string[]
       tags: string[]
       images: string[]
+      sizes: string[]
+      features: string[]
+      careInstruction: string | null
       categoryId: string
       createdAt: Date
       updatedAt: Date
-      ownerId: string | null
     }, ExtArgs["result"]["product"]>
     composites: {}
   }
@@ -2952,7 +2982,7 @@ export namespace Prisma {
   export interface Prisma__ProductClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     category<T extends CategoryDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CategoryDefaultArgs<ExtArgs>>): Prisma__CategoryClient<$Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    owner<T extends Product$ownerArgs<ExtArgs> = {}>(args?: Subset<T, Product$ownerArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    specifications<T extends Product$specificationsArgs<ExtArgs> = {}>(args?: Subset<T, Product$specificationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SpecificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2991,10 +3021,12 @@ export namespace Prisma {
     readonly variants: FieldRef<"Product", 'String[]'>
     readonly tags: FieldRef<"Product", 'String[]'>
     readonly images: FieldRef<"Product", 'String[]'>
+    readonly sizes: FieldRef<"Product", 'String[]'>
+    readonly features: FieldRef<"Product", 'String[]'>
+    readonly careInstruction: FieldRef<"Product", 'String'>
     readonly categoryId: FieldRef<"Product", 'String'>
     readonly createdAt: FieldRef<"Product", 'DateTime'>
     readonly updatedAt: FieldRef<"Product", 'DateTime'>
-    readonly ownerId: FieldRef<"Product", 'String'>
   }
     
 
@@ -3391,22 +3423,27 @@ export namespace Prisma {
   }
 
   /**
-   * Product.owner
+   * Product.specifications
    */
-  export type Product$ownerArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Product$specificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the User
+     * Select specific fields to fetch from the Specification
      */
-    select?: UserSelect<ExtArgs> | null
+    select?: SpecificationSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the User
+     * Omit specific fields from the Specification
      */
-    omit?: UserOmit<ExtArgs> | null
+    omit?: SpecificationOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: UserInclude<ExtArgs> | null
-    where?: UserWhereInput
+    include?: SpecificationInclude<ExtArgs> | null
+    where?: SpecificationWhereInput
+    orderBy?: SpecificationOrderByWithRelationInput | SpecificationOrderByWithRelationInput[]
+    cursor?: SpecificationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SpecificationScalarFieldEnum | SpecificationScalarFieldEnum[]
   }
 
   /**
@@ -3425,6 +3462,1051 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: ProductInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Specification
+   */
+
+  export type AggregateSpecification = {
+    _count: SpecificationCountAggregateOutputType | null
+    _min: SpecificationMinAggregateOutputType | null
+    _max: SpecificationMaxAggregateOutputType | null
+  }
+
+  export type SpecificationMinAggregateOutputType = {
+    id: string | null
+    key: string | null
+    value: string | null
+    productId: string | null
+  }
+
+  export type SpecificationMaxAggregateOutputType = {
+    id: string | null
+    key: string | null
+    value: string | null
+    productId: string | null
+  }
+
+  export type SpecificationCountAggregateOutputType = {
+    id: number
+    key: number
+    value: number
+    productId: number
+    _all: number
+  }
+
+
+  export type SpecificationMinAggregateInputType = {
+    id?: true
+    key?: true
+    value?: true
+    productId?: true
+  }
+
+  export type SpecificationMaxAggregateInputType = {
+    id?: true
+    key?: true
+    value?: true
+    productId?: true
+  }
+
+  export type SpecificationCountAggregateInputType = {
+    id?: true
+    key?: true
+    value?: true
+    productId?: true
+    _all?: true
+  }
+
+  export type SpecificationAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Specification to aggregate.
+     */
+    where?: SpecificationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Specifications to fetch.
+     */
+    orderBy?: SpecificationOrderByWithRelationInput | SpecificationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SpecificationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Specifications from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Specifications.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Specifications
+    **/
+    _count?: true | SpecificationCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SpecificationMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SpecificationMaxAggregateInputType
+  }
+
+  export type GetSpecificationAggregateType<T extends SpecificationAggregateArgs> = {
+        [P in keyof T & keyof AggregateSpecification]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSpecification[P]>
+      : GetScalarType<T[P], AggregateSpecification[P]>
+  }
+
+
+
+
+  export type SpecificationGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SpecificationWhereInput
+    orderBy?: SpecificationOrderByWithAggregationInput | SpecificationOrderByWithAggregationInput[]
+    by: SpecificationScalarFieldEnum[] | SpecificationScalarFieldEnum
+    having?: SpecificationScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SpecificationCountAggregateInputType | true
+    _min?: SpecificationMinAggregateInputType
+    _max?: SpecificationMaxAggregateInputType
+  }
+
+  export type SpecificationGroupByOutputType = {
+    id: string
+    key: string
+    value: string
+    productId: string
+    _count: SpecificationCountAggregateOutputType | null
+    _min: SpecificationMinAggregateOutputType | null
+    _max: SpecificationMaxAggregateOutputType | null
+  }
+
+  type GetSpecificationGroupByPayload<T extends SpecificationGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SpecificationGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SpecificationGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SpecificationGroupByOutputType[P]>
+            : GetScalarType<T[P], SpecificationGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SpecificationSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    key?: boolean
+    value?: boolean
+    productId?: boolean
+    product?: boolean | ProductDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["specification"]>
+
+  export type SpecificationSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    key?: boolean
+    value?: boolean
+    productId?: boolean
+    product?: boolean | ProductDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["specification"]>
+
+  export type SpecificationSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    key?: boolean
+    value?: boolean
+    productId?: boolean
+    product?: boolean | ProductDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["specification"]>
+
+  export type SpecificationSelectScalar = {
+    id?: boolean
+    key?: boolean
+    value?: boolean
+    productId?: boolean
+  }
+
+  export type SpecificationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "key" | "value" | "productId", ExtArgs["result"]["specification"]>
+  export type SpecificationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    product?: boolean | ProductDefaultArgs<ExtArgs>
+  }
+  export type SpecificationIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    product?: boolean | ProductDefaultArgs<ExtArgs>
+  }
+  export type SpecificationIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    product?: boolean | ProductDefaultArgs<ExtArgs>
+  }
+
+  export type $SpecificationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Specification"
+    objects: {
+      product: Prisma.$ProductPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      key: string
+      value: string
+      productId: string
+    }, ExtArgs["result"]["specification"]>
+    composites: {}
+  }
+
+  type SpecificationGetPayload<S extends boolean | null | undefined | SpecificationDefaultArgs> = $Result.GetResult<Prisma.$SpecificationPayload, S>
+
+  type SpecificationCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SpecificationFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SpecificationCountAggregateInputType | true
+    }
+
+  export interface SpecificationDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Specification'], meta: { name: 'Specification' } }
+    /**
+     * Find zero or one Specification that matches the filter.
+     * @param {SpecificationFindUniqueArgs} args - Arguments to find a Specification
+     * @example
+     * // Get one Specification
+     * const specification = await prisma.specification.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SpecificationFindUniqueArgs>(args: SelectSubset<T, SpecificationFindUniqueArgs<ExtArgs>>): Prisma__SpecificationClient<$Result.GetResult<Prisma.$SpecificationPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Specification that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {SpecificationFindUniqueOrThrowArgs} args - Arguments to find a Specification
+     * @example
+     * // Get one Specification
+     * const specification = await prisma.specification.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SpecificationFindUniqueOrThrowArgs>(args: SelectSubset<T, SpecificationFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SpecificationClient<$Result.GetResult<Prisma.$SpecificationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Specification that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SpecificationFindFirstArgs} args - Arguments to find a Specification
+     * @example
+     * // Get one Specification
+     * const specification = await prisma.specification.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SpecificationFindFirstArgs>(args?: SelectSubset<T, SpecificationFindFirstArgs<ExtArgs>>): Prisma__SpecificationClient<$Result.GetResult<Prisma.$SpecificationPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Specification that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SpecificationFindFirstOrThrowArgs} args - Arguments to find a Specification
+     * @example
+     * // Get one Specification
+     * const specification = await prisma.specification.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SpecificationFindFirstOrThrowArgs>(args?: SelectSubset<T, SpecificationFindFirstOrThrowArgs<ExtArgs>>): Prisma__SpecificationClient<$Result.GetResult<Prisma.$SpecificationPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Specifications that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SpecificationFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Specifications
+     * const specifications = await prisma.specification.findMany()
+     * 
+     * // Get first 10 Specifications
+     * const specifications = await prisma.specification.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const specificationWithIdOnly = await prisma.specification.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends SpecificationFindManyArgs>(args?: SelectSubset<T, SpecificationFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SpecificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Specification.
+     * @param {SpecificationCreateArgs} args - Arguments to create a Specification.
+     * @example
+     * // Create one Specification
+     * const Specification = await prisma.specification.create({
+     *   data: {
+     *     // ... data to create a Specification
+     *   }
+     * })
+     * 
+     */
+    create<T extends SpecificationCreateArgs>(args: SelectSubset<T, SpecificationCreateArgs<ExtArgs>>): Prisma__SpecificationClient<$Result.GetResult<Prisma.$SpecificationPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Specifications.
+     * @param {SpecificationCreateManyArgs} args - Arguments to create many Specifications.
+     * @example
+     * // Create many Specifications
+     * const specification = await prisma.specification.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SpecificationCreateManyArgs>(args?: SelectSubset<T, SpecificationCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Specifications and returns the data saved in the database.
+     * @param {SpecificationCreateManyAndReturnArgs} args - Arguments to create many Specifications.
+     * @example
+     * // Create many Specifications
+     * const specification = await prisma.specification.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Specifications and only return the `id`
+     * const specificationWithIdOnly = await prisma.specification.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SpecificationCreateManyAndReturnArgs>(args?: SelectSubset<T, SpecificationCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SpecificationPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Specification.
+     * @param {SpecificationDeleteArgs} args - Arguments to delete one Specification.
+     * @example
+     * // Delete one Specification
+     * const Specification = await prisma.specification.delete({
+     *   where: {
+     *     // ... filter to delete one Specification
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SpecificationDeleteArgs>(args: SelectSubset<T, SpecificationDeleteArgs<ExtArgs>>): Prisma__SpecificationClient<$Result.GetResult<Prisma.$SpecificationPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Specification.
+     * @param {SpecificationUpdateArgs} args - Arguments to update one Specification.
+     * @example
+     * // Update one Specification
+     * const specification = await prisma.specification.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SpecificationUpdateArgs>(args: SelectSubset<T, SpecificationUpdateArgs<ExtArgs>>): Prisma__SpecificationClient<$Result.GetResult<Prisma.$SpecificationPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Specifications.
+     * @param {SpecificationDeleteManyArgs} args - Arguments to filter Specifications to delete.
+     * @example
+     * // Delete a few Specifications
+     * const { count } = await prisma.specification.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SpecificationDeleteManyArgs>(args?: SelectSubset<T, SpecificationDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Specifications.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SpecificationUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Specifications
+     * const specification = await prisma.specification.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SpecificationUpdateManyArgs>(args: SelectSubset<T, SpecificationUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Specifications and returns the data updated in the database.
+     * @param {SpecificationUpdateManyAndReturnArgs} args - Arguments to update many Specifications.
+     * @example
+     * // Update many Specifications
+     * const specification = await prisma.specification.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Specifications and only return the `id`
+     * const specificationWithIdOnly = await prisma.specification.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends SpecificationUpdateManyAndReturnArgs>(args: SelectSubset<T, SpecificationUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SpecificationPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Specification.
+     * @param {SpecificationUpsertArgs} args - Arguments to update or create a Specification.
+     * @example
+     * // Update or create a Specification
+     * const specification = await prisma.specification.upsert({
+     *   create: {
+     *     // ... data to create a Specification
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Specification we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SpecificationUpsertArgs>(args: SelectSubset<T, SpecificationUpsertArgs<ExtArgs>>): Prisma__SpecificationClient<$Result.GetResult<Prisma.$SpecificationPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Specifications.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SpecificationCountArgs} args - Arguments to filter Specifications to count.
+     * @example
+     * // Count the number of Specifications
+     * const count = await prisma.specification.count({
+     *   where: {
+     *     // ... the filter for the Specifications we want to count
+     *   }
+     * })
+    **/
+    count<T extends SpecificationCountArgs>(
+      args?: Subset<T, SpecificationCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SpecificationCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Specification.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SpecificationAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SpecificationAggregateArgs>(args: Subset<T, SpecificationAggregateArgs>): Prisma.PrismaPromise<GetSpecificationAggregateType<T>>
+
+    /**
+     * Group by Specification.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SpecificationGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SpecificationGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SpecificationGroupByArgs['orderBy'] }
+        : { orderBy?: SpecificationGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SpecificationGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSpecificationGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Specification model
+   */
+  readonly fields: SpecificationFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Specification.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SpecificationClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    product<T extends ProductDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ProductDefaultArgs<ExtArgs>>): Prisma__ProductClient<$Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Specification model
+   */
+  interface SpecificationFieldRefs {
+    readonly id: FieldRef<"Specification", 'String'>
+    readonly key: FieldRef<"Specification", 'String'>
+    readonly value: FieldRef<"Specification", 'String'>
+    readonly productId: FieldRef<"Specification", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Specification findUnique
+   */
+  export type SpecificationFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Specification
+     */
+    select?: SpecificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Specification
+     */
+    omit?: SpecificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SpecificationInclude<ExtArgs> | null
+    /**
+     * Filter, which Specification to fetch.
+     */
+    where: SpecificationWhereUniqueInput
+  }
+
+  /**
+   * Specification findUniqueOrThrow
+   */
+  export type SpecificationFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Specification
+     */
+    select?: SpecificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Specification
+     */
+    omit?: SpecificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SpecificationInclude<ExtArgs> | null
+    /**
+     * Filter, which Specification to fetch.
+     */
+    where: SpecificationWhereUniqueInput
+  }
+
+  /**
+   * Specification findFirst
+   */
+  export type SpecificationFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Specification
+     */
+    select?: SpecificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Specification
+     */
+    omit?: SpecificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SpecificationInclude<ExtArgs> | null
+    /**
+     * Filter, which Specification to fetch.
+     */
+    where?: SpecificationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Specifications to fetch.
+     */
+    orderBy?: SpecificationOrderByWithRelationInput | SpecificationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Specifications.
+     */
+    cursor?: SpecificationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Specifications from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Specifications.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Specifications.
+     */
+    distinct?: SpecificationScalarFieldEnum | SpecificationScalarFieldEnum[]
+  }
+
+  /**
+   * Specification findFirstOrThrow
+   */
+  export type SpecificationFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Specification
+     */
+    select?: SpecificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Specification
+     */
+    omit?: SpecificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SpecificationInclude<ExtArgs> | null
+    /**
+     * Filter, which Specification to fetch.
+     */
+    where?: SpecificationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Specifications to fetch.
+     */
+    orderBy?: SpecificationOrderByWithRelationInput | SpecificationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Specifications.
+     */
+    cursor?: SpecificationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Specifications from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Specifications.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Specifications.
+     */
+    distinct?: SpecificationScalarFieldEnum | SpecificationScalarFieldEnum[]
+  }
+
+  /**
+   * Specification findMany
+   */
+  export type SpecificationFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Specification
+     */
+    select?: SpecificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Specification
+     */
+    omit?: SpecificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SpecificationInclude<ExtArgs> | null
+    /**
+     * Filter, which Specifications to fetch.
+     */
+    where?: SpecificationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Specifications to fetch.
+     */
+    orderBy?: SpecificationOrderByWithRelationInput | SpecificationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Specifications.
+     */
+    cursor?: SpecificationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Specifications from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Specifications.
+     */
+    skip?: number
+    distinct?: SpecificationScalarFieldEnum | SpecificationScalarFieldEnum[]
+  }
+
+  /**
+   * Specification create
+   */
+  export type SpecificationCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Specification
+     */
+    select?: SpecificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Specification
+     */
+    omit?: SpecificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SpecificationInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Specification.
+     */
+    data: XOR<SpecificationCreateInput, SpecificationUncheckedCreateInput>
+  }
+
+  /**
+   * Specification createMany
+   */
+  export type SpecificationCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Specifications.
+     */
+    data: SpecificationCreateManyInput | SpecificationCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Specification createManyAndReturn
+   */
+  export type SpecificationCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Specification
+     */
+    select?: SpecificationSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Specification
+     */
+    omit?: SpecificationOmit<ExtArgs> | null
+    /**
+     * The data used to create many Specifications.
+     */
+    data: SpecificationCreateManyInput | SpecificationCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SpecificationIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Specification update
+   */
+  export type SpecificationUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Specification
+     */
+    select?: SpecificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Specification
+     */
+    omit?: SpecificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SpecificationInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Specification.
+     */
+    data: XOR<SpecificationUpdateInput, SpecificationUncheckedUpdateInput>
+    /**
+     * Choose, which Specification to update.
+     */
+    where: SpecificationWhereUniqueInput
+  }
+
+  /**
+   * Specification updateMany
+   */
+  export type SpecificationUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Specifications.
+     */
+    data: XOR<SpecificationUpdateManyMutationInput, SpecificationUncheckedUpdateManyInput>
+    /**
+     * Filter which Specifications to update
+     */
+    where?: SpecificationWhereInput
+    /**
+     * Limit how many Specifications to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Specification updateManyAndReturn
+   */
+  export type SpecificationUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Specification
+     */
+    select?: SpecificationSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Specification
+     */
+    omit?: SpecificationOmit<ExtArgs> | null
+    /**
+     * The data used to update Specifications.
+     */
+    data: XOR<SpecificationUpdateManyMutationInput, SpecificationUncheckedUpdateManyInput>
+    /**
+     * Filter which Specifications to update
+     */
+    where?: SpecificationWhereInput
+    /**
+     * Limit how many Specifications to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SpecificationIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Specification upsert
+   */
+  export type SpecificationUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Specification
+     */
+    select?: SpecificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Specification
+     */
+    omit?: SpecificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SpecificationInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Specification to update in case it exists.
+     */
+    where: SpecificationWhereUniqueInput
+    /**
+     * In case the Specification found by the `where` argument doesn't exist, create a new Specification with this data.
+     */
+    create: XOR<SpecificationCreateInput, SpecificationUncheckedCreateInput>
+    /**
+     * In case the Specification was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SpecificationUpdateInput, SpecificationUncheckedUpdateInput>
+  }
+
+  /**
+   * Specification delete
+   */
+  export type SpecificationDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Specification
+     */
+    select?: SpecificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Specification
+     */
+    omit?: SpecificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SpecificationInclude<ExtArgs> | null
+    /**
+     * Filter which Specification to delete.
+     */
+    where: SpecificationWhereUniqueInput
+  }
+
+  /**
+   * Specification deleteMany
+   */
+  export type SpecificationDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Specifications to delete
+     */
+    where?: SpecificationWhereInput
+    /**
+     * Limit how many Specifications to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Specification without action
+   */
+  export type SpecificationDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Specification
+     */
+    select?: SpecificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Specification
+     */
+    omit?: SpecificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SpecificationInclude<ExtArgs> | null
   }
 
 
@@ -4521,13 +5603,25 @@ export namespace Prisma {
     variants: 'variants',
     tags: 'tags',
     images: 'images',
+    sizes: 'sizes',
+    features: 'features',
+    careInstruction: 'careInstruction',
     categoryId: 'categoryId',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt',
-    ownerId: 'ownerId'
+    updatedAt: 'updatedAt'
   };
 
   export type ProductScalarFieldEnum = (typeof ProductScalarFieldEnum)[keyof typeof ProductScalarFieldEnum]
+
+
+  export const SpecificationScalarFieldEnum: {
+    id: 'id',
+    key: 'key',
+    value: 'value',
+    productId: 'productId'
+  };
+
+  export type SpecificationScalarFieldEnum = (typeof SpecificationScalarFieldEnum)[keyof typeof SpecificationScalarFieldEnum]
 
 
   export const CategoryScalarFieldEnum: {
@@ -4652,7 +5746,6 @@ export namespace Prisma {
     password?: StringFilter<"User"> | string
     role?: EnumRoleFilter<"User"> | $Enums.Role
     createdAt?: DateTimeFilter<"User"> | Date | string
-    products?: ProductListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -4662,7 +5755,6 @@ export namespace Prisma {
     password?: SortOrder
     role?: SortOrder
     createdAt?: SortOrder
-    products?: ProductOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -4675,7 +5767,6 @@ export namespace Prisma {
     password?: StringFilter<"User"> | string
     role?: EnumRoleFilter<"User"> | $Enums.Role
     createdAt?: DateTimeFilter<"User"> | Date | string
-    products?: ProductListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -4715,12 +5806,14 @@ export namespace Prisma {
     variants?: StringNullableListFilter<"Product">
     tags?: StringNullableListFilter<"Product">
     images?: StringNullableListFilter<"Product">
+    sizes?: StringNullableListFilter<"Product">
+    features?: StringNullableListFilter<"Product">
+    careInstruction?: StringNullableFilter<"Product"> | string | null
     categoryId?: StringFilter<"Product"> | string
     createdAt?: DateTimeFilter<"Product"> | Date | string
     updatedAt?: DateTimeFilter<"Product"> | Date | string
-    ownerId?: StringNullableFilter<"Product"> | string | null
     category?: XOR<CategoryScalarRelationFilter, CategoryWhereInput>
-    owner?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    specifications?: SpecificationListRelationFilter
   }
 
   export type ProductOrderByWithRelationInput = {
@@ -4733,12 +5826,14 @@ export namespace Prisma {
     variants?: SortOrder
     tags?: SortOrder
     images?: SortOrder
+    sizes?: SortOrder
+    features?: SortOrder
+    careInstruction?: SortOrderInput | SortOrder
     categoryId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    ownerId?: SortOrderInput | SortOrder
     category?: CategoryOrderByWithRelationInput
-    owner?: UserOrderByWithRelationInput
+    specifications?: SpecificationOrderByRelationAggregateInput
   }
 
   export type ProductWhereUniqueInput = Prisma.AtLeast<{
@@ -4754,12 +5849,14 @@ export namespace Prisma {
     variants?: StringNullableListFilter<"Product">
     tags?: StringNullableListFilter<"Product">
     images?: StringNullableListFilter<"Product">
+    sizes?: StringNullableListFilter<"Product">
+    features?: StringNullableListFilter<"Product">
+    careInstruction?: StringNullableFilter<"Product"> | string | null
     categoryId?: StringFilter<"Product"> | string
     createdAt?: DateTimeFilter<"Product"> | Date | string
     updatedAt?: DateTimeFilter<"Product"> | Date | string
-    ownerId?: StringNullableFilter<"Product"> | string | null
     category?: XOR<CategoryScalarRelationFilter, CategoryWhereInput>
-    owner?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    specifications?: SpecificationListRelationFilter
   }, "id" | "sku">
 
   export type ProductOrderByWithAggregationInput = {
@@ -4772,10 +5869,12 @@ export namespace Prisma {
     variants?: SortOrder
     tags?: SortOrder
     images?: SortOrder
+    sizes?: SortOrder
+    features?: SortOrder
+    careInstruction?: SortOrderInput | SortOrder
     categoryId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    ownerId?: SortOrderInput | SortOrder
     _count?: ProductCountOrderByAggregateInput
     _avg?: ProductAvgOrderByAggregateInput
     _max?: ProductMaxOrderByAggregateInput
@@ -4796,10 +5895,62 @@ export namespace Prisma {
     variants?: StringNullableListFilter<"Product">
     tags?: StringNullableListFilter<"Product">
     images?: StringNullableListFilter<"Product">
+    sizes?: StringNullableListFilter<"Product">
+    features?: StringNullableListFilter<"Product">
+    careInstruction?: StringNullableWithAggregatesFilter<"Product"> | string | null
     categoryId?: StringWithAggregatesFilter<"Product"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Product"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Product"> | Date | string
-    ownerId?: StringNullableWithAggregatesFilter<"Product"> | string | null
+  }
+
+  export type SpecificationWhereInput = {
+    AND?: SpecificationWhereInput | SpecificationWhereInput[]
+    OR?: SpecificationWhereInput[]
+    NOT?: SpecificationWhereInput | SpecificationWhereInput[]
+    id?: StringFilter<"Specification"> | string
+    key?: StringFilter<"Specification"> | string
+    value?: StringFilter<"Specification"> | string
+    productId?: StringFilter<"Specification"> | string
+    product?: XOR<ProductScalarRelationFilter, ProductWhereInput>
+  }
+
+  export type SpecificationOrderByWithRelationInput = {
+    id?: SortOrder
+    key?: SortOrder
+    value?: SortOrder
+    productId?: SortOrder
+    product?: ProductOrderByWithRelationInput
+  }
+
+  export type SpecificationWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: SpecificationWhereInput | SpecificationWhereInput[]
+    OR?: SpecificationWhereInput[]
+    NOT?: SpecificationWhereInput | SpecificationWhereInput[]
+    key?: StringFilter<"Specification"> | string
+    value?: StringFilter<"Specification"> | string
+    productId?: StringFilter<"Specification"> | string
+    product?: XOR<ProductScalarRelationFilter, ProductWhereInput>
+  }, "id">
+
+  export type SpecificationOrderByWithAggregationInput = {
+    id?: SortOrder
+    key?: SortOrder
+    value?: SortOrder
+    productId?: SortOrder
+    _count?: SpecificationCountOrderByAggregateInput
+    _max?: SpecificationMaxOrderByAggregateInput
+    _min?: SpecificationMinOrderByAggregateInput
+  }
+
+  export type SpecificationScalarWhereWithAggregatesInput = {
+    AND?: SpecificationScalarWhereWithAggregatesInput | SpecificationScalarWhereWithAggregatesInput[]
+    OR?: SpecificationScalarWhereWithAggregatesInput[]
+    NOT?: SpecificationScalarWhereWithAggregatesInput | SpecificationScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Specification"> | string
+    key?: StringWithAggregatesFilter<"Specification"> | string
+    value?: StringWithAggregatesFilter<"Specification"> | string
+    productId?: StringWithAggregatesFilter<"Specification"> | string
   }
 
   export type CategoryWhereInput = {
@@ -4859,7 +6010,6 @@ export namespace Prisma {
     password: string
     role?: $Enums.Role
     createdAt?: Date | string
-    products?: ProductCreateNestedManyWithoutOwnerInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -4869,7 +6019,6 @@ export namespace Prisma {
     password: string
     role?: $Enums.Role
     createdAt?: Date | string
-    products?: ProductUncheckedCreateNestedManyWithoutOwnerInput
   }
 
   export type UserUpdateInput = {
@@ -4879,7 +6028,6 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    products?: ProductUpdateManyWithoutOwnerNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -4889,7 +6037,6 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    products?: ProductUncheckedUpdateManyWithoutOwnerNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -4929,10 +6076,13 @@ export namespace Prisma {
     variants?: ProductCreatevariantsInput | string[]
     tags?: ProductCreatetagsInput | string[]
     images?: ProductCreateimagesInput | string[]
+    sizes?: ProductCreatesizesInput | string[]
+    features?: ProductCreatefeaturesInput | string[]
+    careInstruction?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     category: CategoryCreateNestedOneWithoutProductsInput
-    owner?: UserCreateNestedOneWithoutProductsInput
+    specifications?: SpecificationCreateNestedManyWithoutProductInput
   }
 
   export type ProductUncheckedCreateInput = {
@@ -4945,10 +6095,13 @@ export namespace Prisma {
     variants?: ProductCreatevariantsInput | string[]
     tags?: ProductCreatetagsInput | string[]
     images?: ProductCreateimagesInput | string[]
+    sizes?: ProductCreatesizesInput | string[]
+    features?: ProductCreatefeaturesInput | string[]
+    careInstruction?: string | null
     categoryId: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    ownerId?: string | null
+    specifications?: SpecificationUncheckedCreateNestedManyWithoutProductInput
   }
 
   export type ProductUpdateInput = {
@@ -4961,10 +6114,13 @@ export namespace Prisma {
     variants?: ProductUpdatevariantsInput | string[]
     tags?: ProductUpdatetagsInput | string[]
     images?: ProductUpdateimagesInput | string[]
+    sizes?: ProductUpdatesizesInput | string[]
+    features?: ProductUpdatefeaturesInput | string[]
+    careInstruction?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     category?: CategoryUpdateOneRequiredWithoutProductsNestedInput
-    owner?: UserUpdateOneWithoutProductsNestedInput
+    specifications?: SpecificationUpdateManyWithoutProductNestedInput
   }
 
   export type ProductUncheckedUpdateInput = {
@@ -4977,10 +6133,13 @@ export namespace Prisma {
     variants?: ProductUpdatevariantsInput | string[]
     tags?: ProductUpdatetagsInput | string[]
     images?: ProductUpdateimagesInput | string[]
+    sizes?: ProductUpdatesizesInput | string[]
+    features?: ProductUpdatefeaturesInput | string[]
+    careInstruction?: NullableStringFieldUpdateOperationsInput | string | null
     categoryId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    ownerId?: NullableStringFieldUpdateOperationsInput | string | null
+    specifications?: SpecificationUncheckedUpdateManyWithoutProductNestedInput
   }
 
   export type ProductCreateManyInput = {
@@ -4993,10 +6152,12 @@ export namespace Prisma {
     variants?: ProductCreatevariantsInput | string[]
     tags?: ProductCreatetagsInput | string[]
     images?: ProductCreateimagesInput | string[]
+    sizes?: ProductCreatesizesInput | string[]
+    features?: ProductCreatefeaturesInput | string[]
+    careInstruction?: string | null
     categoryId: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    ownerId?: string | null
   }
 
   export type ProductUpdateManyMutationInput = {
@@ -5009,6 +6170,9 @@ export namespace Prisma {
     variants?: ProductUpdatevariantsInput | string[]
     tags?: ProductUpdatetagsInput | string[]
     images?: ProductUpdateimagesInput | string[]
+    sizes?: ProductUpdatesizesInput | string[]
+    features?: ProductUpdatefeaturesInput | string[]
+    careInstruction?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -5023,10 +6187,60 @@ export namespace Prisma {
     variants?: ProductUpdatevariantsInput | string[]
     tags?: ProductUpdatetagsInput | string[]
     images?: ProductUpdateimagesInput | string[]
+    sizes?: ProductUpdatesizesInput | string[]
+    features?: ProductUpdatefeaturesInput | string[]
+    careInstruction?: NullableStringFieldUpdateOperationsInput | string | null
     categoryId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    ownerId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type SpecificationCreateInput = {
+    id?: string
+    key: string
+    value: string
+    product: ProductCreateNestedOneWithoutSpecificationsInput
+  }
+
+  export type SpecificationUncheckedCreateInput = {
+    id?: string
+    key: string
+    value: string
+    productId: string
+  }
+
+  export type SpecificationUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    value?: StringFieldUpdateOperationsInput | string
+    product?: ProductUpdateOneRequiredWithoutSpecificationsNestedInput
+  }
+
+  export type SpecificationUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    value?: StringFieldUpdateOperationsInput | string
+    productId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SpecificationCreateManyInput = {
+    id?: string
+    key: string
+    value: string
+    productId: string
+  }
+
+  export type SpecificationUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    value?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SpecificationUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    value?: StringFieldUpdateOperationsInput | string
+    productId?: StringFieldUpdateOperationsInput | string
   }
 
   export type CategoryCreateInput = {
@@ -5113,16 +6327,6 @@ export namespace Prisma {
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
-  }
-
-  export type ProductListRelationFilter = {
-    every?: ProductWhereInput
-    some?: ProductWhereInput
-    none?: ProductWhereInput
-  }
-
-  export type ProductOrderByRelationAggregateInput = {
-    _count?: SortOrder
   }
 
   export type UserCountOrderByAggregateInput = {
@@ -5244,14 +6448,19 @@ export namespace Prisma {
     isNot?: CategoryWhereInput
   }
 
-  export type UserNullableScalarRelationFilter = {
-    is?: UserWhereInput | null
-    isNot?: UserWhereInput | null
+  export type SpecificationListRelationFilter = {
+    every?: SpecificationWhereInput
+    some?: SpecificationWhereInput
+    none?: SpecificationWhereInput
   }
 
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
+  }
+
+  export type SpecificationOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type ProductCountOrderByAggregateInput = {
@@ -5264,10 +6473,12 @@ export namespace Prisma {
     variants?: SortOrder
     tags?: SortOrder
     images?: SortOrder
+    sizes?: SortOrder
+    features?: SortOrder
+    careInstruction?: SortOrder
     categoryId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    ownerId?: SortOrder
   }
 
   export type ProductAvgOrderByAggregateInput = {
@@ -5282,10 +6493,10 @@ export namespace Prisma {
     price?: SortOrder
     stock?: SortOrder
     sku?: SortOrder
+    careInstruction?: SortOrder
     categoryId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    ownerId?: SortOrder
   }
 
   export type ProductMinOrderByAggregateInput = {
@@ -5295,10 +6506,10 @@ export namespace Prisma {
     price?: SortOrder
     stock?: SortOrder
     sku?: SortOrder
+    careInstruction?: SortOrder
     categoryId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    ownerId?: SortOrder
   }
 
   export type ProductSumOrderByAggregateInput = {
@@ -5356,6 +6567,42 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
+  export type ProductScalarRelationFilter = {
+    is?: ProductWhereInput
+    isNot?: ProductWhereInput
+  }
+
+  export type SpecificationCountOrderByAggregateInput = {
+    id?: SortOrder
+    key?: SortOrder
+    value?: SortOrder
+    productId?: SortOrder
+  }
+
+  export type SpecificationMaxOrderByAggregateInput = {
+    id?: SortOrder
+    key?: SortOrder
+    value?: SortOrder
+    productId?: SortOrder
+  }
+
+  export type SpecificationMinOrderByAggregateInput = {
+    id?: SortOrder
+    key?: SortOrder
+    value?: SortOrder
+    productId?: SortOrder
+  }
+
+  export type ProductListRelationFilter = {
+    every?: ProductWhereInput
+    some?: ProductWhereInput
+    none?: ProductWhereInput
+  }
+
+  export type ProductOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type CategoryCountOrderByAggregateInput = {
     id?: SortOrder
     label?: SortOrder
@@ -5377,20 +6624,6 @@ export namespace Prisma {
     createdAt?: SortOrder
   }
 
-  export type ProductCreateNestedManyWithoutOwnerInput = {
-    create?: XOR<ProductCreateWithoutOwnerInput, ProductUncheckedCreateWithoutOwnerInput> | ProductCreateWithoutOwnerInput[] | ProductUncheckedCreateWithoutOwnerInput[]
-    connectOrCreate?: ProductCreateOrConnectWithoutOwnerInput | ProductCreateOrConnectWithoutOwnerInput[]
-    createMany?: ProductCreateManyOwnerInputEnvelope
-    connect?: ProductWhereUniqueInput | ProductWhereUniqueInput[]
-  }
-
-  export type ProductUncheckedCreateNestedManyWithoutOwnerInput = {
-    create?: XOR<ProductCreateWithoutOwnerInput, ProductUncheckedCreateWithoutOwnerInput> | ProductCreateWithoutOwnerInput[] | ProductUncheckedCreateWithoutOwnerInput[]
-    connectOrCreate?: ProductCreateOrConnectWithoutOwnerInput | ProductCreateOrConnectWithoutOwnerInput[]
-    createMany?: ProductCreateManyOwnerInputEnvelope
-    connect?: ProductWhereUniqueInput | ProductWhereUniqueInput[]
-  }
-
   export type StringFieldUpdateOperationsInput = {
     set?: string
   }
@@ -5401,34 +6634,6 @@ export namespace Prisma {
 
   export type DateTimeFieldUpdateOperationsInput = {
     set?: Date | string
-  }
-
-  export type ProductUpdateManyWithoutOwnerNestedInput = {
-    create?: XOR<ProductCreateWithoutOwnerInput, ProductUncheckedCreateWithoutOwnerInput> | ProductCreateWithoutOwnerInput[] | ProductUncheckedCreateWithoutOwnerInput[]
-    connectOrCreate?: ProductCreateOrConnectWithoutOwnerInput | ProductCreateOrConnectWithoutOwnerInput[]
-    upsert?: ProductUpsertWithWhereUniqueWithoutOwnerInput | ProductUpsertWithWhereUniqueWithoutOwnerInput[]
-    createMany?: ProductCreateManyOwnerInputEnvelope
-    set?: ProductWhereUniqueInput | ProductWhereUniqueInput[]
-    disconnect?: ProductWhereUniqueInput | ProductWhereUniqueInput[]
-    delete?: ProductWhereUniqueInput | ProductWhereUniqueInput[]
-    connect?: ProductWhereUniqueInput | ProductWhereUniqueInput[]
-    update?: ProductUpdateWithWhereUniqueWithoutOwnerInput | ProductUpdateWithWhereUniqueWithoutOwnerInput[]
-    updateMany?: ProductUpdateManyWithWhereWithoutOwnerInput | ProductUpdateManyWithWhereWithoutOwnerInput[]
-    deleteMany?: ProductScalarWhereInput | ProductScalarWhereInput[]
-  }
-
-  export type ProductUncheckedUpdateManyWithoutOwnerNestedInput = {
-    create?: XOR<ProductCreateWithoutOwnerInput, ProductUncheckedCreateWithoutOwnerInput> | ProductCreateWithoutOwnerInput[] | ProductUncheckedCreateWithoutOwnerInput[]
-    connectOrCreate?: ProductCreateOrConnectWithoutOwnerInput | ProductCreateOrConnectWithoutOwnerInput[]
-    upsert?: ProductUpsertWithWhereUniqueWithoutOwnerInput | ProductUpsertWithWhereUniqueWithoutOwnerInput[]
-    createMany?: ProductCreateManyOwnerInputEnvelope
-    set?: ProductWhereUniqueInput | ProductWhereUniqueInput[]
-    disconnect?: ProductWhereUniqueInput | ProductWhereUniqueInput[]
-    delete?: ProductWhereUniqueInput | ProductWhereUniqueInput[]
-    connect?: ProductWhereUniqueInput | ProductWhereUniqueInput[]
-    update?: ProductUpdateWithWhereUniqueWithoutOwnerInput | ProductUpdateWithWhereUniqueWithoutOwnerInput[]
-    updateMany?: ProductUpdateManyWithWhereWithoutOwnerInput | ProductUpdateManyWithWhereWithoutOwnerInput[]
-    deleteMany?: ProductScalarWhereInput | ProductScalarWhereInput[]
   }
 
   export type ProductCreatevariantsInput = {
@@ -5443,16 +6648,32 @@ export namespace Prisma {
     set: string[]
   }
 
+  export type ProductCreatesizesInput = {
+    set: string[]
+  }
+
+  export type ProductCreatefeaturesInput = {
+    set: string[]
+  }
+
   export type CategoryCreateNestedOneWithoutProductsInput = {
     create?: XOR<CategoryCreateWithoutProductsInput, CategoryUncheckedCreateWithoutProductsInput>
     connectOrCreate?: CategoryCreateOrConnectWithoutProductsInput
     connect?: CategoryWhereUniqueInput
   }
 
-  export type UserCreateNestedOneWithoutProductsInput = {
-    create?: XOR<UserCreateWithoutProductsInput, UserUncheckedCreateWithoutProductsInput>
-    connectOrCreate?: UserCreateOrConnectWithoutProductsInput
-    connect?: UserWhereUniqueInput
+  export type SpecificationCreateNestedManyWithoutProductInput = {
+    create?: XOR<SpecificationCreateWithoutProductInput, SpecificationUncheckedCreateWithoutProductInput> | SpecificationCreateWithoutProductInput[] | SpecificationUncheckedCreateWithoutProductInput[]
+    connectOrCreate?: SpecificationCreateOrConnectWithoutProductInput | SpecificationCreateOrConnectWithoutProductInput[]
+    createMany?: SpecificationCreateManyProductInputEnvelope
+    connect?: SpecificationWhereUniqueInput | SpecificationWhereUniqueInput[]
+  }
+
+  export type SpecificationUncheckedCreateNestedManyWithoutProductInput = {
+    create?: XOR<SpecificationCreateWithoutProductInput, SpecificationUncheckedCreateWithoutProductInput> | SpecificationCreateWithoutProductInput[] | SpecificationUncheckedCreateWithoutProductInput[]
+    connectOrCreate?: SpecificationCreateOrConnectWithoutProductInput | SpecificationCreateOrConnectWithoutProductInput[]
+    createMany?: SpecificationCreateManyProductInputEnvelope
+    connect?: SpecificationWhereUniqueInput | SpecificationWhereUniqueInput[]
   }
 
   export type FloatFieldUpdateOperationsInput = {
@@ -5486,6 +6707,20 @@ export namespace Prisma {
     push?: string | string[]
   }
 
+  export type ProductUpdatesizesInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type ProductUpdatefeaturesInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
+  }
+
   export type CategoryUpdateOneRequiredWithoutProductsNestedInput = {
     create?: XOR<CategoryCreateWithoutProductsInput, CategoryUncheckedCreateWithoutProductsInput>
     connectOrCreate?: CategoryCreateOrConnectWithoutProductsInput
@@ -5494,18 +6729,46 @@ export namespace Prisma {
     update?: XOR<XOR<CategoryUpdateToOneWithWhereWithoutProductsInput, CategoryUpdateWithoutProductsInput>, CategoryUncheckedUpdateWithoutProductsInput>
   }
 
-  export type UserUpdateOneWithoutProductsNestedInput = {
-    create?: XOR<UserCreateWithoutProductsInput, UserUncheckedCreateWithoutProductsInput>
-    connectOrCreate?: UserCreateOrConnectWithoutProductsInput
-    upsert?: UserUpsertWithoutProductsInput
-    disconnect?: UserWhereInput | boolean
-    delete?: UserWhereInput | boolean
-    connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutProductsInput, UserUpdateWithoutProductsInput>, UserUncheckedUpdateWithoutProductsInput>
+  export type SpecificationUpdateManyWithoutProductNestedInput = {
+    create?: XOR<SpecificationCreateWithoutProductInput, SpecificationUncheckedCreateWithoutProductInput> | SpecificationCreateWithoutProductInput[] | SpecificationUncheckedCreateWithoutProductInput[]
+    connectOrCreate?: SpecificationCreateOrConnectWithoutProductInput | SpecificationCreateOrConnectWithoutProductInput[]
+    upsert?: SpecificationUpsertWithWhereUniqueWithoutProductInput | SpecificationUpsertWithWhereUniqueWithoutProductInput[]
+    createMany?: SpecificationCreateManyProductInputEnvelope
+    set?: SpecificationWhereUniqueInput | SpecificationWhereUniqueInput[]
+    disconnect?: SpecificationWhereUniqueInput | SpecificationWhereUniqueInput[]
+    delete?: SpecificationWhereUniqueInput | SpecificationWhereUniqueInput[]
+    connect?: SpecificationWhereUniqueInput | SpecificationWhereUniqueInput[]
+    update?: SpecificationUpdateWithWhereUniqueWithoutProductInput | SpecificationUpdateWithWhereUniqueWithoutProductInput[]
+    updateMany?: SpecificationUpdateManyWithWhereWithoutProductInput | SpecificationUpdateManyWithWhereWithoutProductInput[]
+    deleteMany?: SpecificationScalarWhereInput | SpecificationScalarWhereInput[]
   }
 
-  export type NullableStringFieldUpdateOperationsInput = {
-    set?: string | null
+  export type SpecificationUncheckedUpdateManyWithoutProductNestedInput = {
+    create?: XOR<SpecificationCreateWithoutProductInput, SpecificationUncheckedCreateWithoutProductInput> | SpecificationCreateWithoutProductInput[] | SpecificationUncheckedCreateWithoutProductInput[]
+    connectOrCreate?: SpecificationCreateOrConnectWithoutProductInput | SpecificationCreateOrConnectWithoutProductInput[]
+    upsert?: SpecificationUpsertWithWhereUniqueWithoutProductInput | SpecificationUpsertWithWhereUniqueWithoutProductInput[]
+    createMany?: SpecificationCreateManyProductInputEnvelope
+    set?: SpecificationWhereUniqueInput | SpecificationWhereUniqueInput[]
+    disconnect?: SpecificationWhereUniqueInput | SpecificationWhereUniqueInput[]
+    delete?: SpecificationWhereUniqueInput | SpecificationWhereUniqueInput[]
+    connect?: SpecificationWhereUniqueInput | SpecificationWhereUniqueInput[]
+    update?: SpecificationUpdateWithWhereUniqueWithoutProductInput | SpecificationUpdateWithWhereUniqueWithoutProductInput[]
+    updateMany?: SpecificationUpdateManyWithWhereWithoutProductInput | SpecificationUpdateManyWithWhereWithoutProductInput[]
+    deleteMany?: SpecificationScalarWhereInput | SpecificationScalarWhereInput[]
+  }
+
+  export type ProductCreateNestedOneWithoutSpecificationsInput = {
+    create?: XOR<ProductCreateWithoutSpecificationsInput, ProductUncheckedCreateWithoutSpecificationsInput>
+    connectOrCreate?: ProductCreateOrConnectWithoutSpecificationsInput
+    connect?: ProductWhereUniqueInput
+  }
+
+  export type ProductUpdateOneRequiredWithoutSpecificationsNestedInput = {
+    create?: XOR<ProductCreateWithoutSpecificationsInput, ProductUncheckedCreateWithoutSpecificationsInput>
+    connectOrCreate?: ProductCreateOrConnectWithoutSpecificationsInput
+    upsert?: ProductUpsertWithoutSpecificationsInput
+    connect?: ProductWhereUniqueInput
+    update?: XOR<XOR<ProductUpdateToOneWithWhereWithoutSpecificationsInput, ProductUpdateWithoutSpecificationsInput>, ProductUncheckedUpdateWithoutSpecificationsInput>
   }
 
   export type ProductCreateNestedManyWithoutCategoryInput = {
@@ -5719,81 +6982,6 @@ export namespace Prisma {
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
-  export type ProductCreateWithoutOwnerInput = {
-    id?: string
-    name: string
-    description: string
-    price: number
-    stock: number
-    sku: string
-    variants?: ProductCreatevariantsInput | string[]
-    tags?: ProductCreatetagsInput | string[]
-    images?: ProductCreateimagesInput | string[]
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    category: CategoryCreateNestedOneWithoutProductsInput
-  }
-
-  export type ProductUncheckedCreateWithoutOwnerInput = {
-    id?: string
-    name: string
-    description: string
-    price: number
-    stock: number
-    sku: string
-    variants?: ProductCreatevariantsInput | string[]
-    tags?: ProductCreatetagsInput | string[]
-    images?: ProductCreateimagesInput | string[]
-    categoryId: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type ProductCreateOrConnectWithoutOwnerInput = {
-    where: ProductWhereUniqueInput
-    create: XOR<ProductCreateWithoutOwnerInput, ProductUncheckedCreateWithoutOwnerInput>
-  }
-
-  export type ProductCreateManyOwnerInputEnvelope = {
-    data: ProductCreateManyOwnerInput | ProductCreateManyOwnerInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type ProductUpsertWithWhereUniqueWithoutOwnerInput = {
-    where: ProductWhereUniqueInput
-    update: XOR<ProductUpdateWithoutOwnerInput, ProductUncheckedUpdateWithoutOwnerInput>
-    create: XOR<ProductCreateWithoutOwnerInput, ProductUncheckedCreateWithoutOwnerInput>
-  }
-
-  export type ProductUpdateWithWhereUniqueWithoutOwnerInput = {
-    where: ProductWhereUniqueInput
-    data: XOR<ProductUpdateWithoutOwnerInput, ProductUncheckedUpdateWithoutOwnerInput>
-  }
-
-  export type ProductUpdateManyWithWhereWithoutOwnerInput = {
-    where: ProductScalarWhereInput
-    data: XOR<ProductUpdateManyMutationInput, ProductUncheckedUpdateManyWithoutOwnerInput>
-  }
-
-  export type ProductScalarWhereInput = {
-    AND?: ProductScalarWhereInput | ProductScalarWhereInput[]
-    OR?: ProductScalarWhereInput[]
-    NOT?: ProductScalarWhereInput | ProductScalarWhereInput[]
-    id?: StringFilter<"Product"> | string
-    name?: StringFilter<"Product"> | string
-    description?: StringFilter<"Product"> | string
-    price?: FloatFilter<"Product"> | number
-    stock?: IntFilter<"Product"> | number
-    sku?: StringFilter<"Product"> | string
-    variants?: StringNullableListFilter<"Product">
-    tags?: StringNullableListFilter<"Product">
-    images?: StringNullableListFilter<"Product">
-    categoryId?: StringFilter<"Product"> | string
-    createdAt?: DateTimeFilter<"Product"> | Date | string
-    updatedAt?: DateTimeFilter<"Product"> | Date | string
-    ownerId?: StringNullableFilter<"Product"> | string | null
-  }
-
   export type CategoryCreateWithoutProductsInput = {
     id: string
     label: string
@@ -5813,27 +7001,26 @@ export namespace Prisma {
     create: XOR<CategoryCreateWithoutProductsInput, CategoryUncheckedCreateWithoutProductsInput>
   }
 
-  export type UserCreateWithoutProductsInput = {
+  export type SpecificationCreateWithoutProductInput = {
     id?: string
-    name: string
-    email: string
-    password: string
-    role?: $Enums.Role
-    createdAt?: Date | string
+    key: string
+    value: string
   }
 
-  export type UserUncheckedCreateWithoutProductsInput = {
+  export type SpecificationUncheckedCreateWithoutProductInput = {
     id?: string
-    name: string
-    email: string
-    password: string
-    role?: $Enums.Role
-    createdAt?: Date | string
+    key: string
+    value: string
   }
 
-  export type UserCreateOrConnectWithoutProductsInput = {
-    where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutProductsInput, UserUncheckedCreateWithoutProductsInput>
+  export type SpecificationCreateOrConnectWithoutProductInput = {
+    where: SpecificationWhereUniqueInput
+    create: XOR<SpecificationCreateWithoutProductInput, SpecificationUncheckedCreateWithoutProductInput>
+  }
+
+  export type SpecificationCreateManyProductInputEnvelope = {
+    data: SpecificationCreateManyProductInput | SpecificationCreateManyProductInput[]
+    skipDuplicates?: boolean
   }
 
   export type CategoryUpsertWithoutProductsInput = {
@@ -5861,33 +7048,118 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type UserUpsertWithoutProductsInput = {
-    update: XOR<UserUpdateWithoutProductsInput, UserUncheckedUpdateWithoutProductsInput>
-    create: XOR<UserCreateWithoutProductsInput, UserUncheckedCreateWithoutProductsInput>
-    where?: UserWhereInput
+  export type SpecificationUpsertWithWhereUniqueWithoutProductInput = {
+    where: SpecificationWhereUniqueInput
+    update: XOR<SpecificationUpdateWithoutProductInput, SpecificationUncheckedUpdateWithoutProductInput>
+    create: XOR<SpecificationCreateWithoutProductInput, SpecificationUncheckedCreateWithoutProductInput>
   }
 
-  export type UserUpdateToOneWithWhereWithoutProductsInput = {
-    where?: UserWhereInput
-    data: XOR<UserUpdateWithoutProductsInput, UserUncheckedUpdateWithoutProductsInput>
+  export type SpecificationUpdateWithWhereUniqueWithoutProductInput = {
+    where: SpecificationWhereUniqueInput
+    data: XOR<SpecificationUpdateWithoutProductInput, SpecificationUncheckedUpdateWithoutProductInput>
   }
 
-  export type UserUpdateWithoutProductsInput = {
+  export type SpecificationUpdateManyWithWhereWithoutProductInput = {
+    where: SpecificationScalarWhereInput
+    data: XOR<SpecificationUpdateManyMutationInput, SpecificationUncheckedUpdateManyWithoutProductInput>
+  }
+
+  export type SpecificationScalarWhereInput = {
+    AND?: SpecificationScalarWhereInput | SpecificationScalarWhereInput[]
+    OR?: SpecificationScalarWhereInput[]
+    NOT?: SpecificationScalarWhereInput | SpecificationScalarWhereInput[]
+    id?: StringFilter<"Specification"> | string
+    key?: StringFilter<"Specification"> | string
+    value?: StringFilter<"Specification"> | string
+    productId?: StringFilter<"Specification"> | string
+  }
+
+  export type ProductCreateWithoutSpecificationsInput = {
+    id?: string
+    name: string
+    description: string
+    price: number
+    stock: number
+    sku: string
+    variants?: ProductCreatevariantsInput | string[]
+    tags?: ProductCreatetagsInput | string[]
+    images?: ProductCreateimagesInput | string[]
+    sizes?: ProductCreatesizesInput | string[]
+    features?: ProductCreatefeaturesInput | string[]
+    careInstruction?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    category: CategoryCreateNestedOneWithoutProductsInput
+  }
+
+  export type ProductUncheckedCreateWithoutSpecificationsInput = {
+    id?: string
+    name: string
+    description: string
+    price: number
+    stock: number
+    sku: string
+    variants?: ProductCreatevariantsInput | string[]
+    tags?: ProductCreatetagsInput | string[]
+    images?: ProductCreateimagesInput | string[]
+    sizes?: ProductCreatesizesInput | string[]
+    features?: ProductCreatefeaturesInput | string[]
+    careInstruction?: string | null
+    categoryId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ProductCreateOrConnectWithoutSpecificationsInput = {
+    where: ProductWhereUniqueInput
+    create: XOR<ProductCreateWithoutSpecificationsInput, ProductUncheckedCreateWithoutSpecificationsInput>
+  }
+
+  export type ProductUpsertWithoutSpecificationsInput = {
+    update: XOR<ProductUpdateWithoutSpecificationsInput, ProductUncheckedUpdateWithoutSpecificationsInput>
+    create: XOR<ProductCreateWithoutSpecificationsInput, ProductUncheckedCreateWithoutSpecificationsInput>
+    where?: ProductWhereInput
+  }
+
+  export type ProductUpdateToOneWithWhereWithoutSpecificationsInput = {
+    where?: ProductWhereInput
+    data: XOR<ProductUpdateWithoutSpecificationsInput, ProductUncheckedUpdateWithoutSpecificationsInput>
+  }
+
+  export type ProductUpdateWithoutSpecificationsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    description?: StringFieldUpdateOperationsInput | string
+    price?: FloatFieldUpdateOperationsInput | number
+    stock?: IntFieldUpdateOperationsInput | number
+    sku?: StringFieldUpdateOperationsInput | string
+    variants?: ProductUpdatevariantsInput | string[]
+    tags?: ProductUpdatetagsInput | string[]
+    images?: ProductUpdateimagesInput | string[]
+    sizes?: ProductUpdatesizesInput | string[]
+    features?: ProductUpdatefeaturesInput | string[]
+    careInstruction?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    category?: CategoryUpdateOneRequiredWithoutProductsNestedInput
   }
 
-  export type UserUncheckedUpdateWithoutProductsInput = {
+  export type ProductUncheckedUpdateWithoutSpecificationsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    description?: StringFieldUpdateOperationsInput | string
+    price?: FloatFieldUpdateOperationsInput | number
+    stock?: IntFieldUpdateOperationsInput | number
+    sku?: StringFieldUpdateOperationsInput | string
+    variants?: ProductUpdatevariantsInput | string[]
+    tags?: ProductUpdatetagsInput | string[]
+    images?: ProductUpdateimagesInput | string[]
+    sizes?: ProductUpdatesizesInput | string[]
+    features?: ProductUpdatefeaturesInput | string[]
+    careInstruction?: NullableStringFieldUpdateOperationsInput | string | null
+    categoryId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ProductCreateWithoutCategoryInput = {
@@ -5900,9 +7172,12 @@ export namespace Prisma {
     variants?: ProductCreatevariantsInput | string[]
     tags?: ProductCreatetagsInput | string[]
     images?: ProductCreateimagesInput | string[]
+    sizes?: ProductCreatesizesInput | string[]
+    features?: ProductCreatefeaturesInput | string[]
+    careInstruction?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    owner?: UserCreateNestedOneWithoutProductsInput
+    specifications?: SpecificationCreateNestedManyWithoutProductInput
   }
 
   export type ProductUncheckedCreateWithoutCategoryInput = {
@@ -5915,9 +7190,12 @@ export namespace Prisma {
     variants?: ProductCreatevariantsInput | string[]
     tags?: ProductCreatetagsInput | string[]
     images?: ProductCreateimagesInput | string[]
+    sizes?: ProductCreatesizesInput | string[]
+    features?: ProductCreatefeaturesInput | string[]
+    careInstruction?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    ownerId?: string | null
+    specifications?: SpecificationUncheckedCreateNestedManyWithoutProductInput
   }
 
   export type ProductCreateOrConnectWithoutCategoryInput = {
@@ -5946,64 +7224,49 @@ export namespace Prisma {
     data: XOR<ProductUpdateManyMutationInput, ProductUncheckedUpdateManyWithoutCategoryInput>
   }
 
-  export type ProductCreateManyOwnerInput = {
+  export type ProductScalarWhereInput = {
+    AND?: ProductScalarWhereInput | ProductScalarWhereInput[]
+    OR?: ProductScalarWhereInput[]
+    NOT?: ProductScalarWhereInput | ProductScalarWhereInput[]
+    id?: StringFilter<"Product"> | string
+    name?: StringFilter<"Product"> | string
+    description?: StringFilter<"Product"> | string
+    price?: FloatFilter<"Product"> | number
+    stock?: IntFilter<"Product"> | number
+    sku?: StringFilter<"Product"> | string
+    variants?: StringNullableListFilter<"Product">
+    tags?: StringNullableListFilter<"Product">
+    images?: StringNullableListFilter<"Product">
+    sizes?: StringNullableListFilter<"Product">
+    features?: StringNullableListFilter<"Product">
+    careInstruction?: StringNullableFilter<"Product"> | string | null
+    categoryId?: StringFilter<"Product"> | string
+    createdAt?: DateTimeFilter<"Product"> | Date | string
+    updatedAt?: DateTimeFilter<"Product"> | Date | string
+  }
+
+  export type SpecificationCreateManyProductInput = {
     id?: string
-    name: string
-    description: string
-    price: number
-    stock: number
-    sku: string
-    variants?: ProductCreatevariantsInput | string[]
-    tags?: ProductCreatetagsInput | string[]
-    images?: ProductCreateimagesInput | string[]
-    categoryId: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    key: string
+    value: string
   }
 
-  export type ProductUpdateWithoutOwnerInput = {
+  export type SpecificationUpdateWithoutProductInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    price?: FloatFieldUpdateOperationsInput | number
-    stock?: IntFieldUpdateOperationsInput | number
-    sku?: StringFieldUpdateOperationsInput | string
-    variants?: ProductUpdatevariantsInput | string[]
-    tags?: ProductUpdatetagsInput | string[]
-    images?: ProductUpdateimagesInput | string[]
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    category?: CategoryUpdateOneRequiredWithoutProductsNestedInput
+    key?: StringFieldUpdateOperationsInput | string
+    value?: StringFieldUpdateOperationsInput | string
   }
 
-  export type ProductUncheckedUpdateWithoutOwnerInput = {
+  export type SpecificationUncheckedUpdateWithoutProductInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    price?: FloatFieldUpdateOperationsInput | number
-    stock?: IntFieldUpdateOperationsInput | number
-    sku?: StringFieldUpdateOperationsInput | string
-    variants?: ProductUpdatevariantsInput | string[]
-    tags?: ProductUpdatetagsInput | string[]
-    images?: ProductUpdateimagesInput | string[]
-    categoryId?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    key?: StringFieldUpdateOperationsInput | string
+    value?: StringFieldUpdateOperationsInput | string
   }
 
-  export type ProductUncheckedUpdateManyWithoutOwnerInput = {
+  export type SpecificationUncheckedUpdateManyWithoutProductInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    price?: FloatFieldUpdateOperationsInput | number
-    stock?: IntFieldUpdateOperationsInput | number
-    sku?: StringFieldUpdateOperationsInput | string
-    variants?: ProductUpdatevariantsInput | string[]
-    tags?: ProductUpdatetagsInput | string[]
-    images?: ProductUpdateimagesInput | string[]
-    categoryId?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    key?: StringFieldUpdateOperationsInput | string
+    value?: StringFieldUpdateOperationsInput | string
   }
 
   export type ProductCreateManyCategoryInput = {
@@ -6016,9 +7279,11 @@ export namespace Prisma {
     variants?: ProductCreatevariantsInput | string[]
     tags?: ProductCreatetagsInput | string[]
     images?: ProductCreateimagesInput | string[]
+    sizes?: ProductCreatesizesInput | string[]
+    features?: ProductCreatefeaturesInput | string[]
+    careInstruction?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    ownerId?: string | null
   }
 
   export type ProductUpdateWithoutCategoryInput = {
@@ -6031,9 +7296,12 @@ export namespace Prisma {
     variants?: ProductUpdatevariantsInput | string[]
     tags?: ProductUpdatetagsInput | string[]
     images?: ProductUpdateimagesInput | string[]
+    sizes?: ProductUpdatesizesInput | string[]
+    features?: ProductUpdatefeaturesInput | string[]
+    careInstruction?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    owner?: UserUpdateOneWithoutProductsNestedInput
+    specifications?: SpecificationUpdateManyWithoutProductNestedInput
   }
 
   export type ProductUncheckedUpdateWithoutCategoryInput = {
@@ -6046,9 +7314,12 @@ export namespace Prisma {
     variants?: ProductUpdatevariantsInput | string[]
     tags?: ProductUpdatetagsInput | string[]
     images?: ProductUpdateimagesInput | string[]
+    sizes?: ProductUpdatesizesInput | string[]
+    features?: ProductUpdatefeaturesInput | string[]
+    careInstruction?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    ownerId?: NullableStringFieldUpdateOperationsInput | string | null
+    specifications?: SpecificationUncheckedUpdateManyWithoutProductNestedInput
   }
 
   export type ProductUncheckedUpdateManyWithoutCategoryInput = {
@@ -6061,9 +7332,11 @@ export namespace Prisma {
     variants?: ProductUpdatevariantsInput | string[]
     tags?: ProductUpdatetagsInput | string[]
     images?: ProductUpdateimagesInput | string[]
+    sizes?: ProductUpdatesizesInput | string[]
+    features?: ProductUpdatefeaturesInput | string[]
+    careInstruction?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    ownerId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
 

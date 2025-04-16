@@ -3,6 +3,7 @@ import FeaturedProduct from "@/components/home/featured-product";
 import { useGetProduct } from "@/features/product/api/use-get-product";
 import ProductPicker from "@/features/product/components/product-picker";
 import ProductTab from "@/features/product/components/product-tabs";
+import ProductTag from "@/features/product/components/product-tags";
 import SwitchImage from "@/features/product/components/switch-image";
 import { useProjectId } from "@/features/product/hooks/use-product-id";
 import { RotateCw, Truck } from "lucide-react";
@@ -11,6 +12,7 @@ import React from "react";
 function ProductDetailPage() {
   const id = useProjectId();
   const { data: product, isLoading } = useGetProduct({ id });
+  console.log(product);
   if (isLoading) return <div>Loading...</div>;
   if (!product) return <div>Product not found</div>;
 
@@ -24,7 +26,7 @@ function ProductDetailPage() {
               {product.category}
             </p>
             <h1 className=" text-3xl font-bold mb-3">{product.name}</h1>
-            <div className="flex items-center mb-4">
+            {/* <div className="flex items-center mb-4">
               <div className="flex items-center">
                 {[...Array(5)].map((_, i) => (
                   <svg
@@ -46,12 +48,13 @@ function ProductDetailPage() {
               <p className="ml-2 text-sm text-muted-foreground">
                 {product.rating} ({product.reviewCount} reviews)
               </p>
-            </div>
+            </div> */}
             <p className="text-2xl font-bold mb-4">
               ${product.price.toFixed(2)}
             </p>
 
-            <p className="text-muted-foreground mb-8">{product.description}</p>
+            <p className="text-muted-foreground mb-4">{product.description}</p>
+            <ProductTag tags={product.tags} />
             <ProductPicker product={product} />
             <div className="space-y-4">
               <div className="flex items-start">

@@ -136,10 +136,19 @@ exports.Prisma.ProductScalarFieldEnum = {
   variants: 'variants',
   tags: 'tags',
   images: 'images',
+  sizes: 'sizes',
+  features: 'features',
+  careInstruction: 'careInstruction',
   categoryId: 'categoryId',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  ownerId: 'ownerId'
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.SpecificationScalarFieldEnum = {
+  id: 'id',
+  key: 'key',
+  value: 'value',
+  productId: 'productId'
 };
 
 exports.Prisma.CategoryScalarFieldEnum = {
@@ -172,6 +181,7 @@ exports.Role = exports.$Enums.Role = {
 exports.Prisma.ModelName = {
   User: 'User',
   Product: 'Product',
+  Specification: 'Specification',
   Category: 'Category'
 };
 

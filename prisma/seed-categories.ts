@@ -9,6 +9,7 @@ const categories = [
   { value: "clothing", label: "Clothing" },
   { value: "home-appliances", label: "Home Appliances" },
   { value: "books", label: "Books" },
+  { value: "footwear", label: "Footwear" },
 ];
 
 async function main() {

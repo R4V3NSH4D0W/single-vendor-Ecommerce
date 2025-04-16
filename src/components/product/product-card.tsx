@@ -4,10 +4,15 @@ import React from "react";
 // import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 import { Heart, ShoppingBag } from "lucide-react";
-import { Product } from "@/lib/types";
 
 interface ProductCardProps {
-  product: Product;
+  product: {
+    id: string;
+    images: string[];
+    name: string;
+    category: string;
+    price: number;
+  };
 }
 const ProductCard = ({ product }: ProductCardProps) => {
   return (

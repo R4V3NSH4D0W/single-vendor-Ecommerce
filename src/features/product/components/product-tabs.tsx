@@ -9,25 +9,25 @@ interface ProductTabProps {
 }
 
 function ProductTab({ product }: ProductTabProps) {
-  const [reviews, setReviews] = useState(product.reviews);
+  // const [reviews, setReviews] = useState(product.reviews);
 
-  const handleReviewSubmitted = () => {
-    setReviews([
-      {
-        id: reviews.length + 1,
-        name: "You",
-        rating: 5,
-        date: new Date().toLocaleDateString("en-US", {
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-        }),
-        comment: "Your review has been submitted and is pending approval.",
-        verified: true,
-      },
-      ...reviews,
-    ]);
-  };
+  // const handleReviewSubmitted = () => {
+  //   setReviews([
+  //     {
+  //       id: reviews.length + 1,
+  //       name: "You",
+  //       rating: 5,
+  //       date: new Date().toLocaleDateString("en-US", {
+  //         year: "numeric",
+  //         month: "long",
+  //         day: "numeric",
+  //       }),
+  //       comment: "Your review has been submitted and is pending approval.",
+  //       verified: true,
+  //     },
+  //     ...reviews,
+  //   ]);
+  // };
 
   return (
     <div className="mt-16">
@@ -36,7 +36,8 @@ function ProductTab({ product }: ProductTabProps) {
           <TabsTrigger value="details">Details</TabsTrigger>
           <TabsTrigger value="specifications">Specifications</TabsTrigger>
           <TabsTrigger value="reviews">
-            Reviews ({product.reviews.length})
+            Reviews
+            {/* ({product.reviews.length}) */}
           </TabsTrigger>
         </TabsList>
 
@@ -57,18 +58,28 @@ function ProductTab({ product }: ProductTabProps) {
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-border">
               <tbody className="divide-y divide-border">
-                {Object.entries(product.specifications).map(([key, value]) => (
+                {product.specifications.map((specification, index) => (
+                  <tr key={index}>
+                    <td className="py-4 px-6 font-medium">
+                      {specification.key}
+                    </td>
+                    <td className="py-4 px-6 text-muted-foreground">
+                      {specification.value}
+                    </td>
+                  </tr>
+                ))}
+                {/* {Object.entries(product.specifications).map(([key, value]) => (
                   <tr key={key}>
                     <td className="py-4 px-6 font-medium">{key}</td>
                     <td className="py-4 px-6 text-muted-foreground">{value}</td>
                   </tr>
-                ))}
+                ))} */}
               </tbody>
             </table>
           </div>
         </TabsContent>
 
-        <TabsContent value="reviews">
+        {/* <TabsContent value="reviews">
           <div className="space-y-8">
             <div className="flex items-center justify-between">
               <div>
@@ -157,7 +168,7 @@ function ProductTab({ product }: ProductTabProps) {
               onReviewSubmitted={handleReviewSubmitted}
             />
           </div>
-        </TabsContent>
+        </TabsContent> */}
       </Tabs>
     </div>
   );

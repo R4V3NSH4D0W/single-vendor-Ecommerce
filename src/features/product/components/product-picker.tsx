@@ -1,4 +1,5 @@
 "use client";
+
 import { Button } from "@/components/ui/button";
 import { addToCart } from "@/features/cart/state/cart-slice";
 import { Product } from "@/lib/types";
@@ -6,6 +7,7 @@ import { useAppDispatch } from "@/store/hooks";
 import { Heart, ShoppingBag } from "lucide-react";
 import React, { useState } from "react";
 import { toast } from "sonner";
+
 interface ProductPickerProps {
   product: Product;
 }
@@ -13,12 +15,14 @@ interface ProductPickerProps {
 function ProductPicker({ product }: ProductPickerProps) {
   const isColorAvailable = product.colors.length > 0;
   const isSizeAvailable = product.sizes.length > 0;
+  const isInStock = product.stock > 0;
 
   const dispatch = useAppDispatch();
 
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedColor, setSelectedColor] = useState("");
   const [quantity, setQuantity] = useState(1);
+
   const handleQuantityChange = (newQuantity: number) => {
     if (newQuantity > 0 && newQuantity <= 10) {
       setQuantity(newQuantity);
@@ -74,6 +78,7 @@ function ProductPicker({ product }: ProductPickerProps) {
           </div>
         </div>
       )}
+
       {isSizeAvailable && (
         <div className="mb-6">
           <div className="flex justify-between items-center mb-2">
@@ -99,6 +104,7 @@ function ProductPicker({ product }: ProductPickerProps) {
           </div>
         </div>
       )}
+
       <div className="flex flex-wrap items-center gap-4 mb-8">
         <div className="flex items-center border border-input rounded-md">
           <button
@@ -117,13 +123,14 @@ function ProductPicker({ product }: ProductPickerProps) {
             +
           </button>
         </div>
+
         <Button
           className="flex-1 py-6"
-          disabled={!product.inStock}
+          disabled={!isInStock}
           onClick={handleAddToCart}
         >
           <ShoppingBag className="mr-2 h-4 w-4" />
-          {product.inStock ? "Add to Cart" : "Out of Stock"}
+          {isInStock ? "Add to Cart" : "Out of Stock"}
         </Button>
 
         <Button variant="outline" size="icon" className="h-12 w-12">

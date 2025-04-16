@@ -40,7 +40,7 @@ export async function imageStorage(file: File | Buffer): Promise<SavedImage> {
     return {
       filename,
       path: filePath,
-      url: `/api/images/${filename}` // This will be handled by your API route
+      url: `http://localhost:3000/api/products/images/${filename}`
     };
   } catch (err) {
     console.error('Error saving image:', err);

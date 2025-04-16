@@ -18,7 +18,8 @@ export const useGetProduct = ({ id }: UseGetProductProps) => {
         throw new Error("Product not found");
       }
 
-      return (await response.json()) as Product;
+      const data = await response.json();
+      return data.formattedProduct as Product;
     },
     enabled: !!id,
   });

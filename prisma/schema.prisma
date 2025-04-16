@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
   output   = "../src/generated/prisma"
@@ -21,33 +15,44 @@ enum Role {
 }
 
 model User {
-  id        String    @id @default(cuid())
+  id        String   @id @default(cuid())
   name      String
-  email     String    @unique
+  email     String   @unique
   password  String
-  role      Role      @default(USER)
-  createdAt DateTime  @default(now())
-  products  Product[]
+  role      Role     @default(USER)
+  createdAt DateTime @default(now())
 }
 
 model Product {
-  id          String   @id @default(cuid())
-  name        String   @map("productName")
-  description String   @map("productDescription")
-  price       Float    @map("productPrice")
-  stock       Int      @map("productStock")
-  sku         String   @unique @map("productSKU")
-  variants    String[] @map("productVariants")
-  tags        String[] @map("productTags")
-  images      String[] @map("productImages")
-  category    Category @relation(fields: [categoryId], references: [id])
-  categoryId  String   @map("productCategory")
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  owner       User?    @relation(fields: [ownerId], references: [id])
-  ownerId     String?
+  id              String          @id @default(cuid())
+  name            String          @map("productName")
+  description     String          @map("productDescription")
+  price           Float           @map("productPrice")
+  stock           Int             @map("productStock")
+  sku             String          @unique @map("productSKU")
+  variants        String[]        @map("productVariants")
+  tags            String[]        @map("productTags")
+  images          String[]        @map("productImages")
+  sizes           String[]        @map("productSize")
+  features        String[]        @map("productFeatures")
+  careInstruction String?
+  category        Category        @relation(fields: [categoryId], references: [id])
+  categoryId      String          @map("productCategory")
+  specifications  Specification[]
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
 
   @@map("products")
+}
+
+model Specification {
+  id        String  @id @default(cuid())
+  key       String
+  value     String
+  product   Product @relation(fields: [productId], references: [id])
+  productId String
+
+  @@map("product_specifications")
 }
 
 model Category {

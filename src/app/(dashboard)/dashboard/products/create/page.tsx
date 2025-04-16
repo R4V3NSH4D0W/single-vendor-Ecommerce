@@ -26,17 +26,20 @@ import { Button } from "@/components/ui/button";
 import { ChipsInput } from "@/components/chip-input";
 import { FileUpload } from "@/features/dashboard/components/file-upload";
 import { useCreateProduct } from "@/features/dashboard/api/use-create-product";
+import { SpecificationFields } from "@/features/dashboard/components/specifications-fields";
 
 const categories = [
   { value: "electronics", label: "Electronics" },
   { value: "clothing", label: "Clothing" },
   { value: "home-appliances", label: "Home Appliances" },
   { value: "books", label: "Books" },
+  { value: "footwear", label: "Footwear" },
 ];
 
 function AddProduct() {
   const { mutate, error } = useCreateProduct();
   console.log(error);
+
   const form = useForm<z.infer<typeof ProductSchema>>({
     resolver: zodResolver(ProductSchema),
     defaultValues: {
@@ -49,14 +52,27 @@ function AddProduct() {
       productVariants: [],
       productImages: [],
       productTags: [],
+      productSize: [],
+      specifications: [
+        { key: "Material", value: "" },
+        {
+          key: "Weight",
+          value: "",
+        },
+        {
+          key: "Origin",
+          value: "",
+        },
+      ],
+      productFeatures: [],
+      careInstructions: "",
     },
   });
   type ProductFormValues = z.infer<typeof ProductSchema>;
 
   const onSubmit = async (values: ProductFormValues) => {
     const formData = new FormData();
-
-    // Append all fields
+    console.log(values);
     formData.append("productName", values.productName);
     formData.append("productDescription", values.productDescription);
     formData.append("productPrice", values.productPrice.toString());
@@ -65,8 +81,11 @@ function AddProduct() {
     formData.append("productSKU", values.productSKU);
     formData.append("productVariants", JSON.stringify(values.productVariants));
     formData.append("productTags", JSON.stringify(values.productTags));
+    formData.append("specifications", JSON.stringify(values.specifications));
+    formData.append("productSize", JSON.stringify(values.productSize));
+    formData.append("productFeature", JSON.stringify(values.productFeatures));
+    formData.append("careInstruction", values.careInstructions || "");
 
-    // Append image files
     values.productImages.forEach((file) => {
       if (file instanceof File) {
         formData.append("productImages", file);
@@ -74,7 +93,6 @@ function AddProduct() {
         formData.append("productImages", file);
       }
     });
-
     mutate(formData);
   };
 
@@ -205,13 +223,14 @@ function AddProduct() {
                     </FormItem>
                   )}
                 />
+
                 <div className="flex flex-col md:flex-row gap-4 mb-4">
                   <FormField
                     name="productVariants"
                     control={form.control}
                     render={({ field }) => (
                       <FormItem className=" w-full">
-                        <label className="block text-sm font-semibold">
+                        <label className="block text-sm font-semibold mt-4">
                           Variants
                         </label>
                         <FormControl>
@@ -246,6 +265,47 @@ function AddProduct() {
                     )}
                   />
                 </div>
+
+                <FormField
+                  name="productFeatures"
+                  control={form.control}
+                  render={({ field }) => (
+                    <FormItem className=" w-full">
+                      <label className="block text-sm font-semibold ">
+                        Product Features
+                      </label>
+                      <FormControl>
+                        <ChipsInput
+                          value={field.value}
+                          onChange={field.onChange}
+                          placeholder="Add Features (press Enter or comma)"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  name="careInstructions"
+                  control={form.control}
+                  render={({ field }) => (
+                    <FormItem>
+                      <label className="text-sm font-semibold mt-4">
+                        Care Instruction (optional)
+                      </label>
+                      <FormControl>
+                        <Input
+                          type="text"
+                          placeholder=" Care Instruction"
+                          required
+                          {...field}
+                          className="w-full mb-4"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
               </CardContent>
             </Card>
 
@@ -289,14 +349,47 @@ function AddProduct() {
                     </FormItem>
                   )}
                 />
+
+                <FormField
+                  name="productSize"
+                  control={form.control}
+                  render={({ field }) => (
+                    <FormItem className=" w-full">
+                      <label className="block text-sm font-semibold mt-4">
+                        Product size (optional)
+                      </label>
+                      <FormControl>
+                        <ChipsInput
+                          value={field.value || []}
+                          onChange={field.onChange}
+                          placeholder="Add Product Size (press Enter or comma)"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <SpecificationFields
+                  control={form.control}
+                  setValue={form.setValue}
+                />
                 <FormField
                   name="productImages"
                   control={form.control}
-                  render={() => <FileUpload form={form} name="productImages" />}
+                  render={() => (
+                    <>
+                      <label className="block text-sm font-semibold my-4">
+                        Upload
+                      </label>
+                      <FileUpload form={form} name="productImages" />
+                    </>
+                  )}
                 />
               </CardContent>
             </Card>
           </div>
+
           <div className="  flex lg:justify-end mt-6">
             <Button size="lg" className=" w-full lg:w-[120px]">
               <Save />
