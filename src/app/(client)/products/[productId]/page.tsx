@@ -2,6 +2,7 @@
 import FeaturedProduct from "@/components/home/featured-product";
 import { useGetProduct } from "@/features/product/api/use-get-product";
 import ProductPicker from "@/features/product/components/product-picker";
+import { ProductStatus } from "@/features/product/components/product-status";
 import ProductTab from "@/features/product/components/product-tabs";
 import ProductTag from "@/features/product/components/product-tags";
 import SwitchImage from "@/features/product/components/switch-image";
@@ -12,7 +13,6 @@ import React from "react";
 function ProductDetailPage() {
   const id = useProjectId();
   const { data: product, isLoading } = useGetProduct({ id });
-  console.log(product);
   if (isLoading) return <div>Loading...</div>;
   if (!product) return <div>Product not found</div>;
 
@@ -53,6 +53,7 @@ function ProductDetailPage() {
               ${product.price.toFixed(2)}
             </p>
 
+            <ProductStatus stock={product.stock} />
             <p className="text-muted-foreground mb-4">{product.description}</p>
             <ProductTag tags={product.tags} />
             <ProductPicker product={product} />

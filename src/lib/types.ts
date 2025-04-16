@@ -34,4 +34,5 @@ export interface Review {
     reviews?: Review[];
     createdAt: string;
     updatedAt: string;
+    isFeatured:boolean;
   }

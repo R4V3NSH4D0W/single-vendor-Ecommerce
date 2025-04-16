@@ -25,6 +25,10 @@ app.post('/upload', async (c) => {
       formData.get('specifications') as string
     ) as { key: string; value: string }[];
 
+    const isFeaturedRaw = formData.get("isFeatured") as string | null;
+    const isFeatured = isFeaturedRaw === "true" || isFeaturedRaw === "on";
+
+
     const productData = {
       name: formData.get('productName') as string,
       description: formData.get('productDescription') as string,
@@ -37,6 +41,7 @@ app.post('/upload', async (c) => {
       features:JSON.parse(formData.get('productFeature') as string),
       careInstruction: formData.get("careInstruction") as string,
       images: uploadedImageUrls,
+      isFeatured: isFeatured,
       category: {
         connect: {
           value: formData.get('productCategory') as string
@@ -74,6 +79,7 @@ app.post('/upload', async (c) => {
           productTags: product.tags,
           productImages: product.images,
           productSize: product.sizes,
+          isFeatured: product.isFeatured,
           productCategory: product.category.value,
           productSpecifications: product.specifications,
           createdAt: product.createdAt,

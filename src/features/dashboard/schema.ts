@@ -21,6 +21,7 @@ export const ProductSchema = z.object({
   .min(1, "At least one specification required"),
   productFeatures: z.array(z.string()).min(1, "At least one feature is required"),
   careInstructions: z.string().min(1, "Care instructions are required").optional(),
+  isFeatured:z.boolean().optional(),
 
 });
 

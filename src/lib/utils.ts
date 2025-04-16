@@ -13,3 +13,20 @@ export function toTitleCase(input: string): string {
     .map(word => word[0].toUpperCase() + word.slice(1))
     .join(' ');
 }
+
+export const sortOptions = [
+  { value: "newest", label: "Newest" },
+  { value: "featured", label: "Featured" },
+  { value: "price-asc", label: "Price: Low to High" },
+  { value: "price-desc", label: "Price: High to Low" },
+] as const;
+
+export type SortOptionValue = typeof sortOptions[number]['value'];
+
+export  const categories = [
+  { value: "electronics", label: "Electronics" },
+  { value: "clothing", label: "Clothing" },
+  { value: "home-appliances", label: "Home Appliances" },
+  { value: "books", label: "Books" },
+  { value: "footwear", label: "Footwear" },
+];

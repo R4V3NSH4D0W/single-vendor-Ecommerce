@@ -13,7 +13,7 @@ import { selectTotalItems } from "@/features/cart/state/cart-slice";
 
 const NAV_LINKS = [
   { id: 1, name: "Home", path: "/" },
-  { id: 2, name: "Shop", path: "/products" },
+  { id: 2, name: "Shop", path: "/products?sort=newest" },
   { id: 3, name: "Collection", path: "/collection" },
   { id: 4, name: "About", path: "/about" },
   { id: 6, name: "Contact", path: "/contact" },

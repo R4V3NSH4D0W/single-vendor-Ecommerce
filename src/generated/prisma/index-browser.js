@@ -141,7 +141,8 @@ exports.Prisma.ProductScalarFieldEnum = {
   careInstruction: 'careInstruction',
   categoryId: 'categoryId',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  isFeatured: 'isFeatured'
 };
 
 exports.Prisma.SpecificationScalarFieldEnum = {

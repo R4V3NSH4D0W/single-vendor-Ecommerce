@@ -4,7 +4,20 @@ import { ChevronDown, ChevronUp, Funnel } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
-const categories = ["All", "Clothing", "Accessories", "Home", "Beauty"];
+const categories = [
+  "All",
+  "Electronics",
+  "Clothing",
+  "Home Appliances",
+  "Books",
+  "Footwear",
+];
+const priceRanges = [
+  { label: "Under $50", value: "under-50", min: 0, max: 49 },
+  { label: "$50 - $100", value: "50-100", min: 50, max: 100 },
+  { label: "$100 - $200", value: "100-200", min: 100, max: 200 },
+  { label: "$200+", value: "200+", min: 200, max: null },
+];
 
 function ProductSidebar() {
   const router = useRouter();
@@ -12,6 +25,7 @@ function ProductSidebar() {
   const categoryParam = searchParams.get("category");
   const [showFilter, setShowFilter] = useState(false);
   const [activeCategory, setActiveCategory] = useState("All");
+  const [selectedPrice, setSelectedPrice] = useState<string | null>(null);
 
   useEffect(() => {
     if (categoryParam && categories.includes(categoryParam)) {
@@ -29,6 +43,20 @@ function ProductSidebar() {
     } else {
       params.set("category", category);
     }
+    router.push(`/products?${params.toString()}`);
+  };
+
+  const handlePriceChange = (value: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+
+    if (selectedPrice === value) {
+      setSelectedPrice(null);
+      params.delete("price");
+    } else {
+      setSelectedPrice(value);
+      params.set("price", value);
+    }
+
     router.push(`/products?${params.toString()}`);
   };
 
@@ -75,26 +103,19 @@ function ProductSidebar() {
           <div>
             <h3 className="font-semibold mb-4">Price Range</h3>
             <div className="space-y-2">
-              <label className="flex items-center">
-                <input type="checkbox" className="mr-2" />
-                <span className="text-sm text-muted-foreground">Under $50</span>
-              </label>
-              <label className="flex items-center">
-                <input type="checkbox" className="mr-2" />
-                <span className="text-sm text-muted-foreground">
-                  $50 - $100
-                </span>
-              </label>
-              <label className="flex items-center">
-                <input type="checkbox" className="mr-2" />
-                <span className="text-sm text-muted-foreground">
-                  $100 - $200
-                </span>
-              </label>
-              <label className="flex items-center">
-                <input type="checkbox" className="mr-2" />
-                <span className="text-sm text-muted-foreground">$200+</span>
-              </label>
+              {priceRanges.map((range) => (
+                <label key={range.value} className="flex items-center">
+                  <input
+                    type="checkbox"
+                    className="mr-2"
+                    checked={selectedPrice === range.value}
+                    onChange={() => handlePriceChange(range.value)}
+                  />
+                  <span className="text-sm text-muted-foreground">
+                    {range.label}
+                  </span>
+                </label>
+              ))}
             </div>
           </div>
         </div>

@@ -66,6 +66,7 @@ function AddProduct() {
       ],
       productFeatures: [],
       careInstructions: "",
+      isFeatured: false,
     },
   });
   type ProductFormValues = z.infer<typeof ProductSchema>;
@@ -85,6 +86,7 @@ function AddProduct() {
     formData.append("productSize", JSON.stringify(values.productSize));
     formData.append("productFeature", JSON.stringify(values.productFeatures));
     formData.append("careInstruction", values.careInstructions || "");
+    formData.append("isFeatured", values.isFeatured ? "true" : "false");
 
     values.productImages.forEach((file) => {
       if (file instanceof File) {
@@ -202,6 +204,7 @@ function AddProduct() {
                     )}
                   />
                 </div>
+
                 <FormField
                   name="productSKU"
                   control={form.control}
@@ -302,6 +305,26 @@ function AddProduct() {
                           className="w-full mb-4"
                         />
                       </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  name="isFeatured"
+                  control={form.control}
+                  render={({ field }) => (
+                    <FormItem className="flex items-center gap-2 mt-4">
+                      <FormControl>
+                        <input
+                          type="checkbox"
+                          checked={field.value}
+                          onChange={field.onChange}
+                        />
+                      </FormControl>
+                      <label className="text-sm font-semibold inline-block">
+                        Mark as Featured Product (optional)
+                      </label>
                       <FormMessage />
                     </FormItem>
                   )}

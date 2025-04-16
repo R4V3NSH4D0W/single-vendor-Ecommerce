@@ -1,22 +1,25 @@
 import { useQuery } from "@tanstack/react-query";
-
 import { client } from "@/lib/rpc";
-
-
-export const useGetProducts= ()=>{
-    const query =useQuery({
-        queryKey:["products"],
-        queryFn:async()=>{
-            const response = await client.api.products.$get();
-            if(!response.ok){
-                return null;
-            }
-
-            const jsonResponse = await response.json();
-
-            return jsonResponse;
-        }
-
-    })
-    return query;
+interface ProductQueryParams {
+  category?: string;
+  sort?: string;
+  price?:string;
+  page?:string;
 }
+
+export const useGetProducts = (params?: ProductQueryParams) => {
+  return useQuery({
+    queryKey: ["products", params],
+    queryFn: async () => {
+      const response = await client.api.products.$get({
+        query: params,
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch products");
+      }
+
+      return response.json();
+    },
+  });
+};

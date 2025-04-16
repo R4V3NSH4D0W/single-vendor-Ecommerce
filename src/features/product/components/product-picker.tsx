@@ -24,7 +24,7 @@ function ProductPicker({ product }: ProductPickerProps) {
   const [quantity, setQuantity] = useState(1);
 
   const handleQuantityChange = (newQuantity: number) => {
-    if (newQuantity > 0 && newQuantity <= 10) {
+    if (newQuantity > 0 && newQuantity <= product.stock) {
       setQuantity(newQuantity);
     }
   };
@@ -57,16 +57,13 @@ function ProductPicker({ product }: ProductPickerProps) {
         <div className="mb-6">
           <div className="flex justify-between items-center mb-2">
             <h3 className="font-medium">Color</h3>
-            <span className="text-sm text-muted-foreground">
-              {selectedColor ? selectedColor : "Select a color"}
-            </span>
           </div>
           <div className="flex gap-3">
             {product.colors.map((color) => (
               <button
                 key={color}
                 onClick={() => setSelectedColor(color)}
-                className={`px-4 py-2 border rounded-md ${
+                className={`px-4 py-2 border rounded-md cursor-pointer ${
                   selectedColor === color
                     ? "border-primary bg-primary/10 text-primary"
                     : "border-border text-muted-foreground"
@@ -83,16 +80,13 @@ function ProductPicker({ product }: ProductPickerProps) {
         <div className="mb-6">
           <div className="flex justify-between items-center mb-2">
             <h3 className="font-medium">Size</h3>
-            <span className="text-sm text-muted-foreground">
-              {selectedSize ? selectedSize : "Select a size"}
-            </span>
           </div>
           <div className="flex gap-3 flex-wrap">
             {product.sizes.map((size) => (
               <button
                 key={size}
                 onClick={() => setSelectedSize(size)}
-                className={`w-12 h-12 flex items-center justify-center border rounded-md ${
+                className={`w-12 h-12 flex items-center justify-center border rounded-md cursor-pointer ${
                   selectedSize === size
                     ? "border-primary bg-primary/10 text-primary"
                     : "border-border text-muted-foreground"
@@ -108,7 +102,7 @@ function ProductPicker({ product }: ProductPickerProps) {
       <div className="flex flex-wrap items-center gap-4 mb-8">
         <div className="flex items-center border border-input rounded-md">
           <button
-            className="px-3 py-2 text-lg"
+            className="px-3 py-2 text-lg cursor-pointer"
             onClick={() => handleQuantityChange(quantity - 1)}
             disabled={quantity <= 1}
           >
@@ -116,16 +110,16 @@ function ProductPicker({ product }: ProductPickerProps) {
           </button>
           <span className="w-12 text-center">{quantity}</span>
           <button
-            className="px-3 py-2 text-lg"
+            className="px-3 py-2 text-lg cursor-pointer"
             onClick={() => handleQuantityChange(quantity + 1)}
-            disabled={quantity >= 10}
+            disabled={quantity >= product.stock}
           >
             +
           </button>
         </div>
 
         <Button
-          className="flex-1 py-6"
+          className="flex-1 py-6 cursor-pointer"
           disabled={!isInStock}
           onClick={handleAddToCart}
         >

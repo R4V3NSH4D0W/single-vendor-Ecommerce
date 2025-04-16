@@ -2262,6 +2262,7 @@ export namespace Prisma {
     categoryId: string | null
     createdAt: Date | null
     updatedAt: Date | null
+    isFeatured: boolean | null
   }
 
   export type ProductMaxAggregateOutputType = {
@@ -2275,6 +2276,7 @@ export namespace Prisma {
     categoryId: string | null
     createdAt: Date | null
     updatedAt: Date | null
+    isFeatured: boolean | null
   }
 
   export type ProductCountAggregateOutputType = {
@@ -2293,6 +2295,7 @@ export namespace Prisma {
     categoryId: number
     createdAt: number
     updatedAt: number
+    isFeatured: number
     _all: number
   }
 
@@ -2318,6 +2321,7 @@ export namespace Prisma {
     categoryId?: true
     createdAt?: true
     updatedAt?: true
+    isFeatured?: true
   }
 
   export type ProductMaxAggregateInputType = {
@@ -2331,6 +2335,7 @@ export namespace Prisma {
     categoryId?: true
     createdAt?: true
     updatedAt?: true
+    isFeatured?: true
   }
 
   export type ProductCountAggregateInputType = {
@@ -2349,6 +2354,7 @@ export namespace Prisma {
     categoryId?: true
     createdAt?: true
     updatedAt?: true
+    isFeatured?: true
     _all?: true
   }
 
@@ -2454,6 +2460,7 @@ export namespace Prisma {
     categoryId: string
     createdAt: Date
     updatedAt: Date
+    isFeatured: boolean
     _count: ProductCountAggregateOutputType | null
     _avg: ProductAvgAggregateOutputType | null
     _sum: ProductSumAggregateOutputType | null
@@ -2491,6 +2498,7 @@ export namespace Prisma {
     categoryId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    isFeatured?: boolean
     category?: boolean | CategoryDefaultArgs<ExtArgs>
     specifications?: boolean | Product$specificationsArgs<ExtArgs>
     _count?: boolean | ProductCountOutputTypeDefaultArgs<ExtArgs>
@@ -2512,6 +2520,7 @@ export namespace Prisma {
     categoryId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    isFeatured?: boolean
     category?: boolean | CategoryDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["product"]>
 
@@ -2531,6 +2540,7 @@ export namespace Prisma {
     categoryId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    isFeatured?: boolean
     category?: boolean | CategoryDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["product"]>
 
@@ -2550,9 +2560,10 @@ export namespace Prisma {
     categoryId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    isFeatured?: boolean
   }
 
-  export type ProductOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "price" | "stock" | "sku" | "variants" | "tags" | "images" | "sizes" | "features" | "careInstruction" | "categoryId" | "createdAt" | "updatedAt", ExtArgs["result"]["product"]>
+  export type ProductOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "price" | "stock" | "sku" | "variants" | "tags" | "images" | "sizes" | "features" | "careInstruction" | "categoryId" | "createdAt" | "updatedAt" | "isFeatured", ExtArgs["result"]["product"]>
   export type ProductInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     category?: boolean | CategoryDefaultArgs<ExtArgs>
     specifications?: boolean | Product$specificationsArgs<ExtArgs>
@@ -2587,6 +2598,7 @@ export namespace Prisma {
       categoryId: string
       createdAt: Date
       updatedAt: Date
+      isFeatured: boolean
     }, ExtArgs["result"]["product"]>
     composites: {}
   }
@@ -3027,6 +3039,7 @@ export namespace Prisma {
     readonly categoryId: FieldRef<"Product", 'String'>
     readonly createdAt: FieldRef<"Product", 'DateTime'>
     readonly updatedAt: FieldRef<"Product", 'DateTime'>
+    readonly isFeatured: FieldRef<"Product", 'Boolean'>
   }
     
 
@@ -5608,7 +5621,8 @@ export namespace Prisma {
     careInstruction: 'careInstruction',
     categoryId: 'categoryId',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    isFeatured: 'isFeatured'
   };
 
   export type ProductScalarFieldEnum = (typeof ProductScalarFieldEnum)[keyof typeof ProductScalarFieldEnum]
@@ -5731,6 +5745,13 @@ export namespace Prisma {
    */
   export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
     
+
+
+  /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
   /**
    * Deep Input Types
    */
@@ -5812,6 +5833,7 @@ export namespace Prisma {
     categoryId?: StringFilter<"Product"> | string
     createdAt?: DateTimeFilter<"Product"> | Date | string
     updatedAt?: DateTimeFilter<"Product"> | Date | string
+    isFeatured?: BoolFilter<"Product"> | boolean
     category?: XOR<CategoryScalarRelationFilter, CategoryWhereInput>
     specifications?: SpecificationListRelationFilter
   }
@@ -5832,6 +5854,7 @@ export namespace Prisma {
     categoryId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    isFeatured?: SortOrder
     category?: CategoryOrderByWithRelationInput
     specifications?: SpecificationOrderByRelationAggregateInput
   }
@@ -5855,6 +5878,7 @@ export namespace Prisma {
     categoryId?: StringFilter<"Product"> | string
     createdAt?: DateTimeFilter<"Product"> | Date | string
     updatedAt?: DateTimeFilter<"Product"> | Date | string
+    isFeatured?: BoolFilter<"Product"> | boolean
     category?: XOR<CategoryScalarRelationFilter, CategoryWhereInput>
     specifications?: SpecificationListRelationFilter
   }, "id" | "sku">
@@ -5875,6 +5899,7 @@ export namespace Prisma {
     categoryId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    isFeatured?: SortOrder
     _count?: ProductCountOrderByAggregateInput
     _avg?: ProductAvgOrderByAggregateInput
     _max?: ProductMaxOrderByAggregateInput
@@ -5901,6 +5926,7 @@ export namespace Prisma {
     categoryId?: StringWithAggregatesFilter<"Product"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Product"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Product"> | Date | string
+    isFeatured?: BoolWithAggregatesFilter<"Product"> | boolean
   }
 
   export type SpecificationWhereInput = {
@@ -6081,6 +6107,7 @@ export namespace Prisma {
     careInstruction?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    isFeatured?: boolean
     category: CategoryCreateNestedOneWithoutProductsInput
     specifications?: SpecificationCreateNestedManyWithoutProductInput
   }
@@ -6101,6 +6128,7 @@ export namespace Prisma {
     categoryId: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    isFeatured?: boolean
     specifications?: SpecificationUncheckedCreateNestedManyWithoutProductInput
   }
 
@@ -6119,6 +6147,7 @@ export namespace Prisma {
     careInstruction?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isFeatured?: BoolFieldUpdateOperationsInput | boolean
     category?: CategoryUpdateOneRequiredWithoutProductsNestedInput
     specifications?: SpecificationUpdateManyWithoutProductNestedInput
   }
@@ -6139,6 +6168,7 @@ export namespace Prisma {
     categoryId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isFeatured?: BoolFieldUpdateOperationsInput | boolean
     specifications?: SpecificationUncheckedUpdateManyWithoutProductNestedInput
   }
 
@@ -6158,6 +6188,7 @@ export namespace Prisma {
     categoryId: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    isFeatured?: boolean
   }
 
   export type ProductUpdateManyMutationInput = {
@@ -6175,6 +6206,7 @@ export namespace Prisma {
     careInstruction?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isFeatured?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type ProductUncheckedUpdateManyInput = {
@@ -6193,6 +6225,7 @@ export namespace Prisma {
     categoryId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isFeatured?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type SpecificationCreateInput = {
@@ -6443,6 +6476,11 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type CategoryScalarRelationFilter = {
     is?: CategoryWhereInput
     isNot?: CategoryWhereInput
@@ -6479,6 +6517,7 @@ export namespace Prisma {
     categoryId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    isFeatured?: SortOrder
   }
 
   export type ProductAvgOrderByAggregateInput = {
@@ -6497,6 +6536,7 @@ export namespace Prisma {
     categoryId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    isFeatured?: SortOrder
   }
 
   export type ProductMinOrderByAggregateInput = {
@@ -6510,6 +6550,7 @@ export namespace Prisma {
     categoryId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    isFeatured?: SortOrder
   }
 
   export type ProductSumOrderByAggregateInput = {
@@ -6565,6 +6606,14 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedStringNullableFilter<$PrismaModel>
     _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type ProductScalarRelationFilter = {
@@ -6719,6 +6768,10 @@ export namespace Prisma {
 
   export type NullableStringFieldUpdateOperationsInput = {
     set?: string | null
+  }
+
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
   }
 
   export type CategoryUpdateOneRequiredWithoutProductsNestedInput = {
@@ -6922,6 +6975,11 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | FloatFieldRefInput<$PrismaModel>
     in?: number[] | ListFloatFieldRefInput<$PrismaModel>
@@ -6980,6 +7038,14 @@ export namespace Prisma {
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type CategoryCreateWithoutProductsInput = {
@@ -7089,6 +7155,7 @@ export namespace Prisma {
     careInstruction?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    isFeatured?: boolean
     category: CategoryCreateNestedOneWithoutProductsInput
   }
 
@@ -7108,6 +7175,7 @@ export namespace Prisma {
     categoryId: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    isFeatured?: boolean
   }
 
   export type ProductCreateOrConnectWithoutSpecificationsInput = {
@@ -7141,6 +7209,7 @@ export namespace Prisma {
     careInstruction?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isFeatured?: BoolFieldUpdateOperationsInput | boolean
     category?: CategoryUpdateOneRequiredWithoutProductsNestedInput
   }
 
@@ -7160,6 +7229,7 @@ export namespace Prisma {
     categoryId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isFeatured?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type ProductCreateWithoutCategoryInput = {
@@ -7177,6 +7247,7 @@ export namespace Prisma {
     careInstruction?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    isFeatured?: boolean
     specifications?: SpecificationCreateNestedManyWithoutProductInput
   }
 
@@ -7195,6 +7266,7 @@ export namespace Prisma {
     careInstruction?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    isFeatured?: boolean
     specifications?: SpecificationUncheckedCreateNestedManyWithoutProductInput
   }
 
@@ -7243,6 +7315,7 @@ export namespace Prisma {
     categoryId?: StringFilter<"Product"> | string
     createdAt?: DateTimeFilter<"Product"> | Date | string
     updatedAt?: DateTimeFilter<"Product"> | Date | string
+    isFeatured?: BoolFilter<"Product"> | boolean
   }
 
   export type SpecificationCreateManyProductInput = {
@@ -7284,6 +7357,7 @@ export namespace Prisma {
     careInstruction?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    isFeatured?: boolean
   }
 
   export type ProductUpdateWithoutCategoryInput = {
@@ -7301,6 +7375,7 @@ export namespace Prisma {
     careInstruction?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isFeatured?: BoolFieldUpdateOperationsInput | boolean
     specifications?: SpecificationUpdateManyWithoutProductNestedInput
   }
 
@@ -7319,6 +7394,7 @@ export namespace Prisma {
     careInstruction?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isFeatured?: BoolFieldUpdateOperationsInput | boolean
     specifications?: SpecificationUncheckedUpdateManyWithoutProductNestedInput
   }
 
@@ -7337,6 +7413,7 @@ export namespace Prisma {
     careInstruction?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isFeatured?: BoolFieldUpdateOperationsInput | boolean
   }
 
 

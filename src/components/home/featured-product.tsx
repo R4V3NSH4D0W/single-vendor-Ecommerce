@@ -7,9 +7,9 @@ import ProductCard from "../product/product-card";
 import { useGetProducts } from "@/features/product/api/use-get-products";
 
 const FeaturedProduct = () => {
-  const { data: products, isLoading } = useGetProducts();
-  console.log("products", products);
-
+  const { data: products, isLoading } = useGetProducts({
+    sort: "featured",
+  });
   if (isLoading) {
     return <div className="container mx-auto py-16">Loading...</div>;
   }
@@ -29,13 +29,16 @@ const FeaturedProduct = () => {
             </p>
           </div>
           <Button variant="ghost" asChild className="mt-4 md:mt-0">
-            <Link href="/products" className="flex items-center gap-2">
+            <Link
+              href="/products?sort=featured"
+              className="flex items-center gap-2"
+            >
               View All Products <ArrowRight className="h-4 w-4" />
             </Link>
           </Button>
         </div>
         <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {products?.slice(0, 4).map((product) => (
+          {products?.data.slice(0, 4).map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
         </div>
