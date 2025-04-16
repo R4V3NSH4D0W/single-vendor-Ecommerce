@@ -18,8 +18,10 @@ import { z } from "zod";
 import Link from "next/link";
 import { LoginSchema } from "../schema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useLogin } from "../api/use-login";
 
 function SignInCard() {
+  const { mutate, isPending } = useLogin();
   const [showPassword, setShowPassword] = useState(false);
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
@@ -29,7 +31,7 @@ function SignInCard() {
     },
   });
   const onSubmit = (value: z.infer<typeof LoginSchema>) => {
-    console.log("Form submitted:", value);
+    mutate({ json: value });
   };
 
   return (
@@ -106,7 +108,7 @@ function SignInCard() {
                 Forgot password?
               </a>
             </div>
-            <Button size="lg" className=" w-full">
+            <Button size="lg" className=" w-full" disabled={isPending}>
               Login
             </Button>
           </form>
