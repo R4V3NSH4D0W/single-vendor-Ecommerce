@@ -7,16 +7,14 @@ export interface Review {
     verified: boolean;
   }
   
- export interface ProductSpecifications {
-    Material: string;
-    Weight: string;
-    Care: string;
-    Origin: string;
-    Fit: string;
-  }
+  export type ProductSpecification = {
+    key: string;
+    value: string;
+  };
+  
   
   export interface Product {
-    id: number;
+    id: string;
     name: string;
     price: number;
     description: string;
@@ -24,14 +22,17 @@ export interface Review {
     images: string[];
     colors: string[];
     sizes: string[];
-    inStock: boolean;
-    rating: number;
-    reviewCount: number;
+    tags: string[];
+    stock: number;
+    categoryLabel: string;
+    rating?: number;
+    reviewCount?: number;
     category: string;
     sku: string;
-    material: string;
     care: string;
-    specifications: ProductSpecifications;
-    reviews: Review[];
+    specifications: ProductSpecification[];
+    reviews?: Review[];
+    createdAt: string;
+    updatedAt: string;
+    isFeatured:boolean;
   }
-  

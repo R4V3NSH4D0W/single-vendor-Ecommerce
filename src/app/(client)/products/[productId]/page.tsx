@@ -1,77 +1,21 @@
+"use client";
 import FeaturedProduct from "@/components/home/featured-product";
+import { useGetProduct } from "@/features/product/api/use-get-product";
 import ProductPicker from "@/features/product/components/product-picker";
+import { ProductStatus } from "@/features/product/components/product-status";
 import ProductTab from "@/features/product/components/product-tabs";
+import ProductTag from "@/features/product/components/product-tags";
 import SwitchImage from "@/features/product/components/switch-image";
+import { useProjectId } from "@/features/product/hooks/use-product-id";
 import { RotateCw, Truck } from "lucide-react";
 import React from "react";
 
-const productData = {
-  id: 1,
-  name: "Classic Cotton T-Shirt",
-  price: 29.99,
-  description:
-    "Our signature t-shirt made from premium cotton. Soft, breathable, and designed to last with a comfortable fit for everyday wear.",
-  features: [
-    "Premium organic cotton",
-    "Ethically manufactured",
-    "Pre-shrunk fabric",
-    "Tailored fit",
-    "Available in multiple colors and sizes",
-  ],
-  images: [
-    "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?q=80&w=800",
-    "https://images.unsplash.com/photo-1516726817505-f5ed825624d8?q=80&w=800",
-    "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=800",
-  ],
-  colors: ["White", "Black", "Navy"],
-  sizes: ["S", "M", "L", "XL"],
-  inStock: true,
-  rating: 4.5,
-  reviewCount: 128,
-  category: "Clothing",
-  sku: "CT-001",
-  material: "100% Organic Cotton",
-  care: "Machine wash cold, tumble dry low",
-  specifications: {
-    Material: "100% Organic Cotton",
-    Weight: "180g/m²",
-    Care: "Machine wash cold, tumble dry low",
-    Origin: "Made in Portugal",
-    Fit: "Regular fit, true to size",
-  },
-  reviews: [
-    {
-      id: 1,
-      name: "Sarah M.",
-      rating: 5,
-      date: "March 15, 2025",
-      comment:
-        "This is my go-to t-shirt. The fabric is soft yet durable, and the fit is perfect. I've bought it in multiple colors!",
-      verified: true,
-    },
-    {
-      id: 2,
-      name: "James K.",
-      rating: 4,
-      date: "February 28, 2025",
-      comment:
-        "Great quality and comfortable fit. The only reason I'm giving 4 stars is because the white is a bit see-through.",
-      verified: true,
-    },
-    {
-      id: 3,
-      name: "Elena P.",
-      rating: 5,
-      date: "January 12, 2025",
-      comment:
-        "Excellent t-shirt that has held up well after multiple washes. The color hasn't faded at all.",
-      verified: false,
-    },
-  ],
-};
-
 function ProductDetailPage() {
-  const product = productData;
+  const id = useProjectId();
+  const { data: product, isLoading } = useGetProduct({ id });
+  if (isLoading) return <div>Loading...</div>;
+  if (!product) return <div>Product not found</div>;
+
   return (
     <>
       <div className=" container mx-auto px-4 py-12">
@@ -82,7 +26,7 @@ function ProductDetailPage() {
               {product.category}
             </p>
             <h1 className=" text-3xl font-bold mb-3">{product.name}</h1>
-            <div className="flex items-center mb-4">
+            {/* <div className="flex items-center mb-4">
               <div className="flex items-center">
                 {[...Array(5)].map((_, i) => (
                   <svg
@@ -104,12 +48,14 @@ function ProductDetailPage() {
               <p className="ml-2 text-sm text-muted-foreground">
                 {product.rating} ({product.reviewCount} reviews)
               </p>
-            </div>
+            </div> */}
             <p className="text-2xl font-bold mb-4">
               ${product.price.toFixed(2)}
             </p>
 
-            <p className="text-muted-foreground mb-8">{product.description}</p>
+            <ProductStatus stock={product.stock} />
+            <p className="text-muted-foreground mb-4">{product.description}</p>
+            <ProductTag tags={product.tags} />
             <ProductPicker product={product} />
             <div className="space-y-4">
               <div className="flex items-start">

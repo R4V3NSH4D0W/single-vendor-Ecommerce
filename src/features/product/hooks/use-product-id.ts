@@ -1,5 +1,5 @@
-// import { useParams } from "next/navigation";
-// export const useProjectId=()=>{
-//     const params= useParams();
-//     return params.productId as string;
-// }
+import { useParams } from "next/navigation";
+export const useProjectId=()=>{
+    const params= useParams();
+    return params.productId as string;
+}

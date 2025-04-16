@@ -8,10 +8,12 @@ import ThemeToggle from "./toogle-theme";
 import CartDrawer from "./cart/cart-drawer";
 import { useCurrent } from "@/features/auth/api/use-current";
 import { UserButton } from "@/features/auth/components/user-button";
+import { useSelector } from "react-redux";
+import { selectTotalItems } from "@/features/cart/state/cart-slice";
 
 const NAV_LINKS = [
   { id: 1, name: "Home", path: "/" },
-  { id: 2, name: "Shop", path: "/products" },
+  { id: 2, name: "Shop", path: "/products?sort=newest" },
   { id: 3, name: "Collection", path: "/collection" },
   { id: 4, name: "About", path: "/about" },
   { id: 6, name: "Contact", path: "/contact" },
@@ -21,6 +23,8 @@ function Navbar() {
   const isMobile = useIsMobile();
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const totalItems = useSelector(selectTotalItems);
+
   const { data: user } = useCurrent();
   return (
     <nav className="sticky top-0 z-50 bg-background/80 backdrop-blur-lg border-b">
@@ -73,9 +77,11 @@ function Navbar() {
               className="relative"
             >
               <ShoppingBag className="h-5 w-5" />
-              <span className="absolute -top-1 -right-1 bg-primary text-primary-foreground rounded-full h-5 w-5 flex items-center justify-center text-xs">
-                3
-              </span>
+              {totalItems > 0 && (
+                <span className="absolute -top-1 -right-1 bg-primary text-primary-foreground rounded-full h-5 w-5 flex items-center justify-center text-xs">
+                  {totalItems}
+                </span>
+              )}
             </Button>
             {isMobile && (
               <Button

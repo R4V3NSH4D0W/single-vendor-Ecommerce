@@ -4,15 +4,15 @@ import Image from "next/image";
 
 interface CartItemProps {
   item: {
-    id: number;
+    id: string;
     name: string;
     price: number;
     quantity: number;
     image: string;
     options?: Record<string, string>;
   };
-  onUpdateQuantity: (id: number, quantity: number) => void;
-  onRemove: (id: number) => void;
+  onUpdateQuantity: (id: string, quantity: number) => void;
+  onRemove: (id: string) => void;
 }
 
 const CartItem = ({ item, onUpdateQuantity, onRemove }: CartItemProps) => {

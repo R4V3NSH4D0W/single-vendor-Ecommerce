@@ -4,11 +4,11 @@ const nextConfig: NextConfig = {
   webpack: (config) => {
     config.externals.push({
       '@prisma/client': '@prisma/client',
-    })
-    return config
+    });
+    return config;
   },
   images: {
-    domains: ["images.unsplash.com"],
+    domains: ["images.unsplash.com", "localhost"],
   },
 };
 

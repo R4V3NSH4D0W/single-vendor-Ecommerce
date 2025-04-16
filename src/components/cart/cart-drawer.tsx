@@ -1,5 +1,6 @@
 "use client";
-import React, { useState } from "react";
+
+import React from "react";
 import { ShoppingBag } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -9,53 +10,28 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import CartItem from "./cart-item";
+import { useAppSelector, useAppDispatch } from "@/store/hooks";
+import {
+  removeFromCart,
+  updateQuantity,
+} from "@/features/cart/state/cart-slice";
+import Link from "next/link";
 
 interface CartDrawerProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-const initialCartItems = [
-  {
-    id: 1,
-    name: "Minimalist Leather Wallet",
-    price: 79.99,
-    quantity: 1,
-    image:
-      "https://images.unsplash.com/photo-1627123424574-724758594e93?q=80&w=100",
-    options: { color: "Brown", size: "" },
-  },
-  {
-    id: 2,
-    name: "Classic Cotton T-Shirt",
-    price: 29.99,
-    quantity: 2,
-    image:
-      "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?q=80&w=100",
-    options: { size: "M", color: "White" },
-  },
-  {
-    id: 3,
-    name: "Ceramic Coffee Mug",
-    price: 24.99,
-    quantity: 1,
-    image:
-      "https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?q=80&w=100",
-    options: { color: "Beige", size: "" },
-  },
-];
-
 const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
-  const [cartItems, setCartItems] = useState(initialCartItems);
+  const cartItems = useAppSelector((state) => state.cart.items);
+  const dispatch = useAppDispatch();
 
-  const handleUpdateQuantity = (id: number, quantity: number) => {
-    setCartItems((prev) =>
-      prev.map((item) => (item.id === id ? { ...item, quantity } : item))
-    );
+  const handleUpdateQuantity = (id: string, quantity: number) => {
+    dispatch(updateQuantity({ id, quantity }));
   };
 
-  const handleRemoveItem = (id: number) => {
-    setCartItems((prev) => prev.filter((item) => item.id !== id));
+  const handleRemoveItem = (id: string) => {
+    dispatch(removeFromCart(id));
   };
 
   const subtotal = cartItems.reduce(
@@ -120,11 +96,13 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
           <div className="flex flex-col items-center justify-center flex-1 py-12">
             <ShoppingBag className="h-16 w-16 text-muted-foreground mb-4" />
             <h3 className="text-xl font-semibold mb-2">Your cart is empty</h3>
-            <p className="text-muted-foreground mb-6">
+            <p className="text-muted-foreground mb-6 text-center pl-2 pr-2">
               Looks like you haven&apos;t added any products to your cart yet.
             </p>
             <Button asChild>
-              <a href="/products">Start Shopping</a>
+              <Link href="/products" onClick={onClose}>
+                Start Shopping
+              </Link>
             </Button>
           </div>
         )}

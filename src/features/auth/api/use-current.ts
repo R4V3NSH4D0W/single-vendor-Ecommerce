@@ -1,13 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { clinet } from "@/lib/rpc";
+import { client } from "@/lib/rpc";
 
 
 export const useCurrent= ()=>{
     const query =useQuery({
         queryKey:["current"],
         queryFn:async()=>{
-            const response = await clinet.api.auth.current.$get();
+            const response = await client.api.auth.current.$get();
             if(!response.ok){
                 return null;
             }
