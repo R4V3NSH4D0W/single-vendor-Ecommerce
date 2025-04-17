@@ -1,17 +1,11 @@
 "use client";
+import CategoryLoading from "@/components/loading/category-loading";
 import { Button } from "@/components/ui/button";
+import { useGetCategories } from "@/features/categories/api/use-get-categories";
 import { ChevronDown, ChevronUp, Funnel } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
-const categories = [
-  "All",
-  "Electronics",
-  "Clothing",
-  "Home Appliances",
-  "Books",
-  "Footwear",
-];
 const priceRanges = [
   { label: "Under $50", value: "under-50", min: 0, max: 49 },
   { label: "$50 - $100", value: "50-100", min: 50, max: 100 },
@@ -26,14 +20,17 @@ function ProductSidebar() {
   const [showFilter, setShowFilter] = useState(false);
   const [activeCategory, setActiveCategory] = useState("All");
   const [selectedPrice, setSelectedPrice] = useState<string | null>(null);
+  const { data: categories = [], isLoading: isCategoryListLoading } =
+    useGetCategories();
+  const categoryList = [{ label: "All" }, ...categories];
 
   useEffect(() => {
-    if (categoryParam && categories.includes(categoryParam)) {
+    if (categoryParam && categories.some((c) => c.label === categoryParam)) {
       setActiveCategory(categoryParam);
     } else {
       setActiveCategory("All");
     }
-  }, [categoryParam]);
+  }, [categoryParam, categories]);
 
   const handleCategoryClick = (category: string) => {
     const params = new URLSearchParams(searchParams.toString());
@@ -84,21 +81,22 @@ function ProductSidebar() {
           <div>
             <h1 className=" text-md font-bold inline-block">Categories</h1>
             <ul className=" space-y-2">
-              {categories.map((category) => (
-                <li key={category}>
+              {categoryList.map((category) => (
+                <li key={category.label}>
                   <button
-                    onClick={() => handleCategoryClick(category)}
+                    onClick={() => handleCategoryClick(category.label)}
                     className={`block w-full text-left py-1 ${
-                      activeCategory === category
+                      activeCategory === category.label
                         ? "font-medium text-primary"
                         : "text-muted-foreground hover:text-primary transition-colors"
                     }`}
                   >
-                    {category}
+                    {category.label}
                   </button>
                 </li>
               ))}
             </ul>
+            {isCategoryListLoading && <CategoryLoading />}
           </div>
           <div>
             <h3 className="font-semibold mb-4">Price Range</h3>

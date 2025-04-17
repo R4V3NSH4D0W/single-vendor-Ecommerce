@@ -14,6 +14,7 @@ type CustomContext = {
       id: string
       email: string
       name: string
+      role:string
     } | null
   }
 }
@@ -43,7 +44,7 @@ export const sessionMiddleware = createMiddleware<CustomContext>(async (c, next)
       return await next()
     }
 
-    c.set('user', { id: user.id, email: user.email, name: user.name })
+    c.set('user', { id: user.id, email: user.email, name: user.name, role:user.role })
   } catch (err) {
     console.error('Invalid token', err)
     c.set('user', null)

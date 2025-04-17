@@ -3,7 +3,7 @@ import prisma from '@/lib/prisma';
 import fs from 'fs/promises';
 import path from 'path';
 import { Product } from '@/lib/types';
-import { SortOptionValue } from '@/lib/utils';
+import { Prisma } from '@/generated/prisma';
 const IMAGE_DIR = path.join(process.cwd(), 'images');
 const app = new Hono()
 
@@ -73,90 +73,111 @@ const app = new Hono()
     return c.json({ error: 'Failed to fetch product' }, 500);
   }
 })
+
 .get("/", async (c) => {
-  const category = c.req.query("category") || undefined;
-  const sort = c.req.query("sort") as SortOptionValue | undefined;
-  const priceRange = c.req.query("price") || undefined;
-  const page = parseInt(c.req.query("page") as string) || 1; 
-  const limit = 8; 
+  // Extract query parameters
+  const category = c.req.query("category");
+  const sort = c.req.query("sort");
+  const priceRange = c.req.query("price");
+  const page = parseInt(c.req.query("page") || "1");
+  const search = c.req.query("search");
+  const limit = 8;
 
-  let priceFilter: { gte?: number; lte?: number } | undefined;
-
+  // 1. Build price filter
+  let priceFilter: Prisma.FloatFilter | undefined;
   switch (priceRange) {
-    case "under-50":
-      priceFilter = { lte: 50 };
-      break;
-    case "50-100":
-      priceFilter = { gte: 50, lte: 100 };
-      break;
-    case "100-200":
-      priceFilter = { gte: 100, lte: 200 };
-      break;
-    case "200+":
-      priceFilter = { gte: 200 };
-      break;
-    default:
-      priceFilter = undefined;
+    case "under-50": priceFilter = { lte: 50 }; break;
+    case "50-100": priceFilter = { gte: 50, lte: 100 }; break;
+    case "100-200": priceFilter = { gte: 100, lte: 200 }; break;
+    case "200+": priceFilter = { gte: 200 }; break;
   }
 
+  // 2. Build featured filter
   const isFeatured = sort === "featured" ? true : undefined;
 
-const whereFilter = {
-  category: category ? { label: category } : undefined,
-  price: priceFilter,
-  isFeatured: isFeatured, 
-};
+  // 3. Build filter conditions
+  const filterConditions: Prisma.ProductWhereInput[] = [];
+
+  if (category) {
+    filterConditions.push({ category: { label: category } });
+  }
+
+  if (priceFilter) {
+    filterConditions.push({ price: priceFilter });
+  }
+
+  if (isFeatured !== undefined) {
+    filterConditions.push({ isFeatured });
+  }
+
+  if (search) {
+    filterConditions.push({
+      OR: [
+        { name: { contains: search, mode: 'insensitive' } },
+        { description: { contains: search, mode: 'insensitive' } },
+        { category: { label: { contains: search, mode: 'insensitive' } } }
+      ]
+    });
+  }
+
+  // 4. Build final where clause
+  const whereFilter: Prisma.ProductWhereInput = filterConditions.length > 0 
+    ? { AND: filterConditions }
+    : {};
+
+  // 5. Build orderBy clause
+  const orderBy: Prisma.ProductOrderByWithRelationInput[] = [];
+  switch (sort) {
+    case "newest":
+      orderBy.push({ createdAt: "desc" });
+      break;
+    case "price-asc":
+      orderBy.push({ price: "asc" });
+      break;
+    case "price-desc":
+      orderBy.push({ price: "desc" });
+      break;
+    case "featured":
+      orderBy.push(
+        { isFeatured: "desc" },
+        { updatedAt: "desc" }
+      );
+      break;
+  }
 
   try {
-    const totalCount = await prisma.product.count({
-      where: whereFilter
-    });
+    // 6. Execute queries
+    const [totalCount, products] = await prisma.$transaction([
+      prisma.product.count({ where: whereFilter }),
+      prisma.product.findMany({
+        where: whereFilter,
+        orderBy,
+        take: limit,
+        skip: (page - 1) * limit,
+        include: { category: true },
+      }),
+    ]);
 
-    const products = await prisma.product.findMany({
-      where: whereFilter,
-      orderBy:
-      sort === "newest"
-        ? { createdAt: "desc" }
-        : sort === "price-asc"
-        ? { price: "asc" }
-        : sort === "price-desc"
-        ? { price: "desc" }
-        : sort === "featured"
-        ? [
-            { isFeatured: "desc" }, 
-            { createdAt: "desc" }
-          ]
-        : undefined,
-    
-      take: limit, 
-      skip: (page - 1) * limit, 
-      include: {
-        category: true,
-      },
-    });
-
-    const formatted = products.map((product) => ({
-      id: product.id,
-      name: product.name,
-      description: product.description,
-      price: product.price,
-      stock: product.stock,
-      sku: product.sku,
-      tags: product.tags,
-      images: product.images,
-      category: product.category.value,
-      categoryLabel: product.category.label,
-      createdAt: product.createdAt,
-      updatedAt: product.updatedAt,
-      isFeatured:product.isFeatured,
-    }));
-
-    const hasNextPage = page * limit < totalCount;
-
+    // 7. Format response
     return c.json({
-      data: formatted,
+      data: products.map(product => ({
+        id: product.id,
+        name: product.name,
+        description: product.description,
+        price: product.price,
+        stock: product.stock,
+        sku: product.sku,
+        tags: product.tags,
+        images: product.images,
+        category: product.category.value,
+        categoryLabel: product.category.label,
+        createdAt: product.createdAt,
+        updatedAt: product.updatedAt,
+        isFeatured: product.isFeatured,
+      })),
       total: totalCount,
-      hasNextPage: hasNextPage,
+      hasNextPage: page * limit < totalCount,
+      totalPages: Math.ceil(totalCount / limit),
     });
     
   } catch (error) {

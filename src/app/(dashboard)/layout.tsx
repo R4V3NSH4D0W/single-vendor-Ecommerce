@@ -1,5 +1,4 @@
-// import DashBoardSideBar from "@/components/dashboard/dashboard-sidebar";
-import QueryProvider from "@/provider/query-provider";
+import DashBoardNavBar from "@/features/dashboard/components/dashboard-navbar";
 import React from "react";
 
 interface DashBoardLayoutProps {
@@ -7,11 +6,11 @@ interface DashBoardLayoutProps {
 }
 function DashBoardLayout({ children }: DashBoardLayoutProps) {
   return (
-    <div className="flex min-h-screen">
-      {/* <DashBoardSideBar /> */}
-      <QueryProvider>
-        <main className="flex-1">{children}</main>
-      </QueryProvider>
+    <div className="flex flex-col min-h-screen">
+      <main className="flex-1">
+        <DashBoardNavBar />
+        {children}
+      </main>
     </div>
   );
 }

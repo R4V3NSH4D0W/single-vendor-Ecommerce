@@ -49,7 +49,15 @@ function ProductContents() {
   return (
     <div className="w-full">
       <div className="flex flex-wrap justify-between items-center mb-6 gap-4">
-        <p className="text-muted-foreground text-sm">Showing 8 Products</p>
+        <p className="text-muted-foreground text-sm">
+          Showing{" "}
+          {products?.total
+            ? `${(currentPage - 1) * 8 + 1} - ${
+                (currentPage - 1) * 8 + products.data.length
+              } of ${products.total} products`
+            : "0 Products"}
+        </p>
+
         <div className="flex flex-row items-center gap-4">
           <label className="text-sm">Sort by:</label>
           <Select value={currentSort || ""} onValueChange={handleSortChange}>

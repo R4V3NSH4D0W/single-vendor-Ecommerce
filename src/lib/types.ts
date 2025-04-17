@@ -36,3 +36,13 @@ export interface Review {
     updatedAt: string;
     isFeatured:boolean;
   }
+
+  export type ProductColumn = {
+    id: string;
+    name: string;
+    category: string;
+    price: number;
+    stock: number;
+    isFeatured: boolean;
+    createdAt: string;
+  };
