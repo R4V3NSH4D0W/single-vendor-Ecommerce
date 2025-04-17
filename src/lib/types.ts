@@ -1,10 +1,11 @@
 export interface Review {
-    id: number;
+    id: string;
     name: string;
     rating: number;
     date: string;
     comment: string;
-    verified: boolean;
+    verified?: boolean;
+    userId?:string,
   }
   
   export type ProductSpecification = {
@@ -31,8 +32,18 @@ export interface Review {
     sku: string;
     care: string;
     specifications: ProductSpecification[];
-    reviews?: Review[];
+    reviews: Review[];
     createdAt: string;
     updatedAt: string;
     isFeatured:boolean;
   }
+
+  export type ProductColumn = {
+    id: string;
+    name: string;
+    category: string;
+    price: number;
+    stock: number;
+    isFeatured: boolean;
+    createdAt: string;
+  };

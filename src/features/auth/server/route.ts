@@ -63,7 +63,7 @@ const app = new Hono()
       }
 
       const token = Jwt.sign(
-        { id: user.id, email: user.email },
+        { id: user.id, email: user.email},
         process.env.JWT_SECRET!,
         { expiresIn: "7d" }
       );

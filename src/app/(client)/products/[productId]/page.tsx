@@ -6,13 +6,14 @@ import { ProductStatus } from "@/features/product/components/product-status";
 import ProductTab from "@/features/product/components/product-tabs";
 import ProductTag from "@/features/product/components/product-tags";
 import SwitchImage from "@/features/product/components/switch-image";
-import { useProjectId } from "@/features/product/hooks/use-product-id";
+import { useProductId } from "@/features/product/hooks/use-product-id";
 import { RotateCw, Truck } from "lucide-react";
 import React from "react";
 
 function ProductDetailPage() {
-  const id = useProjectId();
+  const id = useProductId();
   const { data: product, isLoading } = useGetProduct({ id });
+  console.log(product);
   if (isLoading) return <div>Loading...</div>;
   if (!product) return <div>Product not found</div>;
 

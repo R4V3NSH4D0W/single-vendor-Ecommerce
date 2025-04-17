@@ -14,6 +14,7 @@ export async function getCurrentUser() {
     const decoded = jwt.verify(token, process.env.JWT_SECRET!) as {
       id: string;
       email: string;
+      role:string;
     };
 
     const user = await prisma.user.findUnique({
@@ -26,6 +27,7 @@ export async function getCurrentUser() {
       id: user.id,
       email: user.email,
       name: user.name,
+      role: user.role,
     };
   } catch (error) {
     console.error("Token verification failed:", error);

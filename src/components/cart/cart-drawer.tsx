@@ -24,6 +24,7 @@ interface CartDrawerProps {
 
 const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
   const cartItems = useAppSelector((state) => state.cart.items);
+  console.log("cart Items", cartItems);
   const dispatch = useAppDispatch();
 
   const handleUpdateQuantity = (id: string, quantity: number) => {

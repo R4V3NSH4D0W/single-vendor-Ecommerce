@@ -145,6 +145,16 @@ exports.Prisma.ProductScalarFieldEnum = {
   isFeatured: 'isFeatured'
 };
 
+exports.Prisma.ReviewScalarFieldEnum = {
+  id: 'id',
+  comment: 'comment',
+  rating: 'rating',
+  userId: 'userId',
+  productId: 'productId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SpecificationScalarFieldEnum = {
   id: 'id',
   key: 'key',
@@ -182,6 +192,7 @@ exports.Role = exports.$Enums.Role = {
 exports.Prisma.ModelName = {
   User: 'User',
   Product: 'Product',
+  Review: 'Review',
   Specification: 'Specification',
   Category: 'Category'
 };

@@ -1,6 +1,7 @@
 import { Minus, Plus, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import Link from "next/link";
 
 interface CartItemProps {
   item: {
@@ -29,13 +30,15 @@ const CartItem = ({ item, onUpdateQuantity, onRemove }: CartItemProps) => {
   return (
     <div className="flex py-4 border-b last:border-0 p-4">
       <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border">
-        <Image
-          src={item.image}
-          alt={item.name}
-          height={20}
-          width={20}
-          className="h-full w-full object-cover object-center"
-        />
+        <Link href={`/products/${item.id}`}>
+          <Image
+            src={item.image}
+            alt={item.name}
+            height={20}
+            width={20}
+            className="h-full w-full object-cover object-center"
+          />
+        </Link>
       </div>
 
       <div className="ml-4 flex flex-1 flex-col">

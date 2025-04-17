@@ -2,32 +2,36 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Product } from "@/lib/types";
 import { User } from "lucide-react";
-import React, { useState } from "react";
+import React from "react";
 import ReviewForm from "./review-form";
+import { formatDate } from "@/lib/utils";
+import { StarRating } from "@/features/review/components/star-rating";
+import { useCurrent } from "@/features/auth/api/use-current";
+import Link from "next/link";
+
 interface ProductTabProps {
   product: Product;
 }
 
 function ProductTab({ product }: ProductTabProps) {
-  // const [reviews, setReviews] = useState(product.reviews);
+  const { data: user } = useCurrent();
+  const currentUserId = user?.id;
+  const existingReview = product.reviews.find(
+    (review) => review.userId === currentUserId && review.userId !== undefined
+  ) as
+    | {
+        id: string;
+        rating: number;
+        comment: string;
+        userId: string;
+      }
+    | undefined;
 
-  // const handleReviewSubmitted = () => {
-  //   setReviews([
-  //     {
-  //       id: reviews.length + 1,
-  //       name: "You",
-  //       rating: 5,
-  //       date: new Date().toLocaleDateString("en-US", {
-  //         year: "numeric",
-  //         month: "long",
-  //         day: "numeric",
-  //       }),
-  //       comment: "Your review has been submitted and is pending approval.",
-  //       verified: true,
-  //     },
-  //     ...reviews,
-  //   ]);
-  // };
+  const averageRating =
+    product.reviews.length > 0
+      ? product.reviews.reduce((acc, review) => acc + review.rating, 0) /
+        product.reviews.length
+      : 0;
 
   return (
     <div className="mt-16">
@@ -36,8 +40,7 @@ function ProductTab({ product }: ProductTabProps) {
           <TabsTrigger value="details">Details</TabsTrigger>
           <TabsTrigger value="specifications">Specifications</TabsTrigger>
           <TabsTrigger value="reviews">
-            Reviews
-            {/* ({product.reviews.length}) */}
+            Reviews ({product.reviewCount})
           </TabsTrigger>
         </TabsList>
 
@@ -68,41 +71,21 @@ function ProductTab({ product }: ProductTabProps) {
                     </td>
                   </tr>
                 ))}
-                {/* {Object.entries(product.specifications).map(([key, value]) => (
-                  <tr key={key}>
-                    <td className="py-4 px-6 font-medium">{key}</td>
-                    <td className="py-4 px-6 text-muted-foreground">{value}</td>
-                  </tr>
-                ))} */}
               </tbody>
             </table>
           </div>
         </TabsContent>
 
-        {/* <TabsContent value="reviews">
+        <TabsContent value="reviews">
           <div className="space-y-8">
             <div className="flex items-center justify-between">
               <div>
                 <h3 className="text-xl font-semibold">Customer Reviews</h3>
                 <div className="flex items-center mt-1">
                   <div className="flex items-center mr-2">
-                    {[...Array(5)].map((_, i) => (
-                      <svg
-                        key={i}
-                        className={`h-5 w-5 ${
-                          i < Math.floor(product.rating)
-                            ? "text-yellow-400 fill-current"
-                            : i < product.rating
-                            ? "text-yellow-400 fill-current opacity-50"
-                            : "text-gray-300 fill-current"
-                        }`}
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 20 20"
-                      >
-                        <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
-                      </svg>
-                    ))}
+                    <StarRating rating={averageRating} />
                   </div>
+
                   <p className="text-sm text-muted-foreground">
                     Based on {product.reviewCount} reviews
                   </p>
@@ -110,9 +93,9 @@ function ProductTab({ product }: ProductTabProps) {
               </div>
             </div>
 
-            {reviews.length > 0 ? (
+            {product?.reviewCount && product.reviewCount > 0 ? (
               <div className="space-y-6">
-                {reviews.map((review) => (
+                {product?.reviews.map((review) => (
                   <div
                     key={review.id}
                     className="border-b border-border pb-6 last:border-0"
@@ -132,7 +115,7 @@ function ProductTab({ product }: ProductTabProps) {
                             )}
                           </div>
                           <p className="text-xs text-muted-foreground">
-                            {review.date}
+                            {formatDate(review.date)}
                           </p>
                         </div>
                       </div>
@@ -163,12 +146,26 @@ function ProductTab({ product }: ProductTabProps) {
               </p>
             )}
 
-            <ReviewForm
-              productId={product.id}
-              onReviewSubmitted={handleReviewSubmitted}
-            />
+            {user ? (
+              <ReviewForm
+                productId={product.id}
+                existingReview={existingReview}
+              />
+            ) : (
+              <div className="flex flex-col text-center mt-6">
+                <p className="text-md text-muted-foreground mb-2">
+                  You must be logged in to leave a review.
+                </p>
+                <Link href={"/signin"}>
+                  <p className=" underline text-md font-bold">
+                    {" "}
+                    Login to Submit Review
+                  </p>
+                </Link>
+              </div>
+            )}
           </div>
-        </TabsContent> */}
+        </TabsContent>
       </Tabs>
     </div>
   );

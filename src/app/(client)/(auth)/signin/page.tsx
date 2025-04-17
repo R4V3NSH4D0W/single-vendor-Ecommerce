@@ -6,8 +6,11 @@ import React from "react";
 async function SignInPage() {
   const user = await getCurrentUser();
   if (user) {
-    redirect("/");
+    redirect(
+      user.role === "ADMIN" || user.role === "MODERATOR" ? "/dashboard" : "/"
+    );
   }
+
   return <SignInCard />;
 }
 

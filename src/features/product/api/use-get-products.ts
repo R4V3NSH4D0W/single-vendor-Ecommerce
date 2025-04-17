@@ -1,10 +1,13 @@
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { client } from "@/lib/rpc";
+
 interface ProductQueryParams {
   category?: string;
   sort?: string;
-  price?:string;
-  page?:string;
+  price?: string;
+  page?: string;
+  search?: string;
+  limit?: string;
 }
 
 export const useGetProducts = (params?: ProductQueryParams) => {
@@ -21,5 +24,6 @@ export const useGetProducts = (params?: ProductQueryParams) => {
 
       return response.json();
     },
+    placeholderData: keepPreviousData,
   });
 };

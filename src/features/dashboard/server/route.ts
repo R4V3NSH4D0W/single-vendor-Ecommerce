@@ -1,10 +1,16 @@
 import { Hono } from 'hono';
 import prisma from '@/lib/prisma';
 import { imageStorage } from '@/lib/imageStorage';
+import { deleteImageFromStorage } from '@/lib/deleteImage';
+import { sessionMiddleware } from '@/lib/session-middleware';
 
 const app = new Hono();
 
-app.post('/upload', async (c) => {
+app.post('/upload',sessionMiddleware, async (c) => {
+  const user =c.get("user");
+  if(!user || user.role !== "ADMIN"){
+    return c.json({ success: false, error: 'Unauthorized' }, 403);
+  }
   try {
     const formData = await c.req.formData();
     const imageFiles = formData.getAll('productImages');
@@ -54,8 +60,6 @@ app.post('/upload', async (c) => {
         })),
       },
     };
-
-    console.log("data",productData)
     const product = await prisma.product.create({
       data: {
         ...productData,
@@ -93,6 +97,92 @@ app.post('/upload', async (c) => {
       error: error instanceof Error ? error.message : 'Failed to create product'
     }, 400);
   }
-});
+})
+.put("/update",sessionMiddleware, async (c) => {
+  const user =c.get("user");
+  if(!user || user.role !== "ADMIN"){
+    return c.json({ success: false, error: 'Unauthorized' }, 403);
+  }
+  
+  try {
+    const formData = await c.req.formData();
+    const productId = formData.get("id") as string;
+
+    const existingProduct = await prisma.product.findUnique({
+      where: { id: productId },
+    });
+
+    if (!existingProduct) {
+      return c.json({ success: false, error: "Product not found" }, 404);
+    }
+
+    const imageFiles = formData.getAll("productImages");
+    const uploadedImageUrls: string[] = [];
+
+    for (const file of imageFiles) {
+      if (file instanceof File) {
+        const arrayBuffer = await file.arrayBuffer();
+        const buffer = Buffer.from(arrayBuffer);
+        const { url } = await imageStorage(buffer); 
+        uploadedImageUrls.push(url);
+      } else if (typeof file === "string") {
+        uploadedImageUrls.push(file);
+      }
+    }
+
+    const removedImages = existingProduct.images.filter(
+      (oldImg) => !uploadedImageUrls.includes(oldImg)
+    );
+
+    for (const img of removedImages) {
+      await deleteImageFromStorage(img);
+    }
+
+    const updateData = {
+      name: formData.get("productName") as string,
+      description: formData.get("productDescription") as string,
+      price: Number(formData.get("productPrice")),
+      stock: Number(formData.get("productStock")),
+      sku: formData.get("productSKU") as string,
+      variants: JSON.parse(formData.get("productVariants") as string),
+      tags: JSON.parse(formData.get("productTags") as string),
+      sizes: JSON.parse(formData.get("productSize") as string),
+      features: JSON.parse(formData.get("productFeature") as string),
+      careInstruction: formData.get("careInstruction") as string,
+      images: uploadedImageUrls,
+      isFeatured: formData.get("isFeatured") === "true",
+      category: {
+        connect: { value: formData.get("productCategory") as string },
+      },
+      specifications: {
+        deleteMany: {},
+        create: JSON.parse(formData.get("specifications") as string).map(
+          (spec: { key: string; value: string }) => ({
+            key: spec.key,
+            value: spec.value,
+          })
+        ),
+      },
+    };
+
+    const updatedProduct = await prisma.product.update({
+      where: { id: productId },
+      data: updateData,
+      include: {
+        category: true,
+        specifications: true,
+      },
+    });
+
+    return c.json({ success: true, product: updatedProduct }, 200);
+  } catch (error) {
+    console.error("Error updating product:", error);
+    return c.json({
+      success: false,
+      error: error instanceof Error ? error.message : "Update failed",
+    }, 400);
+  }
+})
+
 
 export default app;
