@@ -34,13 +34,12 @@ import { useProductId } from "@/features/product/hooks/use-product-id";
 function UpdateProductClient() {
   const id = useProductId();
   console.log("id", id);
-  const { data: product } = useGetProduct({
+  const { data: product, isLoading: productLoading } = useGetProduct({
     id,
   });
-  console.log(product);
-  const { mutate, error } = useUpdateProduct();
-  console.log(error);
-  const { data: categories, isLoading } = useGetCategories();
+  const { mutate } = useUpdateProduct();
+
+  const { data: categories, isLoading: categoryLoading } = useGetCategories();
 
   const form = useForm<z.infer<typeof ProductSchema>>({
     resolver: zodResolver(ProductSchema),
@@ -118,7 +117,7 @@ function UpdateProductClient() {
     mutate(formData);
   };
 
-  if (isLoading) {
+  if (productLoading && categoryLoading) {
     return (
       <div className="flex justify-center items-center h-screen">
         Loading...

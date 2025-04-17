@@ -44,7 +44,7 @@ function CategoriesClientPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Add Category Form */}
-        <Card className="lg:col-span-1 h-[250px]">
+        <Card className="lg:col-span-1 h-[200px]">
           <CardHeader>
             <CardTitle>Create New Category</CardTitle>
           </CardHeader>

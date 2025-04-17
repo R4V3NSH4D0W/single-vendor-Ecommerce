@@ -18,7 +18,7 @@ interface DashBoardSideBarProps {
 const SideBarItems = [
   { name: "DashBoard", href: "/dashboard", icon: <Home size={21} /> },
   {
-    name: "Products",
+    name: "Products Manager",
     href: "/dashboard/products",
     icon: <Package size={21} />,
   },
@@ -28,7 +28,7 @@ const SideBarItems = [
     icon: <Plus size={21} />,
   },
   {
-    name: "Categories",
+    name: "Categories Manager",
     href: "/dashboard/categories",
     icon: <Tags size={21} />,
   },

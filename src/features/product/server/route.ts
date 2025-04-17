@@ -35,6 +35,21 @@ const app = new Hono()
       where:{id},
       include:{
         category:true,
+        reviews:{
+          select:{
+            id:true,
+            rating:true,
+            createdAt:true,
+            comment:true,
+            user:{
+              select:{
+                id:true,
+                name:true
+              }
+            }
+
+          }
+        },
         specifications:{
           select:{
             key:true,
@@ -65,6 +80,16 @@ const app = new Hono()
       sizes:product.sizes,
       features:product.features,
       isFeatured:product.isFeatured,
+      reviews: product.reviews.map((review) => ({
+        id: review.id,
+        rating: review.rating,
+        date: review.createdAt.toISOString(),
+        comment: review.comment ,
+        name: review.user?.name,
+        userId:review.user.id,
+      })),
+      reviewCount: product.reviews.length,
+
     }
 
     return c.json({formattedProduct},200)

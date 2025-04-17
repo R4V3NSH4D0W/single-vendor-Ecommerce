@@ -1,7 +1,7 @@
 import { Control, UseFormSetValue } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Plus, Trash2 } from "lucide-react";
+import { Plus, Trash } from "lucide-react";
 import { useWatch } from "react-hook-form";
 import { ProductFormValues } from "../schema";
 
@@ -66,7 +66,7 @@ export function SpecificationFields({
               variant="ghost"
               onClick={() => removeField(index)}
             >
-              <Trash2 className="text-red-500" size={16} />
+              <Trash size={16} />
             </Button>
           </div>
         ))}
