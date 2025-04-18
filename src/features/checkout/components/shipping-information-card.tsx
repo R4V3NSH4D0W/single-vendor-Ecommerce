@@ -26,15 +26,15 @@ function ShippingInformationCard() {
   const form = useForm<z.infer<typeof shippingInformationSchema>>({
     resolver: zodResolver(shippingInformationSchema),
     defaultValues: {
-      firstName: shippingInfo?.firstName,
-      lastName: shippingInfo?.lastName,
-      email: shippingInfo?.email,
-      address: shippingInfo?.address,
-      phone: shippingInfo?.phone,
-      city: shippingInfo?.city,
-      country: shippingInfo?.country,
-      zipCode: shippingInfo?.zipCode,
-      state: shippingInfo?.state,
+      firstName: shippingInfo?.firstName ?? "",
+      lastName: shippingInfo?.lastName ?? "",
+      email: shippingInfo?.email ?? "",
+      address: shippingInfo?.address ?? "",
+      phone: shippingInfo?.phone ?? "",
+      city: shippingInfo?.city ?? "",
+      country: shippingInfo?.country ?? "",
+      zipCode: shippingInfo?.zipCode ?? "",
+      state: shippingInfo?.state ?? "",
     },
   });
 
@@ -55,7 +55,7 @@ function ShippingInformationCard() {
           <Card className="bg-transparent border-0 shadow-none w-full">
             <CardHeader className="p-0">
               <CardTitle className="text-xl font-semibold">
-                Shipping Information
+                <p className=" text-2xl">Shipping Information</p>
               </CardTitle>
             </CardHeader>
             <CardContent className="p-0 w-full">

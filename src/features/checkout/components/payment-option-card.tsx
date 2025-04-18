@@ -27,10 +27,10 @@ function PaymentOpionCard() {
   const form = useForm<z.infer<typeof paymentInformationSchema>>({
     resolver: zodResolver(paymentInformationSchema),
     defaultValues: {
-      cardNumber: paymentInfo?.cardNumber,
-      cvv: paymentInfo?.cvc,
-      expirationDate: paymentInfo?.expiry,
-      nameOnCard: paymentInfo?.nameOnCard,
+      cardNumber: paymentInfo?.cardNumber ?? "",
+      cvv: paymentInfo?.cvc ?? "",
+      expirationDate: paymentInfo?.expiry ?? "",
+      nameOnCard: paymentInfo?.nameOnCard ?? "",
     },
   });
   const onSubmit = async (values: PaymentInformationFormValues) => {

@@ -59,12 +59,14 @@ function CheckoutSteps() {
               </div>
 
               {index < Steps.length - 1 && (
-                <div
-                  className={cn(
-                    "flex-1 border-b border-2 mx-2 sm:w-[150px] md:w-[200px] lg:w-[250px]",
-                    isCompleted ? "border-green-500" : "border-muted-foreground"
-                  )}
-                />
+                <div className="relative flex-1 mx-2 sm:w-[150px] md:w-[200px] lg:w-[250px] h-[2px] bg-muted-foreground overflow-hidden">
+                  <div
+                    className={cn(
+                      "absolute top-0 left-0 h-full bg-green-500 transition-all duration-700 ease-in-out",
+                      isCompleted ? "w-full" : "w-0"
+                    )}
+                  />
+                </div>
               )}
             </React.Fragment>
           );

@@ -25,7 +25,9 @@ function OrderSummeryCard() {
   return (
     <Card className="w-full lg:w-[35%] min-h-[300px] h-auto">
       <CardHeader>
-        <CardTitle>Order Summery</CardTitle>
+        <CardTitle>
+          <p className=" text-2xl">Order Summery</p>
+        </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
         {hasMounted &&

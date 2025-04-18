@@ -69,7 +69,7 @@ function ShippingMethod() {
       <Card className="bg-transparent border-0 shadow-none w-full">
         <CardHeader className="p-0">
           <CardTitle className="flex flex-row justify-between">
-            <p className="text-lg">Shipping Method</p>
+            <p className="text-2xl">Shipping Method</p>
             <p className="text-sm text-muted-foreground cursor-pointer hover:underline">
               Edit Shipping Info
             </p>

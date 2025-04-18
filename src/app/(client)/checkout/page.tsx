@@ -5,7 +5,6 @@ import { redirect } from "next/navigation";
 
 async function CheckoutPage() {
   const user = await getCurrentUser();
-  console.log(user);
   if (!user) {
     redirect("/signup");
   }
