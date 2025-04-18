@@ -27,13 +27,30 @@ export const paymentInformationSchema = z.object({
         path: ['cardNumber']
       });
     }
-    
+
     if (!data.expirationDate || !/^(0[1-9]|1[0-2])\/\d{2}$/.test(data.expirationDate)) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         message: "Invalid expiry format (MM/YY)",
         path: ['expirationDate']
       });
+    } else {
+  
+      const [monthStr, yearStr] = data.expirationDate.split('/');
+      const expMonth = parseInt(monthStr, 10);
+      const expYear = parseInt(`20${yearStr}`, 10); 
+
+      const now = new Date();
+      const currentMonth = now.getMonth() + 1; 
+      const currentYear = now.getFullYear();
+
+      if (expYear < currentYear || (expYear === currentYear && expMonth < currentMonth)) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "Card has expired",
+          path: ['expirationDate']
+        });
+      }
     }
 
     if (!data.cvv || data.cvv.length !== 3) {
