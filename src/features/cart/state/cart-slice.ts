@@ -14,11 +14,13 @@ export type CartItem = {
 
 type CartState={
     items:CartItem[];
+    shipping: number;
 }
 
 
 const initialState: CartState = {
     items: loadCartFromStorage(),
+    shipping: 10,
   };
 const cartSlice =createSlice({
     name:"cart",
@@ -53,6 +55,9 @@ const cartSlice =createSlice({
         }
         saveCartToStorage(state.items);  
     },
+    setShipping: (state, action: PayloadAction<number>) => {
+        state.shipping = action.payload;
+      },
 
 },
 });
@@ -61,5 +66,5 @@ export const selectTotalItems = (state: { cart: CartState }) =>
     state.cart.items.reduce((total, item) => total + item.quantity, 0);
  
 
-export const { addToCart, removeFromCart, clearCart, updateQuantity} = cartSlice.actions;
+export const { addToCart, removeFromCart, clearCart, updateQuantity,setShipping} = cartSlice.actions;
 export default cartSlice.reducer;

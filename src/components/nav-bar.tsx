@@ -1,7 +1,7 @@
 "use client";
 import { useIsMobile } from "@/hooks/use-mobile";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ShoppingBag, User, Menu, X } from "lucide-react";
 import { Button } from "./ui/button";
 import ThemeToggle from "./toogle-theme";
@@ -24,6 +24,12 @@ function Navbar() {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const totalItems = useSelector(selectTotalItems);
+
+  const [hasMounted, setHasMounted] = useState(false);
+
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
 
   const { data: user } = useCurrent();
   return (
@@ -77,7 +83,7 @@ function Navbar() {
               className="relative"
             >
               <ShoppingBag className="h-5 w-5" />
-              {totalItems > 0 && (
+              {hasMounted && totalItems > 0 && (
                 <span className="absolute -top-1 -right-1 bg-primary text-primary-foreground rounded-full h-5 w-5 flex items-center justify-center text-xs">
                   {totalItems}
                 </span>
