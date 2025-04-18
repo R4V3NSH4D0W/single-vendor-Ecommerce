@@ -1,4 +1,3 @@
-// PaymentOptionCard.tsx
 "use client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
@@ -35,10 +34,10 @@ function PaymentOptionCard() {
     resolver: zodResolver(paymentInformationSchema),
     defaultValues: {
       paymentMethod: paymentMethod || "card",
-      cardNumber: paymentInfo?.cardNumber ?? "",
-      cvv: paymentInfo?.cvc ?? "",
-      expirationDate: paymentInfo?.expiry ?? "",
-      nameOnCard: paymentInfo?.nameOnCard ?? "",
+      cardNumber: "",
+      cvv: "",
+      expirationDate: "",
+      nameOnCard: "",
     },
   });
 
@@ -54,19 +53,32 @@ function PaymentOptionCard() {
           nameOnCard: values.nameOnCard!,
         })
       );
+    } else {
+      dispatch(setPaymentInfo(null));
     }
+
     dispatch(setPaymentMethod(values.paymentMethod));
     dispatch(setStep("confirmation"));
   };
 
   useEffect(() => {
-    form.reset({
-      paymentMethod: paymentMethod || "card",
-      cardNumber: paymentInfo?.cardNumber ?? "",
-      cvv: paymentInfo?.cvc ?? "",
-      expirationDate: paymentInfo?.expiry ?? "",
-      nameOnCard: paymentInfo?.nameOnCard ?? "",
-    });
+    if (paymentMethod === "cod") {
+      form.reset({
+        paymentMethod: "cod",
+        cardNumber: "",
+        cvv: "",
+        expirationDate: "",
+        nameOnCard: "",
+      });
+    } else if (paymentInfo) {
+      form.reset({
+        paymentMethod: "card",
+        cardNumber: paymentInfo.cardNumber,
+        cvv: paymentInfo.cvc,
+        expirationDate: paymentInfo.expiry,
+        nameOnCard: paymentInfo.nameOnCard,
+      });
+    }
   }, [paymentInfo, paymentMethod, form]);
 
   const handleBack = () => {
@@ -94,7 +106,6 @@ function PaymentOptionCard() {
                       value={field.value}
                       className="grid gap-4"
                     >
-                      {/* Card Payment Option */}
                       <div className="border p-4 rounded-md">
                         <Label className="flex items-center gap-3 cursor-pointer">
                           <RadioGroupItem value="card" />
@@ -175,7 +186,6 @@ function PaymentOptionCard() {
                         )}
                       </div>
 
-                      {/* Cash on Delivery Option */}
                       <div className="border p-4 rounded-md">
                         <Label className="flex items-center gap-3 cursor-pointer">
                           <RadioGroupItem value="cod" />

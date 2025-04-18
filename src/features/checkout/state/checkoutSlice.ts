@@ -55,7 +55,7 @@ const checkoutSlice = createSlice({
     setShippingInfo(state, action: PayloadAction<ShippingInfo>) {
       state.shippingInfo = action.payload;
     },
-    setPaymentInfo(state, action: PayloadAction<PaymentInfo>) {
+    setPaymentInfo(state, action: PayloadAction<PaymentInfo | null>) {
       state.paymentInfo = action.payload;
     },
     setShippingMethod(state, action: PayloadAction<ShippingMethod>) {
