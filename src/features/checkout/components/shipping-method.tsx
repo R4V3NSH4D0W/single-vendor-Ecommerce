@@ -132,7 +132,7 @@ function ShippingMethod() {
         <div className=" flex flex-row justify-between">
           <Button variant="ghost" onClick={handleBack}>
             <ChevronLeft />
-            Back to Shipping
+            Back to Shipping Info
           </Button>
           <Button onClick={handleContinuePayment}>Continue to Payment</Button>
         </div>

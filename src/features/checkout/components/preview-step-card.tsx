@@ -11,6 +11,7 @@ import {
   Phone,
   Lock,
   ChevronLeft,
+  Wallet,
 } from "lucide-react";
 import { setStep } from "../state/checkoutSlice";
 import { Button } from "@/components/ui/button";
@@ -18,6 +19,7 @@ import { Button } from "@/components/ui/button";
 function PreviewStepCard() {
   const shippingInfo = useAppSelector((state) => state.checkout.shippingInfo);
   const paymentInfo = useAppSelector((state) => state.checkout.paymentInfo);
+  const paymentMethod = useAppSelector((state) => state.checkout.paymentMethod);
   const shippingMethod = useAppSelector(
     (state) => state.checkout.shippingMethod
   );
@@ -32,6 +34,7 @@ function PreviewStepCard() {
       shippingInfo,
       paymentInfo,
       shippingMethod,
+      paymentMethod,
     };
     console.log(orderPayload);
   };
@@ -117,13 +120,12 @@ function PreviewStepCard() {
               </div>
             </div>
           )}
-          {paymentInfo && (
+          {paymentMethod === "card" && paymentInfo && (
             <div className="space-y-4 p-4 bg-muted/50 rounded-lg">
               <div className="flex items-center gap-2 mb-4">
                 <CreditCard className="h-6 w-6 text-primary" />
                 <h2 className="text-xl font-semibold">Payment Details</h2>
               </div>
-
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="flex items-center gap-2">
                   <User className="h-5 w-5 text-muted-foreground" />
@@ -152,6 +154,22 @@ function PreviewStepCard() {
               </div>
             </div>
           )}
+          {paymentMethod === "cod" && (
+            <div className="space-y-4 p-4 bg-muted/50 rounded-lg">
+              <div className="flex items-center gap-2 mb-4">
+                <Wallet className="h-6 w-6 text-primary" />
+                <h2 className="text-xl font-semibold">Payment Method</h2>
+              </div>
+              <div className="flex items-center gap-4 p-3">
+                <div className="flex-1">
+                  <p className="font-medium">Cash on Delivery</p>
+                  <p className="text-sm text-muted-foreground">
+                    You&apos;ll pay in cash when your order arrives
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
         </CardContent>
       </Card>
       <div className=" flex flex-row justify-between mt-4">
@@ -159,7 +177,11 @@ function PreviewStepCard() {
           <ChevronLeft />
           Back to Payment Method
         </Button>
-        <Button onClick={() => handleCheckout()}>Proceed to Checkout</Button>
+        <Button onClick={handleCheckout}>
+          {paymentMethod === "cod"
+            ? "Place Order with COD"
+            : "Proceed to Checkout"}
+        </Button>
       </div>
     </div>
   );

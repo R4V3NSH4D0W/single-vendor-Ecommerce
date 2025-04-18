@@ -1,16 +1,17 @@
+// checkoutSlice.ts
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-type Step = "initial"|"shipping" | "payment" | "confirmation" ;
+type Step = "initial" | "shipping" | "payment" | "confirmation";
 
 interface ShippingInfo {
   firstName: string;
-  lastName:string;
-  email:string;
-  phone:string;
+  lastName: string;
+  email: string;
+  phone: string;
   address: string;
   city: string;
   state: string;
-  zipCode:string,
+  zipCode: string;
   country: string;
 }
 
@@ -21,12 +22,11 @@ interface ShippingMethod {
   cost: number;
 }
 
-
 interface PaymentInfo {
-  cardNumber: string;
-  expiry: string;
-  cvc: string;
-  nameOnCard: string;
+  cardNumber?: string;
+  expiry?: string;
+  cvc?: string;
+  nameOnCard?: string;
 }
 
 interface CheckoutState {
@@ -34,6 +34,7 @@ interface CheckoutState {
   shippingInfo: ShippingInfo | null;
   paymentInfo: PaymentInfo | null;
   shippingMethod: ShippingMethod | null;
+  paymentMethod: 'card' | 'cod' | null;
 }
 
 const initialState: CheckoutState = {
@@ -41,6 +42,7 @@ const initialState: CheckoutState = {
   shippingInfo: null,
   paymentInfo: null,
   shippingMethod: null,
+  paymentMethod: null,
 };
 
 const checkoutSlice = createSlice({
@@ -58,9 +60,18 @@ const checkoutSlice = createSlice({
     },
     setShippingMethod(state, action: PayloadAction<ShippingMethod>) {
       state.shippingMethod = action.payload;
+    },
+    setPaymentMethod(state, action: PayloadAction<'card' | 'cod'>) {
+      state.paymentMethod = action.payload;
     }
   },
 });
 
-export const { setStep, setShippingInfo, setPaymentInfo,setShippingMethod } = checkoutSlice.actions;
+export const { 
+  setStep, 
+  setShippingInfo, 
+  setPaymentInfo, 
+  setShippingMethod,
+  setPaymentMethod 
+} = checkoutSlice.actions;
 export default checkoutSlice.reducer;

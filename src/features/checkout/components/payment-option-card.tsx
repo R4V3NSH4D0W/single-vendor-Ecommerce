@@ -1,16 +1,17 @@
+// PaymentOptionCard.tsx
 "use client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { ChevronLeft, CreditCard } from "lucide-react";
-import React, { useEffect, useState } from "react";
-import {
-  PaymentInformationFormValues,
-  paymentInformationSchema,
-} from "../schema";
-import { z } from "zod";
+import { ChevronLeft, CreditCard, Wallet } from "lucide-react";
+import React, { useEffect } from "react";
+import { paymentInformationSchema } from "../schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { setPaymentInfo, setStep } from "../state/checkoutSlice";
+import {
+  setPaymentInfo,
+  setPaymentMethod,
+  setStep,
+} from "../state/checkoutSlice";
 import {
   Form,
   FormControl,
@@ -20,34 +21,53 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Label } from "@/components/ui/label";
+import { z } from "zod";
 
-function PaymentOpionCard() {
+function PaymentOptionCard() {
   const dispatch = useAppDispatch();
-  const paymentInfo = useAppSelector((state) => state.checkout.paymentInfo);
+  const { paymentInfo, paymentMethod } = useAppSelector(
+    (state) => state.checkout
+  );
+
   const form = useForm<z.infer<typeof paymentInformationSchema>>({
     resolver: zodResolver(paymentInformationSchema),
     defaultValues: {
+      paymentMethod: paymentMethod || "card",
       cardNumber: paymentInfo?.cardNumber ?? "",
       cvv: paymentInfo?.cvc ?? "",
       expirationDate: paymentInfo?.expiry ?? "",
       nameOnCard: paymentInfo?.nameOnCard ?? "",
     },
   });
-  const onSubmit = async (values: PaymentInformationFormValues) => {
-    dispatch(
-      setPaymentInfo({
-        ...values,
-        expiry: values.expirationDate,
-        cvc: values.cvv,
-      })
-    );
+
+  const paymentMethodValue = form.watch("paymentMethod");
+
+  const onSubmit = (values: z.infer<typeof paymentInformationSchema>) => {
+    if (values.paymentMethod === "card") {
+      dispatch(
+        setPaymentInfo({
+          cardNumber: values.cardNumber!,
+          expiry: values.expirationDate!,
+          cvc: values.cvv!,
+          nameOnCard: values.nameOnCard!,
+        })
+      );
+    }
+    dispatch(setPaymentMethod(values.paymentMethod));
     dispatch(setStep("confirmation"));
   };
 
-  const [hasMounted, setHasMounted] = useState(false);
-  useEffect(() => setHasMounted(true), []);
-
-  if (!hasMounted) return null;
+  useEffect(() => {
+    form.reset({
+      paymentMethod: paymentMethod || "card",
+      cardNumber: paymentInfo?.cardNumber ?? "",
+      cvv: paymentInfo?.cvc ?? "",
+      expirationDate: paymentInfo?.expiry ?? "",
+      nameOnCard: paymentInfo?.nameOnCard ?? "",
+    });
+  }, [paymentInfo, paymentMethod, form]);
 
   const handleBack = () => {
     dispatch(setStep("shipping"));
@@ -56,112 +76,138 @@ function PaymentOpionCard() {
   return (
     <div className="p-0 w-full lg:w-[60%]">
       <Card className="bg-transparent border-0 shadow-none w-full">
-        <CardHeader className=" p-0">
+        <CardHeader className="p-0">
           <CardTitle>
-            <p className="text-2xl font-bold">Payment</p>
+            <p className="text-2xl font-bold">Payment Method</p>
           </CardTitle>
         </CardHeader>
         <Form {...form}>
-          <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
-            <CardContent className=" p-0">
-              <div className=" border p-4 rounded-md">
-                <div className=" flex flex-row gap-2">
-                  <CreditCard />
-                  <h1 className=" font-bold">Credit Card</h1>
-                </div>
-                <FormField
-                  name="cardNumber"
-                  control={form.control}
-                  render={({ field }) => (
-                    <FormItem className="w-full ">
-                      <label className="text-sm font-semibold mt-4">
-                        Card Number
-                      </label>
-                      <FormControl>
-                        <Input
-                          type="text"
-                          placeholder="1234 5678 9012 3456"
-                          required
-                          {...field}
-                          className="w-full"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  name="nameOnCard"
-                  control={form.control}
-                  render={({ field }) => (
-                    <FormItem className="w-full ">
-                      <label className="text-sm font-semibold mt-4">
-                        Card Number
-                      </label>
-                      <FormControl>
-                        <Input
-                          type="text"
-                          placeholder="John Smith"
-                          required
-                          {...field}
-                          className="w-full"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <div className="flex flex-row gap-4 w-full mt-4">
-                  <FormField
-                    name="expirationDate"
-                    control={form.control}
-                    render={({ field }) => (
-                      <FormItem className="w-1/2">
-                        <label className="text-sm font-semibold">
-                          Expire Date
-                        </label>
-                        <FormControl>
-                          <Input
-                            type="text"
-                            placeholder="YY/MM"
-                            required
-                            {...field}
-                            className="w-full"
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            <CardContent className="p-0 space-y-6">
+              <FormField
+                control={form.control}
+                name="paymentMethod"
+                render={({ field }) => (
+                  <FormItem>
+                    <RadioGroup
+                      onValueChange={field.onChange}
+                      value={field.value}
+                      className="grid gap-4"
+                    >
+                      {/* Card Payment Option */}
+                      <div className="border p-4 rounded-md">
+                        <Label className="flex items-center gap-3 cursor-pointer">
+                          <RadioGroupItem value="card" />
+                          <div className="flex items-center gap-2">
+                            <CreditCard className="h-5 w-5" />
+                            <span className="font-semibold">
+                              Credit/Debit Card
+                            </span>
+                          </div>
+                        </Label>
 
-                  <FormField
-                    name="cvv"
-                    control={form.control}
-                    render={({ field }) => (
-                      <FormItem className="w-1/2">
-                        <label className="text-sm font-semibold">CVC</label>
-                        <FormControl>
-                          <Input
-                            type="text"
-                            placeholder="123"
-                            required
-                            {...field}
-                            className="w-full"
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-              </div>
+                        {paymentMethodValue === "card" && (
+                          <div className="mt-4 space-y-4">
+                            <FormField
+                              name="cardNumber"
+                              control={form.control}
+                              render={({ field }) => (
+                                <FormItem>
+                                  <Label>Card Number</Label>
+                                  <FormControl>
+                                    <Input
+                                      placeholder="1234 5678 9012 3456"
+                                      {...field}
+                                    />
+                                  </FormControl>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+
+                            <FormField
+                              name="nameOnCard"
+                              control={form.control}
+                              render={({ field }) => (
+                                <FormItem>
+                                  <Label>Cardholder Name</Label>
+                                  <FormControl>
+                                    <Input
+                                      placeholder="John Smith"
+                                      {...field}
+                                    />
+                                  </FormControl>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+
+                            <div className="flex gap-4">
+                              <FormField
+                                name="expirationDate"
+                                control={form.control}
+                                render={({ field }) => (
+                                  <FormItem className="flex-1">
+                                    <Label>Expiration Date (MM/YY)</Label>
+                                    <FormControl>
+                                      <Input placeholder="MM/YY" {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                  </FormItem>
+                                )}
+                              />
+
+                              <FormField
+                                name="cvv"
+                                control={form.control}
+                                render={({ field }) => (
+                                  <FormItem className="flex-1">
+                                    <Label>CVV</Label>
+                                    <FormControl>
+                                      <Input placeholder="123" {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                  </FormItem>
+                                )}
+                              />
+                            </div>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Cash on Delivery Option */}
+                      <div className="border p-4 rounded-md">
+                        <Label className="flex items-center gap-3 cursor-pointer">
+                          <RadioGroupItem value="cod" />
+                          <div className="flex items-center gap-2">
+                            <Wallet className="h-5 w-5" />
+                            <span className="font-semibold">
+                              Cash on Delivery
+                            </span>
+                          </div>
+                        </Label>
+                        {paymentMethodValue === "cod" && (
+                          <p className="mt-2 text-sm text-muted-foreground">
+                            Pay with cash when your order is delivered
+                          </p>
+                        )}
+                      </div>
+                    </RadioGroup>
+                  </FormItem>
+                )}
+              />
             </CardContent>
-            <div className=" flex flex-row justify-between">
-              <Button variant="ghost" onClick={handleBack}>
-                <ChevronLeft />
-                Back to Shipping Method
+
+            <div className="flex flex-row justify-between">
+              <Button variant="ghost" type="button" onClick={handleBack}>
+                <ChevronLeft className="mr-2 h-4 w-4" />
+                Back to Shipping
               </Button>
-              <Button>Continue to Preview</Button>
+              <Button type="submit">
+                {paymentMethodValue === "cod"
+                  ? "Confirm Cash on Delivery"
+                  : "Continue to Payment"}
+              </Button>
             </div>
           </form>
         </Form>
@@ -170,4 +216,4 @@ function PaymentOpionCard() {
   );
 }
 
-export default PaymentOpionCard;
+export default PaymentOptionCard;

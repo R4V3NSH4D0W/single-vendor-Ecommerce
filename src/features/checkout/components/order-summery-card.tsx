@@ -43,7 +43,7 @@ function OrderSummeryCard() {
                 />
               </div>
 
-              <div className="flex flex-col justify-between">
+              <div className="flex flex-col justify-between w-full">
                 <div className="flex flex-row justify-between gap-4">
                   <h1 className="text-sm">{cartItem.name}</h1>
                   <label>${cartItem.price}</label>
