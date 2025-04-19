@@ -169,6 +169,78 @@ exports.Prisma.CategoryScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.OrderScalarFieldEnum = {
+  id: 'id',
+  orderNumber: 'orderNumber',
+  userId: 'userId',
+  totalAmount: 'totalAmount',
+  subtotal: 'subtotal',
+  shippingCost: 'shippingCost',
+  tax: 'tax',
+  paymentMethod: 'paymentMethod',
+  paymentStatus: 'paymentStatus',
+  shippingAddress: 'shippingAddress',
+  shippingCity: 'shippingCity',
+  shippingState: 'shippingState',
+  shippingPostalCode: 'shippingPostalCode',
+  shippingCountry: 'shippingCountry',
+  shippingMethodId: 'shippingMethodId',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  trackingNumber: 'trackingNumber',
+  cancellationReason: 'cancellationReason'
+};
+
+exports.Prisma.OrderItemScalarFieldEnum = {
+  id: 'id',
+  orderId: 'orderId',
+  productId: 'productId',
+  quantity: 'quantity',
+  price: 'price',
+  size: 'size',
+  color: 'color',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.PaymentScalarFieldEnum = {
+  id: 'id',
+  orderId: 'orderId',
+  amount: 'amount',
+  method: 'method',
+  transactionId: 'transactionId',
+  last4Digits: 'last4Digits',
+  expirationDate: 'expirationDate',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ShippingMethodScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  cost: 'cost',
+  duration: 'duration',
+  active: 'active'
+};
+
+exports.Prisma.CartScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.CartItemScalarFieldEnum = {
+  id: 'id',
+  cartId: 'cartId',
+  productId: 'productId',
+  quantity: 'quantity',
+  size: 'size',
+  color: 'color',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -189,12 +261,37 @@ exports.Role = exports.$Enums.Role = {
   MODERATOR: 'MODERATOR'
 };
 
+exports.PaymentMethod = exports.$Enums.PaymentMethod = {
+  COD: 'COD',
+  CARD: 'CARD'
+};
+
+exports.PaymentStatus = exports.$Enums.PaymentStatus = {
+  PENDING: 'PENDING',
+  COMPLETED: 'COMPLETED',
+  FAILED: 'FAILED'
+};
+
+exports.OrderStatus = exports.$Enums.OrderStatus = {
+  PENDING: 'PENDING',
+  PROCESSING: 'PROCESSING',
+  SHIPPED: 'SHIPPED',
+  DELIVERED: 'DELIVERED',
+  CANCELLED: 'CANCELLED'
+};
+
 exports.Prisma.ModelName = {
   User: 'User',
   Product: 'Product',
   Review: 'Review',
   Specification: 'Specification',
-  Category: 'Category'
+  Category: 'Category',
+  Order: 'Order',
+  OrderItem: 'OrderItem',
+  Payment: 'Payment',
+  ShippingMethod: 'ShippingMethod',
+  Cart: 'Cart',
+  CartItem: 'CartItem'
 };
 
 /**
