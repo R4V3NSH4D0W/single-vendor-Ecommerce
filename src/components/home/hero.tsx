@@ -23,7 +23,7 @@ function Hero() {
             <div className="flex flex-wrap gap-4">
               <Button asChild size="lg">
                 <Link
-                  href="/collections/new-arrivals"
+                  href="/products?sort=newest"
                   className="flex items-center"
                 >
                   <span>Shop Now</span> <ArrowRight className="h-4 w-4" />

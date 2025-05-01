@@ -1,12 +1,11 @@
-// app/api/orders/route.ts
 import { Hono } from "hono";
 import prisma from "@/lib/prisma";
 import { zValidator } from "@hono/zod-validator";
 import { z } from "zod";
+import { sessionMiddleware } from "@/lib/session-middleware";
 
 const app = new Hono()
 
-// Get all orders with search
 .get("/", async (c) => {
   const { search } = c.req.query();
   
@@ -39,7 +38,6 @@ const app = new Hono()
   }
 })
 
-// Update order status
 .patch("/:id", zValidator("json", z.object({
   status: z.enum(["PENDING", "PROCESSING", "SHIPPED", "DELIVERED", "CANCELLED"]),
   paymentStatus: z.enum(["PENDING", "COMPLETED", "FAILED"])
@@ -47,12 +45,29 @@ const app = new Hono()
   const id = c.req.param("id");
   const { status, paymentStatus } = await c.req.json();
 
+  const statusMessages: Record<string, string> = {
+    PENDING: "Order placed and pending confirmation.",
+    PROCESSING: "Order is being processed.",
+    SHIPPED: "Order has been shipped.",
+    DELIVERED: "Order delivered to customer.",
+    CANCELLED: "Order was cancelled by the user or admin.",
+  };
+
   try {
-    const updatedOrder = await prisma.order.update({
-      where: { id },
-      data: { status, paymentStatus },
-      include: { user: true, items: true }
-    });
+    const [updatedOrder] = await prisma.$transaction([
+      prisma.order.update({
+        where: { id },
+        data: { status, paymentStatus },
+        include: { user: true, items: true }
+      }),
+      prisma.orderTimelineEvent.create({
+        data: {
+          orderId: id,
+          status,
+          message: `${statusMessages[status] || `Status changed to ${status}`}, payment status is now ${paymentStatus.toLowerCase()}.`
+        }
+      })
+    ]);
 
     return c.json(updatedOrder);
   } catch (error) {
@@ -61,7 +76,6 @@ const app = new Hono()
   }
 })
 
-// Delete order
 .delete("/:id", async (c) => {
   const id = c.req.param("id");
 
@@ -77,6 +91,55 @@ const app = new Hono()
     console.error("Failed to delete order:", error);
     return c.json({ error: "Failed to delete order" }, 500);
   }
+})
+.get("/order",sessionMiddleware, async(c)=>{
+  const user = c.get("user");
+  if (!user) return c.json({ error: "Unauthorized" }, 401);
+
+  try{
+   const order = await prisma.order.findMany({
+      where: { userId: user.id },
+      include:{
+        items:{include:{
+          product:true
+        }}
+      }
+    })
+    return c.json({order},200);
+  }
+  catch(error){
+    console.error("Failed to Fetch Order",error)
+    return c.json({error: "Failed to Fetch Order"},500)
+  }
+})
+
+.get("/:id", async (c) => {
+  const id = c.req.param("id");
+
+  try {
+    const order = await prisma.order.findUnique({
+      where: { id },
+      include: {
+        user: { select: { id: true, name: true, email: true } },
+        items: { include: { product: true } },
+        shippingMethod: true,
+        payment: true,
+        OrderTimelineEvent: {
+          orderBy: { createdAt: "asc" }, 
+        },
+      },
+    });
+
+    if (!order) {
+      return c.json({ error: "Order not found" }, 404);
+    }
+
+    return c.json({ order });
+  } catch (error) {
+    console.error("Failed to fetch order:", error);
+    return c.json({ error: "Failed to fetch order" }, 500);
+  }
 });
+
 
 export default app;

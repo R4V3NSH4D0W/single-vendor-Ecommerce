@@ -39,6 +39,11 @@ export type Specification = $Result.DefaultSelection<Prisma.$SpecificationPayloa
  */
 export type Category = $Result.DefaultSelection<Prisma.$CategoryPayload>
 /**
+ * Model OrderTimelineEvent
+ * 
+ */
+export type OrderTimelineEvent = $Result.DefaultSelection<Prisma.$OrderTimelineEventPayload>
+/**
  * Model Order
  * 
  */
@@ -68,6 +73,11 @@ export type Cart = $Result.DefaultSelection<Prisma.$CartPayload>
  * 
  */
 export type CartItem = $Result.DefaultSelection<Prisma.$CartItemPayload>
+/**
+ * Model Testimonial
+ * 
+ */
+export type Testimonial = $Result.DefaultSelection<Prisma.$TestimonialPayload>
 
 /**
  * Enums
@@ -109,6 +119,16 @@ export const PaymentStatus: {
 
 export type PaymentStatus = (typeof PaymentStatus)[keyof typeof PaymentStatus]
 
+
+export const TestimonialUserRole: {
+  FASHION_ENTHUSIAST: 'FASHION_ENTHUSIAST',
+  CUSTOMER: 'CUSTOMER',
+  INFLUENCER: 'INFLUENCER',
+  OTHER: 'OTHER'
+};
+
+export type TestimonialUserRole = (typeof TestimonialUserRole)[keyof typeof TestimonialUserRole]
+
 }
 
 export type Role = $Enums.Role
@@ -126,6 +146,10 @@ export const PaymentMethod: typeof $Enums.PaymentMethod
 export type PaymentStatus = $Enums.PaymentStatus
 
 export const PaymentStatus: typeof $Enums.PaymentStatus
+
+export type TestimonialUserRole = $Enums.TestimonialUserRole
+
+export const TestimonialUserRole: typeof $Enums.TestimonialUserRole
 
 /**
  * ##  Prisma Client ʲˢ
@@ -303,6 +327,16 @@ export class PrismaClient<
   get category(): Prisma.CategoryDelegate<ExtArgs, ClientOptions>;
 
   /**
+   * `prisma.orderTimelineEvent`: Exposes CRUD operations for the **OrderTimelineEvent** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more OrderTimelineEvents
+    * const orderTimelineEvents = await prisma.orderTimelineEvent.findMany()
+    * ```
+    */
+  get orderTimelineEvent(): Prisma.OrderTimelineEventDelegate<ExtArgs, ClientOptions>;
+
+  /**
    * `prisma.order`: Exposes CRUD operations for the **Order** model.
     * Example usage:
     * ```ts
@@ -361,6 +395,16 @@ export class PrismaClient<
     * ```
     */
   get cartItem(): Prisma.CartItemDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.testimonial`: Exposes CRUD operations for the **Testimonial** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Testimonials
+    * const testimonials = await prisma.testimonial.findMany()
+    * ```
+    */
+  get testimonial(): Prisma.TestimonialDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -806,12 +850,14 @@ export namespace Prisma {
     Review: 'Review',
     Specification: 'Specification',
     Category: 'Category',
+    OrderTimelineEvent: 'OrderTimelineEvent',
     Order: 'Order',
     OrderItem: 'OrderItem',
     Payment: 'Payment',
     ShippingMethod: 'ShippingMethod',
     Cart: 'Cart',
-    CartItem: 'CartItem'
+    CartItem: 'CartItem',
+    Testimonial: 'Testimonial'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -830,7 +876,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "product" | "review" | "specification" | "category" | "order" | "orderItem" | "payment" | "shippingMethod" | "cart" | "cartItem"
+      modelProps: "user" | "product" | "review" | "specification" | "category" | "orderTimelineEvent" | "order" | "orderItem" | "payment" | "shippingMethod" | "cart" | "cartItem" | "testimonial"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1201,6 +1247,80 @@ export namespace Prisma {
           count: {
             args: Prisma.CategoryCountArgs<ExtArgs>
             result: $Utils.Optional<CategoryCountAggregateOutputType> | number
+          }
+        }
+      }
+      OrderTimelineEvent: {
+        payload: Prisma.$OrderTimelineEventPayload<ExtArgs>
+        fields: Prisma.OrderTimelineEventFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.OrderTimelineEventFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrderTimelineEventPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.OrderTimelineEventFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrderTimelineEventPayload>
+          }
+          findFirst: {
+            args: Prisma.OrderTimelineEventFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrderTimelineEventPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.OrderTimelineEventFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrderTimelineEventPayload>
+          }
+          findMany: {
+            args: Prisma.OrderTimelineEventFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrderTimelineEventPayload>[]
+          }
+          create: {
+            args: Prisma.OrderTimelineEventCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrderTimelineEventPayload>
+          }
+          createMany: {
+            args: Prisma.OrderTimelineEventCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.OrderTimelineEventCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrderTimelineEventPayload>[]
+          }
+          delete: {
+            args: Prisma.OrderTimelineEventDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrderTimelineEventPayload>
+          }
+          update: {
+            args: Prisma.OrderTimelineEventUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrderTimelineEventPayload>
+          }
+          deleteMany: {
+            args: Prisma.OrderTimelineEventDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.OrderTimelineEventUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.OrderTimelineEventUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrderTimelineEventPayload>[]
+          }
+          upsert: {
+            args: Prisma.OrderTimelineEventUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrderTimelineEventPayload>
+          }
+          aggregate: {
+            args: Prisma.OrderTimelineEventAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateOrderTimelineEvent>
+          }
+          groupBy: {
+            args: Prisma.OrderTimelineEventGroupByArgs<ExtArgs>
+            result: $Utils.Optional<OrderTimelineEventGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.OrderTimelineEventCountArgs<ExtArgs>
+            result: $Utils.Optional<OrderTimelineEventCountAggregateOutputType> | number
           }
         }
       }
@@ -1648,6 +1768,80 @@ export namespace Prisma {
           }
         }
       }
+      Testimonial: {
+        payload: Prisma.$TestimonialPayload<ExtArgs>
+        fields: Prisma.TestimonialFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.TestimonialFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TestimonialPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.TestimonialFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TestimonialPayload>
+          }
+          findFirst: {
+            args: Prisma.TestimonialFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TestimonialPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.TestimonialFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TestimonialPayload>
+          }
+          findMany: {
+            args: Prisma.TestimonialFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TestimonialPayload>[]
+          }
+          create: {
+            args: Prisma.TestimonialCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TestimonialPayload>
+          }
+          createMany: {
+            args: Prisma.TestimonialCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.TestimonialCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TestimonialPayload>[]
+          }
+          delete: {
+            args: Prisma.TestimonialDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TestimonialPayload>
+          }
+          update: {
+            args: Prisma.TestimonialUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TestimonialPayload>
+          }
+          deleteMany: {
+            args: Prisma.TestimonialDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.TestimonialUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.TestimonialUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TestimonialPayload>[]
+          }
+          upsert: {
+            args: Prisma.TestimonialUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TestimonialPayload>
+          }
+          aggregate: {
+            args: Prisma.TestimonialAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateTestimonial>
+          }
+          groupBy: {
+            args: Prisma.TestimonialGroupByArgs<ExtArgs>
+            result: $Utils.Optional<TestimonialGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.TestimonialCountArgs<ExtArgs>
+            result: $Utils.Optional<TestimonialCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1737,12 +1931,14 @@ export namespace Prisma {
     review?: ReviewOmit
     specification?: SpecificationOmit
     category?: CategoryOmit
+    orderTimelineEvent?: OrderTimelineEventOmit
     order?: OrderOmit
     orderItem?: OrderItemOmit
     payment?: PaymentOmit
     shippingMethod?: ShippingMethodOmit
     cart?: CartOmit
     cartItem?: CartItemOmit
+    testimonial?: TestimonialOmit
   }
 
   /* Types for Logging */
@@ -1976,10 +2172,12 @@ export namespace Prisma {
 
   export type OrderCountOutputType = {
     items: number
+    OrderTimelineEvent: number
   }
 
   export type OrderCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     items?: boolean | OrderCountOutputTypeCountItemsArgs
+    OrderTimelineEvent?: boolean | OrderCountOutputTypeCountOrderTimelineEventArgs
   }
 
   // Custom InputTypes
@@ -1998,6 +2196,13 @@ export namespace Prisma {
    */
   export type OrderCountOutputTypeCountItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: OrderItemWhereInput
+  }
+
+  /**
+   * OrderCountOutputType without action
+   */
+  export type OrderCountOutputTypeCountOrderTimelineEventArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: OrderTimelineEventWhereInput
   }
 
 
@@ -7768,6 +7973,1064 @@ export namespace Prisma {
 
 
   /**
+   * Model OrderTimelineEvent
+   */
+
+  export type AggregateOrderTimelineEvent = {
+    _count: OrderTimelineEventCountAggregateOutputType | null
+    _min: OrderTimelineEventMinAggregateOutputType | null
+    _max: OrderTimelineEventMaxAggregateOutputType | null
+  }
+
+  export type OrderTimelineEventMinAggregateOutputType = {
+    id: string | null
+    orderId: string | null
+    status: $Enums.OrderStatus | null
+    message: string | null
+    createdAt: Date | null
+  }
+
+  export type OrderTimelineEventMaxAggregateOutputType = {
+    id: string | null
+    orderId: string | null
+    status: $Enums.OrderStatus | null
+    message: string | null
+    createdAt: Date | null
+  }
+
+  export type OrderTimelineEventCountAggregateOutputType = {
+    id: number
+    orderId: number
+    status: number
+    message: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type OrderTimelineEventMinAggregateInputType = {
+    id?: true
+    orderId?: true
+    status?: true
+    message?: true
+    createdAt?: true
+  }
+
+  export type OrderTimelineEventMaxAggregateInputType = {
+    id?: true
+    orderId?: true
+    status?: true
+    message?: true
+    createdAt?: true
+  }
+
+  export type OrderTimelineEventCountAggregateInputType = {
+    id?: true
+    orderId?: true
+    status?: true
+    message?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type OrderTimelineEventAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which OrderTimelineEvent to aggregate.
+     */
+    where?: OrderTimelineEventWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of OrderTimelineEvents to fetch.
+     */
+    orderBy?: OrderTimelineEventOrderByWithRelationInput | OrderTimelineEventOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: OrderTimelineEventWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` OrderTimelineEvents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` OrderTimelineEvents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned OrderTimelineEvents
+    **/
+    _count?: true | OrderTimelineEventCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: OrderTimelineEventMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: OrderTimelineEventMaxAggregateInputType
+  }
+
+  export type GetOrderTimelineEventAggregateType<T extends OrderTimelineEventAggregateArgs> = {
+        [P in keyof T & keyof AggregateOrderTimelineEvent]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateOrderTimelineEvent[P]>
+      : GetScalarType<T[P], AggregateOrderTimelineEvent[P]>
+  }
+
+
+
+
+  export type OrderTimelineEventGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: OrderTimelineEventWhereInput
+    orderBy?: OrderTimelineEventOrderByWithAggregationInput | OrderTimelineEventOrderByWithAggregationInput[]
+    by: OrderTimelineEventScalarFieldEnum[] | OrderTimelineEventScalarFieldEnum
+    having?: OrderTimelineEventScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: OrderTimelineEventCountAggregateInputType | true
+    _min?: OrderTimelineEventMinAggregateInputType
+    _max?: OrderTimelineEventMaxAggregateInputType
+  }
+
+  export type OrderTimelineEventGroupByOutputType = {
+    id: string
+    orderId: string
+    status: $Enums.OrderStatus
+    message: string | null
+    createdAt: Date
+    _count: OrderTimelineEventCountAggregateOutputType | null
+    _min: OrderTimelineEventMinAggregateOutputType | null
+    _max: OrderTimelineEventMaxAggregateOutputType | null
+  }
+
+  type GetOrderTimelineEventGroupByPayload<T extends OrderTimelineEventGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<OrderTimelineEventGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof OrderTimelineEventGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], OrderTimelineEventGroupByOutputType[P]>
+            : GetScalarType<T[P], OrderTimelineEventGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type OrderTimelineEventSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    orderId?: boolean
+    status?: boolean
+    message?: boolean
+    createdAt?: boolean
+    order?: boolean | OrderDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["orderTimelineEvent"]>
+
+  export type OrderTimelineEventSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    orderId?: boolean
+    status?: boolean
+    message?: boolean
+    createdAt?: boolean
+    order?: boolean | OrderDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["orderTimelineEvent"]>
+
+  export type OrderTimelineEventSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    orderId?: boolean
+    status?: boolean
+    message?: boolean
+    createdAt?: boolean
+    order?: boolean | OrderDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["orderTimelineEvent"]>
+
+  export type OrderTimelineEventSelectScalar = {
+    id?: boolean
+    orderId?: boolean
+    status?: boolean
+    message?: boolean
+    createdAt?: boolean
+  }
+
+  export type OrderTimelineEventOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "orderId" | "status" | "message" | "createdAt", ExtArgs["result"]["orderTimelineEvent"]>
+  export type OrderTimelineEventInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    order?: boolean | OrderDefaultArgs<ExtArgs>
+  }
+  export type OrderTimelineEventIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    order?: boolean | OrderDefaultArgs<ExtArgs>
+  }
+  export type OrderTimelineEventIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    order?: boolean | OrderDefaultArgs<ExtArgs>
+  }
+
+  export type $OrderTimelineEventPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "OrderTimelineEvent"
+    objects: {
+      order: Prisma.$OrderPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      orderId: string
+      status: $Enums.OrderStatus
+      message: string | null
+      createdAt: Date
+    }, ExtArgs["result"]["orderTimelineEvent"]>
+    composites: {}
+  }
+
+  type OrderTimelineEventGetPayload<S extends boolean | null | undefined | OrderTimelineEventDefaultArgs> = $Result.GetResult<Prisma.$OrderTimelineEventPayload, S>
+
+  type OrderTimelineEventCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<OrderTimelineEventFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: OrderTimelineEventCountAggregateInputType | true
+    }
+
+  export interface OrderTimelineEventDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['OrderTimelineEvent'], meta: { name: 'OrderTimelineEvent' } }
+    /**
+     * Find zero or one OrderTimelineEvent that matches the filter.
+     * @param {OrderTimelineEventFindUniqueArgs} args - Arguments to find a OrderTimelineEvent
+     * @example
+     * // Get one OrderTimelineEvent
+     * const orderTimelineEvent = await prisma.orderTimelineEvent.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends OrderTimelineEventFindUniqueArgs>(args: SelectSubset<T, OrderTimelineEventFindUniqueArgs<ExtArgs>>): Prisma__OrderTimelineEventClient<$Result.GetResult<Prisma.$OrderTimelineEventPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one OrderTimelineEvent that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {OrderTimelineEventFindUniqueOrThrowArgs} args - Arguments to find a OrderTimelineEvent
+     * @example
+     * // Get one OrderTimelineEvent
+     * const orderTimelineEvent = await prisma.orderTimelineEvent.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends OrderTimelineEventFindUniqueOrThrowArgs>(args: SelectSubset<T, OrderTimelineEventFindUniqueOrThrowArgs<ExtArgs>>): Prisma__OrderTimelineEventClient<$Result.GetResult<Prisma.$OrderTimelineEventPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first OrderTimelineEvent that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OrderTimelineEventFindFirstArgs} args - Arguments to find a OrderTimelineEvent
+     * @example
+     * // Get one OrderTimelineEvent
+     * const orderTimelineEvent = await prisma.orderTimelineEvent.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends OrderTimelineEventFindFirstArgs>(args?: SelectSubset<T, OrderTimelineEventFindFirstArgs<ExtArgs>>): Prisma__OrderTimelineEventClient<$Result.GetResult<Prisma.$OrderTimelineEventPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first OrderTimelineEvent that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OrderTimelineEventFindFirstOrThrowArgs} args - Arguments to find a OrderTimelineEvent
+     * @example
+     * // Get one OrderTimelineEvent
+     * const orderTimelineEvent = await prisma.orderTimelineEvent.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends OrderTimelineEventFindFirstOrThrowArgs>(args?: SelectSubset<T, OrderTimelineEventFindFirstOrThrowArgs<ExtArgs>>): Prisma__OrderTimelineEventClient<$Result.GetResult<Prisma.$OrderTimelineEventPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more OrderTimelineEvents that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OrderTimelineEventFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all OrderTimelineEvents
+     * const orderTimelineEvents = await prisma.orderTimelineEvent.findMany()
+     * 
+     * // Get first 10 OrderTimelineEvents
+     * const orderTimelineEvents = await prisma.orderTimelineEvent.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const orderTimelineEventWithIdOnly = await prisma.orderTimelineEvent.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends OrderTimelineEventFindManyArgs>(args?: SelectSubset<T, OrderTimelineEventFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrderTimelineEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a OrderTimelineEvent.
+     * @param {OrderTimelineEventCreateArgs} args - Arguments to create a OrderTimelineEvent.
+     * @example
+     * // Create one OrderTimelineEvent
+     * const OrderTimelineEvent = await prisma.orderTimelineEvent.create({
+     *   data: {
+     *     // ... data to create a OrderTimelineEvent
+     *   }
+     * })
+     * 
+     */
+    create<T extends OrderTimelineEventCreateArgs>(args: SelectSubset<T, OrderTimelineEventCreateArgs<ExtArgs>>): Prisma__OrderTimelineEventClient<$Result.GetResult<Prisma.$OrderTimelineEventPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many OrderTimelineEvents.
+     * @param {OrderTimelineEventCreateManyArgs} args - Arguments to create many OrderTimelineEvents.
+     * @example
+     * // Create many OrderTimelineEvents
+     * const orderTimelineEvent = await prisma.orderTimelineEvent.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends OrderTimelineEventCreateManyArgs>(args?: SelectSubset<T, OrderTimelineEventCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many OrderTimelineEvents and returns the data saved in the database.
+     * @param {OrderTimelineEventCreateManyAndReturnArgs} args - Arguments to create many OrderTimelineEvents.
+     * @example
+     * // Create many OrderTimelineEvents
+     * const orderTimelineEvent = await prisma.orderTimelineEvent.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many OrderTimelineEvents and only return the `id`
+     * const orderTimelineEventWithIdOnly = await prisma.orderTimelineEvent.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends OrderTimelineEventCreateManyAndReturnArgs>(args?: SelectSubset<T, OrderTimelineEventCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrderTimelineEventPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a OrderTimelineEvent.
+     * @param {OrderTimelineEventDeleteArgs} args - Arguments to delete one OrderTimelineEvent.
+     * @example
+     * // Delete one OrderTimelineEvent
+     * const OrderTimelineEvent = await prisma.orderTimelineEvent.delete({
+     *   where: {
+     *     // ... filter to delete one OrderTimelineEvent
+     *   }
+     * })
+     * 
+     */
+    delete<T extends OrderTimelineEventDeleteArgs>(args: SelectSubset<T, OrderTimelineEventDeleteArgs<ExtArgs>>): Prisma__OrderTimelineEventClient<$Result.GetResult<Prisma.$OrderTimelineEventPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one OrderTimelineEvent.
+     * @param {OrderTimelineEventUpdateArgs} args - Arguments to update one OrderTimelineEvent.
+     * @example
+     * // Update one OrderTimelineEvent
+     * const orderTimelineEvent = await prisma.orderTimelineEvent.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends OrderTimelineEventUpdateArgs>(args: SelectSubset<T, OrderTimelineEventUpdateArgs<ExtArgs>>): Prisma__OrderTimelineEventClient<$Result.GetResult<Prisma.$OrderTimelineEventPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more OrderTimelineEvents.
+     * @param {OrderTimelineEventDeleteManyArgs} args - Arguments to filter OrderTimelineEvents to delete.
+     * @example
+     * // Delete a few OrderTimelineEvents
+     * const { count } = await prisma.orderTimelineEvent.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends OrderTimelineEventDeleteManyArgs>(args?: SelectSubset<T, OrderTimelineEventDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more OrderTimelineEvents.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OrderTimelineEventUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many OrderTimelineEvents
+     * const orderTimelineEvent = await prisma.orderTimelineEvent.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends OrderTimelineEventUpdateManyArgs>(args: SelectSubset<T, OrderTimelineEventUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more OrderTimelineEvents and returns the data updated in the database.
+     * @param {OrderTimelineEventUpdateManyAndReturnArgs} args - Arguments to update many OrderTimelineEvents.
+     * @example
+     * // Update many OrderTimelineEvents
+     * const orderTimelineEvent = await prisma.orderTimelineEvent.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more OrderTimelineEvents and only return the `id`
+     * const orderTimelineEventWithIdOnly = await prisma.orderTimelineEvent.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends OrderTimelineEventUpdateManyAndReturnArgs>(args: SelectSubset<T, OrderTimelineEventUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrderTimelineEventPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one OrderTimelineEvent.
+     * @param {OrderTimelineEventUpsertArgs} args - Arguments to update or create a OrderTimelineEvent.
+     * @example
+     * // Update or create a OrderTimelineEvent
+     * const orderTimelineEvent = await prisma.orderTimelineEvent.upsert({
+     *   create: {
+     *     // ... data to create a OrderTimelineEvent
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the OrderTimelineEvent we want to update
+     *   }
+     * })
+     */
+    upsert<T extends OrderTimelineEventUpsertArgs>(args: SelectSubset<T, OrderTimelineEventUpsertArgs<ExtArgs>>): Prisma__OrderTimelineEventClient<$Result.GetResult<Prisma.$OrderTimelineEventPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of OrderTimelineEvents.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OrderTimelineEventCountArgs} args - Arguments to filter OrderTimelineEvents to count.
+     * @example
+     * // Count the number of OrderTimelineEvents
+     * const count = await prisma.orderTimelineEvent.count({
+     *   where: {
+     *     // ... the filter for the OrderTimelineEvents we want to count
+     *   }
+     * })
+    **/
+    count<T extends OrderTimelineEventCountArgs>(
+      args?: Subset<T, OrderTimelineEventCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], OrderTimelineEventCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a OrderTimelineEvent.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OrderTimelineEventAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends OrderTimelineEventAggregateArgs>(args: Subset<T, OrderTimelineEventAggregateArgs>): Prisma.PrismaPromise<GetOrderTimelineEventAggregateType<T>>
+
+    /**
+     * Group by OrderTimelineEvent.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OrderTimelineEventGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends OrderTimelineEventGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: OrderTimelineEventGroupByArgs['orderBy'] }
+        : { orderBy?: OrderTimelineEventGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, OrderTimelineEventGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetOrderTimelineEventGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the OrderTimelineEvent model
+   */
+  readonly fields: OrderTimelineEventFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for OrderTimelineEvent.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__OrderTimelineEventClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    order<T extends OrderDefaultArgs<ExtArgs> = {}>(args?: Subset<T, OrderDefaultArgs<ExtArgs>>): Prisma__OrderClient<$Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the OrderTimelineEvent model
+   */
+  interface OrderTimelineEventFieldRefs {
+    readonly id: FieldRef<"OrderTimelineEvent", 'String'>
+    readonly orderId: FieldRef<"OrderTimelineEvent", 'String'>
+    readonly status: FieldRef<"OrderTimelineEvent", 'OrderStatus'>
+    readonly message: FieldRef<"OrderTimelineEvent", 'String'>
+    readonly createdAt: FieldRef<"OrderTimelineEvent", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * OrderTimelineEvent findUnique
+   */
+  export type OrderTimelineEventFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrderTimelineEvent
+     */
+    select?: OrderTimelineEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OrderTimelineEvent
+     */
+    omit?: OrderTimelineEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderTimelineEventInclude<ExtArgs> | null
+    /**
+     * Filter, which OrderTimelineEvent to fetch.
+     */
+    where: OrderTimelineEventWhereUniqueInput
+  }
+
+  /**
+   * OrderTimelineEvent findUniqueOrThrow
+   */
+  export type OrderTimelineEventFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrderTimelineEvent
+     */
+    select?: OrderTimelineEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OrderTimelineEvent
+     */
+    omit?: OrderTimelineEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderTimelineEventInclude<ExtArgs> | null
+    /**
+     * Filter, which OrderTimelineEvent to fetch.
+     */
+    where: OrderTimelineEventWhereUniqueInput
+  }
+
+  /**
+   * OrderTimelineEvent findFirst
+   */
+  export type OrderTimelineEventFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrderTimelineEvent
+     */
+    select?: OrderTimelineEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OrderTimelineEvent
+     */
+    omit?: OrderTimelineEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderTimelineEventInclude<ExtArgs> | null
+    /**
+     * Filter, which OrderTimelineEvent to fetch.
+     */
+    where?: OrderTimelineEventWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of OrderTimelineEvents to fetch.
+     */
+    orderBy?: OrderTimelineEventOrderByWithRelationInput | OrderTimelineEventOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for OrderTimelineEvents.
+     */
+    cursor?: OrderTimelineEventWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` OrderTimelineEvents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` OrderTimelineEvents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of OrderTimelineEvents.
+     */
+    distinct?: OrderTimelineEventScalarFieldEnum | OrderTimelineEventScalarFieldEnum[]
+  }
+
+  /**
+   * OrderTimelineEvent findFirstOrThrow
+   */
+  export type OrderTimelineEventFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrderTimelineEvent
+     */
+    select?: OrderTimelineEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OrderTimelineEvent
+     */
+    omit?: OrderTimelineEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderTimelineEventInclude<ExtArgs> | null
+    /**
+     * Filter, which OrderTimelineEvent to fetch.
+     */
+    where?: OrderTimelineEventWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of OrderTimelineEvents to fetch.
+     */
+    orderBy?: OrderTimelineEventOrderByWithRelationInput | OrderTimelineEventOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for OrderTimelineEvents.
+     */
+    cursor?: OrderTimelineEventWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` OrderTimelineEvents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` OrderTimelineEvents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of OrderTimelineEvents.
+     */
+    distinct?: OrderTimelineEventScalarFieldEnum | OrderTimelineEventScalarFieldEnum[]
+  }
+
+  /**
+   * OrderTimelineEvent findMany
+   */
+  export type OrderTimelineEventFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrderTimelineEvent
+     */
+    select?: OrderTimelineEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OrderTimelineEvent
+     */
+    omit?: OrderTimelineEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderTimelineEventInclude<ExtArgs> | null
+    /**
+     * Filter, which OrderTimelineEvents to fetch.
+     */
+    where?: OrderTimelineEventWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of OrderTimelineEvents to fetch.
+     */
+    orderBy?: OrderTimelineEventOrderByWithRelationInput | OrderTimelineEventOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing OrderTimelineEvents.
+     */
+    cursor?: OrderTimelineEventWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` OrderTimelineEvents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` OrderTimelineEvents.
+     */
+    skip?: number
+    distinct?: OrderTimelineEventScalarFieldEnum | OrderTimelineEventScalarFieldEnum[]
+  }
+
+  /**
+   * OrderTimelineEvent create
+   */
+  export type OrderTimelineEventCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrderTimelineEvent
+     */
+    select?: OrderTimelineEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OrderTimelineEvent
+     */
+    omit?: OrderTimelineEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderTimelineEventInclude<ExtArgs> | null
+    /**
+     * The data needed to create a OrderTimelineEvent.
+     */
+    data: XOR<OrderTimelineEventCreateInput, OrderTimelineEventUncheckedCreateInput>
+  }
+
+  /**
+   * OrderTimelineEvent createMany
+   */
+  export type OrderTimelineEventCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many OrderTimelineEvents.
+     */
+    data: OrderTimelineEventCreateManyInput | OrderTimelineEventCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * OrderTimelineEvent createManyAndReturn
+   */
+  export type OrderTimelineEventCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrderTimelineEvent
+     */
+    select?: OrderTimelineEventSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the OrderTimelineEvent
+     */
+    omit?: OrderTimelineEventOmit<ExtArgs> | null
+    /**
+     * The data used to create many OrderTimelineEvents.
+     */
+    data: OrderTimelineEventCreateManyInput | OrderTimelineEventCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderTimelineEventIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * OrderTimelineEvent update
+   */
+  export type OrderTimelineEventUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrderTimelineEvent
+     */
+    select?: OrderTimelineEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OrderTimelineEvent
+     */
+    omit?: OrderTimelineEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderTimelineEventInclude<ExtArgs> | null
+    /**
+     * The data needed to update a OrderTimelineEvent.
+     */
+    data: XOR<OrderTimelineEventUpdateInput, OrderTimelineEventUncheckedUpdateInput>
+    /**
+     * Choose, which OrderTimelineEvent to update.
+     */
+    where: OrderTimelineEventWhereUniqueInput
+  }
+
+  /**
+   * OrderTimelineEvent updateMany
+   */
+  export type OrderTimelineEventUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update OrderTimelineEvents.
+     */
+    data: XOR<OrderTimelineEventUpdateManyMutationInput, OrderTimelineEventUncheckedUpdateManyInput>
+    /**
+     * Filter which OrderTimelineEvents to update
+     */
+    where?: OrderTimelineEventWhereInput
+    /**
+     * Limit how many OrderTimelineEvents to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * OrderTimelineEvent updateManyAndReturn
+   */
+  export type OrderTimelineEventUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrderTimelineEvent
+     */
+    select?: OrderTimelineEventSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the OrderTimelineEvent
+     */
+    omit?: OrderTimelineEventOmit<ExtArgs> | null
+    /**
+     * The data used to update OrderTimelineEvents.
+     */
+    data: XOR<OrderTimelineEventUpdateManyMutationInput, OrderTimelineEventUncheckedUpdateManyInput>
+    /**
+     * Filter which OrderTimelineEvents to update
+     */
+    where?: OrderTimelineEventWhereInput
+    /**
+     * Limit how many OrderTimelineEvents to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderTimelineEventIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * OrderTimelineEvent upsert
+   */
+  export type OrderTimelineEventUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrderTimelineEvent
+     */
+    select?: OrderTimelineEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OrderTimelineEvent
+     */
+    omit?: OrderTimelineEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderTimelineEventInclude<ExtArgs> | null
+    /**
+     * The filter to search for the OrderTimelineEvent to update in case it exists.
+     */
+    where: OrderTimelineEventWhereUniqueInput
+    /**
+     * In case the OrderTimelineEvent found by the `where` argument doesn't exist, create a new OrderTimelineEvent with this data.
+     */
+    create: XOR<OrderTimelineEventCreateInput, OrderTimelineEventUncheckedCreateInput>
+    /**
+     * In case the OrderTimelineEvent was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<OrderTimelineEventUpdateInput, OrderTimelineEventUncheckedUpdateInput>
+  }
+
+  /**
+   * OrderTimelineEvent delete
+   */
+  export type OrderTimelineEventDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrderTimelineEvent
+     */
+    select?: OrderTimelineEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OrderTimelineEvent
+     */
+    omit?: OrderTimelineEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderTimelineEventInclude<ExtArgs> | null
+    /**
+     * Filter which OrderTimelineEvent to delete.
+     */
+    where: OrderTimelineEventWhereUniqueInput
+  }
+
+  /**
+   * OrderTimelineEvent deleteMany
+   */
+  export type OrderTimelineEventDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which OrderTimelineEvents to delete
+     */
+    where?: OrderTimelineEventWhereInput
+    /**
+     * Limit how many OrderTimelineEvents to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * OrderTimelineEvent without action
+   */
+  export type OrderTimelineEventDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrderTimelineEvent
+     */
+    select?: OrderTimelineEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OrderTimelineEvent
+     */
+    omit?: OrderTimelineEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderTimelineEventInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Model Order
    */
 
@@ -8101,6 +9364,7 @@ export namespace Prisma {
     items?: boolean | Order$itemsArgs<ExtArgs>
     shippingMethod?: boolean | Order$shippingMethodArgs<ExtArgs>
     payment?: boolean | Order$paymentArgs<ExtArgs>
+    OrderTimelineEvent?: boolean | Order$OrderTimelineEventArgs<ExtArgs>
     _count?: boolean | OrderCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["order"]>
 
@@ -8183,6 +9447,7 @@ export namespace Prisma {
     items?: boolean | Order$itemsArgs<ExtArgs>
     shippingMethod?: boolean | Order$shippingMethodArgs<ExtArgs>
     payment?: boolean | Order$paymentArgs<ExtArgs>
+    OrderTimelineEvent?: boolean | Order$OrderTimelineEventArgs<ExtArgs>
     _count?: boolean | OrderCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type OrderIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -8201,6 +9466,7 @@ export namespace Prisma {
       items: Prisma.$OrderItemPayload<ExtArgs>[]
       shippingMethod: Prisma.$ShippingMethodPayload<ExtArgs> | null
       payment: Prisma.$PaymentPayload<ExtArgs> | null
+      OrderTimelineEvent: Prisma.$OrderTimelineEventPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -8621,6 +9887,7 @@ export namespace Prisma {
     items<T extends Order$itemsArgs<ExtArgs> = {}>(args?: Subset<T, Order$itemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrderItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     shippingMethod<T extends Order$shippingMethodArgs<ExtArgs> = {}>(args?: Subset<T, Order$shippingMethodArgs<ExtArgs>>): Prisma__ShippingMethodClient<$Result.GetResult<Prisma.$ShippingMethodPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     payment<T extends Order$paymentArgs<ExtArgs> = {}>(args?: Subset<T, Order$paymentArgs<ExtArgs>>): Prisma__PaymentClient<$Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    OrderTimelineEvent<T extends Order$OrderTimelineEventArgs<ExtArgs> = {}>(args?: Subset<T, Order$OrderTimelineEventArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrderTimelineEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -9125,6 +10392,30 @@ export namespace Prisma {
      */
     include?: PaymentInclude<ExtArgs> | null
     where?: PaymentWhereInput
+  }
+
+  /**
+   * Order.OrderTimelineEvent
+   */
+  export type Order$OrderTimelineEventArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrderTimelineEvent
+     */
+    select?: OrderTimelineEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OrderTimelineEvent
+     */
+    omit?: OrderTimelineEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderTimelineEventInclude<ExtArgs> | null
+    where?: OrderTimelineEventWhereInput
+    orderBy?: OrderTimelineEventOrderByWithRelationInput | OrderTimelineEventOrderByWithRelationInput[]
+    cursor?: OrderTimelineEventWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: OrderTimelineEventScalarFieldEnum | OrderTimelineEventScalarFieldEnum[]
   }
 
   /**
@@ -14752,6 +16043,1074 @@ export namespace Prisma {
 
 
   /**
+   * Model Testimonial
+   */
+
+  export type AggregateTestimonial = {
+    _count: TestimonialCountAggregateOutputType | null
+    _avg: TestimonialAvgAggregateOutputType | null
+    _sum: TestimonialSumAggregateOutputType | null
+    _min: TestimonialMinAggregateOutputType | null
+    _max: TestimonialMaxAggregateOutputType | null
+  }
+
+  export type TestimonialAvgAggregateOutputType = {
+    rating: number | null
+  }
+
+  export type TestimonialSumAggregateOutputType = {
+    rating: number | null
+  }
+
+  export type TestimonialMinAggregateOutputType = {
+    id: string | null
+    name: string | null
+    message: string | null
+    rating: number | null
+    image: string | null
+    role: $Enums.TestimonialUserRole | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type TestimonialMaxAggregateOutputType = {
+    id: string | null
+    name: string | null
+    message: string | null
+    rating: number | null
+    image: string | null
+    role: $Enums.TestimonialUserRole | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type TestimonialCountAggregateOutputType = {
+    id: number
+    name: number
+    message: number
+    rating: number
+    image: number
+    role: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type TestimonialAvgAggregateInputType = {
+    rating?: true
+  }
+
+  export type TestimonialSumAggregateInputType = {
+    rating?: true
+  }
+
+  export type TestimonialMinAggregateInputType = {
+    id?: true
+    name?: true
+    message?: true
+    rating?: true
+    image?: true
+    role?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type TestimonialMaxAggregateInputType = {
+    id?: true
+    name?: true
+    message?: true
+    rating?: true
+    image?: true
+    role?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type TestimonialCountAggregateInputType = {
+    id?: true
+    name?: true
+    message?: true
+    rating?: true
+    image?: true
+    role?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type TestimonialAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Testimonial to aggregate.
+     */
+    where?: TestimonialWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Testimonials to fetch.
+     */
+    orderBy?: TestimonialOrderByWithRelationInput | TestimonialOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: TestimonialWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Testimonials from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Testimonials.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Testimonials
+    **/
+    _count?: true | TestimonialCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: TestimonialAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: TestimonialSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: TestimonialMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: TestimonialMaxAggregateInputType
+  }
+
+  export type GetTestimonialAggregateType<T extends TestimonialAggregateArgs> = {
+        [P in keyof T & keyof AggregateTestimonial]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateTestimonial[P]>
+      : GetScalarType<T[P], AggregateTestimonial[P]>
+  }
+
+
+
+
+  export type TestimonialGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TestimonialWhereInput
+    orderBy?: TestimonialOrderByWithAggregationInput | TestimonialOrderByWithAggregationInput[]
+    by: TestimonialScalarFieldEnum[] | TestimonialScalarFieldEnum
+    having?: TestimonialScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: TestimonialCountAggregateInputType | true
+    _avg?: TestimonialAvgAggregateInputType
+    _sum?: TestimonialSumAggregateInputType
+    _min?: TestimonialMinAggregateInputType
+    _max?: TestimonialMaxAggregateInputType
+  }
+
+  export type TestimonialGroupByOutputType = {
+    id: string
+    name: string
+    message: string
+    rating: number
+    image: string | null
+    role: $Enums.TestimonialUserRole
+    createdAt: Date
+    updatedAt: Date
+    _count: TestimonialCountAggregateOutputType | null
+    _avg: TestimonialAvgAggregateOutputType | null
+    _sum: TestimonialSumAggregateOutputType | null
+    _min: TestimonialMinAggregateOutputType | null
+    _max: TestimonialMaxAggregateOutputType | null
+  }
+
+  type GetTestimonialGroupByPayload<T extends TestimonialGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<TestimonialGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof TestimonialGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], TestimonialGroupByOutputType[P]>
+            : GetScalarType<T[P], TestimonialGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type TestimonialSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    message?: boolean
+    rating?: boolean
+    image?: boolean
+    role?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["testimonial"]>
+
+  export type TestimonialSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    message?: boolean
+    rating?: boolean
+    image?: boolean
+    role?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["testimonial"]>
+
+  export type TestimonialSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    message?: boolean
+    rating?: boolean
+    image?: boolean
+    role?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["testimonial"]>
+
+  export type TestimonialSelectScalar = {
+    id?: boolean
+    name?: boolean
+    message?: boolean
+    rating?: boolean
+    image?: boolean
+    role?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type TestimonialOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "message" | "rating" | "image" | "role" | "createdAt" | "updatedAt", ExtArgs["result"]["testimonial"]>
+
+  export type $TestimonialPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Testimonial"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      name: string
+      message: string
+      rating: number
+      image: string | null
+      role: $Enums.TestimonialUserRole
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["testimonial"]>
+    composites: {}
+  }
+
+  type TestimonialGetPayload<S extends boolean | null | undefined | TestimonialDefaultArgs> = $Result.GetResult<Prisma.$TestimonialPayload, S>
+
+  type TestimonialCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<TestimonialFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: TestimonialCountAggregateInputType | true
+    }
+
+  export interface TestimonialDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Testimonial'], meta: { name: 'Testimonial' } }
+    /**
+     * Find zero or one Testimonial that matches the filter.
+     * @param {TestimonialFindUniqueArgs} args - Arguments to find a Testimonial
+     * @example
+     * // Get one Testimonial
+     * const testimonial = await prisma.testimonial.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends TestimonialFindUniqueArgs>(args: SelectSubset<T, TestimonialFindUniqueArgs<ExtArgs>>): Prisma__TestimonialClient<$Result.GetResult<Prisma.$TestimonialPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Testimonial that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {TestimonialFindUniqueOrThrowArgs} args - Arguments to find a Testimonial
+     * @example
+     * // Get one Testimonial
+     * const testimonial = await prisma.testimonial.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends TestimonialFindUniqueOrThrowArgs>(args: SelectSubset<T, TestimonialFindUniqueOrThrowArgs<ExtArgs>>): Prisma__TestimonialClient<$Result.GetResult<Prisma.$TestimonialPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Testimonial that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TestimonialFindFirstArgs} args - Arguments to find a Testimonial
+     * @example
+     * // Get one Testimonial
+     * const testimonial = await prisma.testimonial.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends TestimonialFindFirstArgs>(args?: SelectSubset<T, TestimonialFindFirstArgs<ExtArgs>>): Prisma__TestimonialClient<$Result.GetResult<Prisma.$TestimonialPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Testimonial that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TestimonialFindFirstOrThrowArgs} args - Arguments to find a Testimonial
+     * @example
+     * // Get one Testimonial
+     * const testimonial = await prisma.testimonial.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends TestimonialFindFirstOrThrowArgs>(args?: SelectSubset<T, TestimonialFindFirstOrThrowArgs<ExtArgs>>): Prisma__TestimonialClient<$Result.GetResult<Prisma.$TestimonialPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Testimonials that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TestimonialFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Testimonials
+     * const testimonials = await prisma.testimonial.findMany()
+     * 
+     * // Get first 10 Testimonials
+     * const testimonials = await prisma.testimonial.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const testimonialWithIdOnly = await prisma.testimonial.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends TestimonialFindManyArgs>(args?: SelectSubset<T, TestimonialFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TestimonialPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Testimonial.
+     * @param {TestimonialCreateArgs} args - Arguments to create a Testimonial.
+     * @example
+     * // Create one Testimonial
+     * const Testimonial = await prisma.testimonial.create({
+     *   data: {
+     *     // ... data to create a Testimonial
+     *   }
+     * })
+     * 
+     */
+    create<T extends TestimonialCreateArgs>(args: SelectSubset<T, TestimonialCreateArgs<ExtArgs>>): Prisma__TestimonialClient<$Result.GetResult<Prisma.$TestimonialPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Testimonials.
+     * @param {TestimonialCreateManyArgs} args - Arguments to create many Testimonials.
+     * @example
+     * // Create many Testimonials
+     * const testimonial = await prisma.testimonial.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends TestimonialCreateManyArgs>(args?: SelectSubset<T, TestimonialCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Testimonials and returns the data saved in the database.
+     * @param {TestimonialCreateManyAndReturnArgs} args - Arguments to create many Testimonials.
+     * @example
+     * // Create many Testimonials
+     * const testimonial = await prisma.testimonial.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Testimonials and only return the `id`
+     * const testimonialWithIdOnly = await prisma.testimonial.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends TestimonialCreateManyAndReturnArgs>(args?: SelectSubset<T, TestimonialCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TestimonialPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Testimonial.
+     * @param {TestimonialDeleteArgs} args - Arguments to delete one Testimonial.
+     * @example
+     * // Delete one Testimonial
+     * const Testimonial = await prisma.testimonial.delete({
+     *   where: {
+     *     // ... filter to delete one Testimonial
+     *   }
+     * })
+     * 
+     */
+    delete<T extends TestimonialDeleteArgs>(args: SelectSubset<T, TestimonialDeleteArgs<ExtArgs>>): Prisma__TestimonialClient<$Result.GetResult<Prisma.$TestimonialPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Testimonial.
+     * @param {TestimonialUpdateArgs} args - Arguments to update one Testimonial.
+     * @example
+     * // Update one Testimonial
+     * const testimonial = await prisma.testimonial.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends TestimonialUpdateArgs>(args: SelectSubset<T, TestimonialUpdateArgs<ExtArgs>>): Prisma__TestimonialClient<$Result.GetResult<Prisma.$TestimonialPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Testimonials.
+     * @param {TestimonialDeleteManyArgs} args - Arguments to filter Testimonials to delete.
+     * @example
+     * // Delete a few Testimonials
+     * const { count } = await prisma.testimonial.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends TestimonialDeleteManyArgs>(args?: SelectSubset<T, TestimonialDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Testimonials.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TestimonialUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Testimonials
+     * const testimonial = await prisma.testimonial.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends TestimonialUpdateManyArgs>(args: SelectSubset<T, TestimonialUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Testimonials and returns the data updated in the database.
+     * @param {TestimonialUpdateManyAndReturnArgs} args - Arguments to update many Testimonials.
+     * @example
+     * // Update many Testimonials
+     * const testimonial = await prisma.testimonial.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Testimonials and only return the `id`
+     * const testimonialWithIdOnly = await prisma.testimonial.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends TestimonialUpdateManyAndReturnArgs>(args: SelectSubset<T, TestimonialUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TestimonialPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Testimonial.
+     * @param {TestimonialUpsertArgs} args - Arguments to update or create a Testimonial.
+     * @example
+     * // Update or create a Testimonial
+     * const testimonial = await prisma.testimonial.upsert({
+     *   create: {
+     *     // ... data to create a Testimonial
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Testimonial we want to update
+     *   }
+     * })
+     */
+    upsert<T extends TestimonialUpsertArgs>(args: SelectSubset<T, TestimonialUpsertArgs<ExtArgs>>): Prisma__TestimonialClient<$Result.GetResult<Prisma.$TestimonialPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Testimonials.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TestimonialCountArgs} args - Arguments to filter Testimonials to count.
+     * @example
+     * // Count the number of Testimonials
+     * const count = await prisma.testimonial.count({
+     *   where: {
+     *     // ... the filter for the Testimonials we want to count
+     *   }
+     * })
+    **/
+    count<T extends TestimonialCountArgs>(
+      args?: Subset<T, TestimonialCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], TestimonialCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Testimonial.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TestimonialAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends TestimonialAggregateArgs>(args: Subset<T, TestimonialAggregateArgs>): Prisma.PrismaPromise<GetTestimonialAggregateType<T>>
+
+    /**
+     * Group by Testimonial.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TestimonialGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends TestimonialGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: TestimonialGroupByArgs['orderBy'] }
+        : { orderBy?: TestimonialGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, TestimonialGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTestimonialGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Testimonial model
+   */
+  readonly fields: TestimonialFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Testimonial.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__TestimonialClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Testimonial model
+   */
+  interface TestimonialFieldRefs {
+    readonly id: FieldRef<"Testimonial", 'String'>
+    readonly name: FieldRef<"Testimonial", 'String'>
+    readonly message: FieldRef<"Testimonial", 'String'>
+    readonly rating: FieldRef<"Testimonial", 'Int'>
+    readonly image: FieldRef<"Testimonial", 'String'>
+    readonly role: FieldRef<"Testimonial", 'TestimonialUserRole'>
+    readonly createdAt: FieldRef<"Testimonial", 'DateTime'>
+    readonly updatedAt: FieldRef<"Testimonial", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Testimonial findUnique
+   */
+  export type TestimonialFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Testimonial
+     */
+    select?: TestimonialSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Testimonial
+     */
+    omit?: TestimonialOmit<ExtArgs> | null
+    /**
+     * Filter, which Testimonial to fetch.
+     */
+    where: TestimonialWhereUniqueInput
+  }
+
+  /**
+   * Testimonial findUniqueOrThrow
+   */
+  export type TestimonialFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Testimonial
+     */
+    select?: TestimonialSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Testimonial
+     */
+    omit?: TestimonialOmit<ExtArgs> | null
+    /**
+     * Filter, which Testimonial to fetch.
+     */
+    where: TestimonialWhereUniqueInput
+  }
+
+  /**
+   * Testimonial findFirst
+   */
+  export type TestimonialFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Testimonial
+     */
+    select?: TestimonialSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Testimonial
+     */
+    omit?: TestimonialOmit<ExtArgs> | null
+    /**
+     * Filter, which Testimonial to fetch.
+     */
+    where?: TestimonialWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Testimonials to fetch.
+     */
+    orderBy?: TestimonialOrderByWithRelationInput | TestimonialOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Testimonials.
+     */
+    cursor?: TestimonialWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Testimonials from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Testimonials.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Testimonials.
+     */
+    distinct?: TestimonialScalarFieldEnum | TestimonialScalarFieldEnum[]
+  }
+
+  /**
+   * Testimonial findFirstOrThrow
+   */
+  export type TestimonialFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Testimonial
+     */
+    select?: TestimonialSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Testimonial
+     */
+    omit?: TestimonialOmit<ExtArgs> | null
+    /**
+     * Filter, which Testimonial to fetch.
+     */
+    where?: TestimonialWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Testimonials to fetch.
+     */
+    orderBy?: TestimonialOrderByWithRelationInput | TestimonialOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Testimonials.
+     */
+    cursor?: TestimonialWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Testimonials from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Testimonials.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Testimonials.
+     */
+    distinct?: TestimonialScalarFieldEnum | TestimonialScalarFieldEnum[]
+  }
+
+  /**
+   * Testimonial findMany
+   */
+  export type TestimonialFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Testimonial
+     */
+    select?: TestimonialSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Testimonial
+     */
+    omit?: TestimonialOmit<ExtArgs> | null
+    /**
+     * Filter, which Testimonials to fetch.
+     */
+    where?: TestimonialWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Testimonials to fetch.
+     */
+    orderBy?: TestimonialOrderByWithRelationInput | TestimonialOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Testimonials.
+     */
+    cursor?: TestimonialWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Testimonials from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Testimonials.
+     */
+    skip?: number
+    distinct?: TestimonialScalarFieldEnum | TestimonialScalarFieldEnum[]
+  }
+
+  /**
+   * Testimonial create
+   */
+  export type TestimonialCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Testimonial
+     */
+    select?: TestimonialSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Testimonial
+     */
+    omit?: TestimonialOmit<ExtArgs> | null
+    /**
+     * The data needed to create a Testimonial.
+     */
+    data: XOR<TestimonialCreateInput, TestimonialUncheckedCreateInput>
+  }
+
+  /**
+   * Testimonial createMany
+   */
+  export type TestimonialCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Testimonials.
+     */
+    data: TestimonialCreateManyInput | TestimonialCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Testimonial createManyAndReturn
+   */
+  export type TestimonialCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Testimonial
+     */
+    select?: TestimonialSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Testimonial
+     */
+    omit?: TestimonialOmit<ExtArgs> | null
+    /**
+     * The data used to create many Testimonials.
+     */
+    data: TestimonialCreateManyInput | TestimonialCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Testimonial update
+   */
+  export type TestimonialUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Testimonial
+     */
+    select?: TestimonialSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Testimonial
+     */
+    omit?: TestimonialOmit<ExtArgs> | null
+    /**
+     * The data needed to update a Testimonial.
+     */
+    data: XOR<TestimonialUpdateInput, TestimonialUncheckedUpdateInput>
+    /**
+     * Choose, which Testimonial to update.
+     */
+    where: TestimonialWhereUniqueInput
+  }
+
+  /**
+   * Testimonial updateMany
+   */
+  export type TestimonialUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Testimonials.
+     */
+    data: XOR<TestimonialUpdateManyMutationInput, TestimonialUncheckedUpdateManyInput>
+    /**
+     * Filter which Testimonials to update
+     */
+    where?: TestimonialWhereInput
+    /**
+     * Limit how many Testimonials to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Testimonial updateManyAndReturn
+   */
+  export type TestimonialUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Testimonial
+     */
+    select?: TestimonialSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Testimonial
+     */
+    omit?: TestimonialOmit<ExtArgs> | null
+    /**
+     * The data used to update Testimonials.
+     */
+    data: XOR<TestimonialUpdateManyMutationInput, TestimonialUncheckedUpdateManyInput>
+    /**
+     * Filter which Testimonials to update
+     */
+    where?: TestimonialWhereInput
+    /**
+     * Limit how many Testimonials to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Testimonial upsert
+   */
+  export type TestimonialUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Testimonial
+     */
+    select?: TestimonialSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Testimonial
+     */
+    omit?: TestimonialOmit<ExtArgs> | null
+    /**
+     * The filter to search for the Testimonial to update in case it exists.
+     */
+    where: TestimonialWhereUniqueInput
+    /**
+     * In case the Testimonial found by the `where` argument doesn't exist, create a new Testimonial with this data.
+     */
+    create: XOR<TestimonialCreateInput, TestimonialUncheckedCreateInput>
+    /**
+     * In case the Testimonial was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<TestimonialUpdateInput, TestimonialUncheckedUpdateInput>
+  }
+
+  /**
+   * Testimonial delete
+   */
+  export type TestimonialDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Testimonial
+     */
+    select?: TestimonialSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Testimonial
+     */
+    omit?: TestimonialOmit<ExtArgs> | null
+    /**
+     * Filter which Testimonial to delete.
+     */
+    where: TestimonialWhereUniqueInput
+  }
+
+  /**
+   * Testimonial deleteMany
+   */
+  export type TestimonialDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Testimonials to delete
+     */
+    where?: TestimonialWhereInput
+    /**
+     * Limit how many Testimonials to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Testimonial without action
+   */
+  export type TestimonialDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Testimonial
+     */
+    select?: TestimonialSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Testimonial
+     */
+    omit?: TestimonialOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -14830,6 +17189,17 @@ export namespace Prisma {
   };
 
   export type CategoryScalarFieldEnum = (typeof CategoryScalarFieldEnum)[keyof typeof CategoryScalarFieldEnum]
+
+
+  export const OrderTimelineEventScalarFieldEnum: {
+    id: 'id',
+    orderId: 'orderId',
+    status: 'status',
+    message: 'message',
+    createdAt: 'createdAt'
+  };
+
+  export type OrderTimelineEventScalarFieldEnum = (typeof OrderTimelineEventScalarFieldEnum)[keyof typeof OrderTimelineEventScalarFieldEnum]
 
 
   export const OrderScalarFieldEnum: {
@@ -14920,6 +17290,20 @@ export namespace Prisma {
   };
 
   export type CartItemScalarFieldEnum = (typeof CartItemScalarFieldEnum)[keyof typeof CartItemScalarFieldEnum]
+
+
+  export const TestimonialScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    message: 'message',
+    rating: 'rating',
+    image: 'image',
+    role: 'role',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type TestimonialScalarFieldEnum = (typeof TestimonialScalarFieldEnum)[keyof typeof TestimonialScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -15029,6 +17413,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'OrderStatus'
+   */
+  export type EnumOrderStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'OrderStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'OrderStatus[]'
+   */
+  export type ListEnumOrderStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'OrderStatus[]'>
+    
+
+
+  /**
    * Reference to a field of type 'PaymentMethod'
    */
   export type EnumPaymentMethodFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PaymentMethod'>
@@ -15057,16 +17455,16 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'OrderStatus'
+   * Reference to a field of type 'TestimonialUserRole'
    */
-  export type EnumOrderStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'OrderStatus'>
+  export type EnumTestimonialUserRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TestimonialUserRole'>
     
 
 
   /**
-   * Reference to a field of type 'OrderStatus[]'
+   * Reference to a field of type 'TestimonialUserRole[]'
    */
-  export type ListEnumOrderStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'OrderStatus[]'>
+  export type ListEnumTestimonialUserRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TestimonialUserRole[]'>
     
   /**
    * Deep Input Types
@@ -15433,6 +17831,61 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"Category"> | Date | string
   }
 
+  export type OrderTimelineEventWhereInput = {
+    AND?: OrderTimelineEventWhereInput | OrderTimelineEventWhereInput[]
+    OR?: OrderTimelineEventWhereInput[]
+    NOT?: OrderTimelineEventWhereInput | OrderTimelineEventWhereInput[]
+    id?: StringFilter<"OrderTimelineEvent"> | string
+    orderId?: StringFilter<"OrderTimelineEvent"> | string
+    status?: EnumOrderStatusFilter<"OrderTimelineEvent"> | $Enums.OrderStatus
+    message?: StringNullableFilter<"OrderTimelineEvent"> | string | null
+    createdAt?: DateTimeFilter<"OrderTimelineEvent"> | Date | string
+    order?: XOR<OrderScalarRelationFilter, OrderWhereInput>
+  }
+
+  export type OrderTimelineEventOrderByWithRelationInput = {
+    id?: SortOrder
+    orderId?: SortOrder
+    status?: SortOrder
+    message?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    order?: OrderOrderByWithRelationInput
+  }
+
+  export type OrderTimelineEventWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: OrderTimelineEventWhereInput | OrderTimelineEventWhereInput[]
+    OR?: OrderTimelineEventWhereInput[]
+    NOT?: OrderTimelineEventWhereInput | OrderTimelineEventWhereInput[]
+    orderId?: StringFilter<"OrderTimelineEvent"> | string
+    status?: EnumOrderStatusFilter<"OrderTimelineEvent"> | $Enums.OrderStatus
+    message?: StringNullableFilter<"OrderTimelineEvent"> | string | null
+    createdAt?: DateTimeFilter<"OrderTimelineEvent"> | Date | string
+    order?: XOR<OrderScalarRelationFilter, OrderWhereInput>
+  }, "id">
+
+  export type OrderTimelineEventOrderByWithAggregationInput = {
+    id?: SortOrder
+    orderId?: SortOrder
+    status?: SortOrder
+    message?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    _count?: OrderTimelineEventCountOrderByAggregateInput
+    _max?: OrderTimelineEventMaxOrderByAggregateInput
+    _min?: OrderTimelineEventMinOrderByAggregateInput
+  }
+
+  export type OrderTimelineEventScalarWhereWithAggregatesInput = {
+    AND?: OrderTimelineEventScalarWhereWithAggregatesInput | OrderTimelineEventScalarWhereWithAggregatesInput[]
+    OR?: OrderTimelineEventScalarWhereWithAggregatesInput[]
+    NOT?: OrderTimelineEventScalarWhereWithAggregatesInput | OrderTimelineEventScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"OrderTimelineEvent"> | string
+    orderId?: StringWithAggregatesFilter<"OrderTimelineEvent"> | string
+    status?: EnumOrderStatusWithAggregatesFilter<"OrderTimelineEvent"> | $Enums.OrderStatus
+    message?: StringNullableWithAggregatesFilter<"OrderTimelineEvent"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"OrderTimelineEvent"> | Date | string
+  }
+
   export type OrderWhereInput = {
     AND?: OrderWhereInput | OrderWhereInput[]
     OR?: OrderWhereInput[]
@@ -15461,6 +17914,7 @@ export namespace Prisma {
     items?: OrderItemListRelationFilter
     shippingMethod?: XOR<ShippingMethodNullableScalarRelationFilter, ShippingMethodWhereInput> | null
     payment?: XOR<PaymentNullableScalarRelationFilter, PaymentWhereInput> | null
+    OrderTimelineEvent?: OrderTimelineEventListRelationFilter
   }
 
   export type OrderOrderByWithRelationInput = {
@@ -15488,6 +17942,7 @@ export namespace Prisma {
     items?: OrderItemOrderByRelationAggregateInput
     shippingMethod?: ShippingMethodOrderByWithRelationInput
     payment?: PaymentOrderByWithRelationInput
+    OrderTimelineEvent?: OrderTimelineEventOrderByRelationAggregateInput
   }
 
   export type OrderWhereUniqueInput = Prisma.AtLeast<{
@@ -15518,6 +17973,7 @@ export namespace Prisma {
     items?: OrderItemListRelationFilter
     shippingMethod?: XOR<ShippingMethodNullableScalarRelationFilter, ShippingMethodWhereInput> | null
     payment?: XOR<PaymentNullableScalarRelationFilter, PaymentWhereInput> | null
+    OrderTimelineEvent?: OrderTimelineEventListRelationFilter
   }, "id" | "orderNumber">
 
   export type OrderOrderByWithAggregationInput = {
@@ -15912,6 +18368,75 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"CartItem"> | Date | string
   }
 
+  export type TestimonialWhereInput = {
+    AND?: TestimonialWhereInput | TestimonialWhereInput[]
+    OR?: TestimonialWhereInput[]
+    NOT?: TestimonialWhereInput | TestimonialWhereInput[]
+    id?: StringFilter<"Testimonial"> | string
+    name?: StringFilter<"Testimonial"> | string
+    message?: StringFilter<"Testimonial"> | string
+    rating?: IntFilter<"Testimonial"> | number
+    image?: StringNullableFilter<"Testimonial"> | string | null
+    role?: EnumTestimonialUserRoleFilter<"Testimonial"> | $Enums.TestimonialUserRole
+    createdAt?: DateTimeFilter<"Testimonial"> | Date | string
+    updatedAt?: DateTimeFilter<"Testimonial"> | Date | string
+  }
+
+  export type TestimonialOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    message?: SortOrder
+    rating?: SortOrder
+    image?: SortOrderInput | SortOrder
+    role?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type TestimonialWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: TestimonialWhereInput | TestimonialWhereInput[]
+    OR?: TestimonialWhereInput[]
+    NOT?: TestimonialWhereInput | TestimonialWhereInput[]
+    name?: StringFilter<"Testimonial"> | string
+    message?: StringFilter<"Testimonial"> | string
+    rating?: IntFilter<"Testimonial"> | number
+    image?: StringNullableFilter<"Testimonial"> | string | null
+    role?: EnumTestimonialUserRoleFilter<"Testimonial"> | $Enums.TestimonialUserRole
+    createdAt?: DateTimeFilter<"Testimonial"> | Date | string
+    updatedAt?: DateTimeFilter<"Testimonial"> | Date | string
+  }, "id">
+
+  export type TestimonialOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    message?: SortOrder
+    rating?: SortOrder
+    image?: SortOrderInput | SortOrder
+    role?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: TestimonialCountOrderByAggregateInput
+    _avg?: TestimonialAvgOrderByAggregateInput
+    _max?: TestimonialMaxOrderByAggregateInput
+    _min?: TestimonialMinOrderByAggregateInput
+    _sum?: TestimonialSumOrderByAggregateInput
+  }
+
+  export type TestimonialScalarWhereWithAggregatesInput = {
+    AND?: TestimonialScalarWhereWithAggregatesInput | TestimonialScalarWhereWithAggregatesInput[]
+    OR?: TestimonialScalarWhereWithAggregatesInput[]
+    NOT?: TestimonialScalarWhereWithAggregatesInput | TestimonialScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Testimonial"> | string
+    name?: StringWithAggregatesFilter<"Testimonial"> | string
+    message?: StringWithAggregatesFilter<"Testimonial"> | string
+    rating?: IntWithAggregatesFilter<"Testimonial"> | number
+    image?: StringNullableWithAggregatesFilter<"Testimonial"> | string | null
+    role?: EnumTestimonialUserRoleWithAggregatesFilter<"Testimonial"> | $Enums.TestimonialUserRole
+    createdAt?: DateTimeWithAggregatesFilter<"Testimonial"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Testimonial"> | Date | string
+  }
+
   export type UserCreateInput = {
     id?: string
     name: string
@@ -16304,6 +18829,61 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type OrderTimelineEventCreateInput = {
+    id?: string
+    status: $Enums.OrderStatus
+    message?: string | null
+    createdAt?: Date | string
+    order: OrderCreateNestedOneWithoutOrderTimelineEventInput
+  }
+
+  export type OrderTimelineEventUncheckedCreateInput = {
+    id?: string
+    orderId: string
+    status: $Enums.OrderStatus
+    message?: string | null
+    createdAt?: Date | string
+  }
+
+  export type OrderTimelineEventUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+    message?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    order?: OrderUpdateOneRequiredWithoutOrderTimelineEventNestedInput
+  }
+
+  export type OrderTimelineEventUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    orderId?: StringFieldUpdateOperationsInput | string
+    status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+    message?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OrderTimelineEventCreateManyInput = {
+    id?: string
+    orderId: string
+    status: $Enums.OrderStatus
+    message?: string | null
+    createdAt?: Date | string
+  }
+
+  export type OrderTimelineEventUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+    message?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OrderTimelineEventUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    orderId?: StringFieldUpdateOperationsInput | string
+    status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+    message?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type OrderCreateInput = {
     id?: string
     orderNumber: string
@@ -16327,6 +18907,7 @@ export namespace Prisma {
     items?: OrderItemCreateNestedManyWithoutOrderInput
     shippingMethod?: ShippingMethodCreateNestedOneWithoutOrdersInput
     payment?: PaymentCreateNestedOneWithoutOrderInput
+    OrderTimelineEvent?: OrderTimelineEventCreateNestedManyWithoutOrderInput
   }
 
   export type OrderUncheckedCreateInput = {
@@ -16352,6 +18933,7 @@ export namespace Prisma {
     cancellationReason?: string | null
     items?: OrderItemUncheckedCreateNestedManyWithoutOrderInput
     payment?: PaymentUncheckedCreateNestedOneWithoutOrderInput
+    OrderTimelineEvent?: OrderTimelineEventUncheckedCreateNestedManyWithoutOrderInput
   }
 
   export type OrderUpdateInput = {
@@ -16377,6 +18959,7 @@ export namespace Prisma {
     items?: OrderItemUpdateManyWithoutOrderNestedInput
     shippingMethod?: ShippingMethodUpdateOneWithoutOrdersNestedInput
     payment?: PaymentUpdateOneWithoutOrderNestedInput
+    OrderTimelineEvent?: OrderTimelineEventUpdateManyWithoutOrderNestedInput
   }
 
   export type OrderUncheckedUpdateInput = {
@@ -16402,6 +18985,7 @@ export namespace Prisma {
     cancellationReason?: NullableStringFieldUpdateOperationsInput | string | null
     items?: OrderItemUncheckedUpdateManyWithoutOrderNestedInput
     payment?: PaymentUncheckedUpdateOneWithoutOrderNestedInput
+    OrderTimelineEvent?: OrderTimelineEventUncheckedUpdateManyWithoutOrderNestedInput
   }
 
   export type OrderCreateManyInput = {
@@ -16814,6 +19398,83 @@ export namespace Prisma {
     size?: NullableStringFieldUpdateOperationsInput | string | null
     color?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TestimonialCreateInput = {
+    id?: string
+    name: string
+    message: string
+    rating: number
+    image?: string | null
+    role?: $Enums.TestimonialUserRole
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TestimonialUncheckedCreateInput = {
+    id?: string
+    name: string
+    message: string
+    rating: number
+    image?: string | null
+    role?: $Enums.TestimonialUserRole
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TestimonialUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    rating?: IntFieldUpdateOperationsInput | number
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumTestimonialUserRoleFieldUpdateOperationsInput | $Enums.TestimonialUserRole
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TestimonialUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    rating?: IntFieldUpdateOperationsInput | number
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumTestimonialUserRoleFieldUpdateOperationsInput | $Enums.TestimonialUserRole
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TestimonialCreateManyInput = {
+    id?: string
+    name: string
+    message: string
+    rating: number
+    image?: string | null
+    role?: $Enums.TestimonialUserRole
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TestimonialUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    rating?: IntFieldUpdateOperationsInput | number
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumTestimonialUserRoleFieldUpdateOperationsInput | $Enums.TestimonialUserRole
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TestimonialUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    rating?: IntFieldUpdateOperationsInput | number
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumTestimonialUserRoleFieldUpdateOperationsInput | $Enums.TestimonialUserRole
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -17253,6 +19914,52 @@ export namespace Prisma {
     createdAt?: SortOrder
   }
 
+  export type EnumOrderStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.OrderStatus | EnumOrderStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.OrderStatus[] | ListEnumOrderStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.OrderStatus[] | ListEnumOrderStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumOrderStatusFilter<$PrismaModel> | $Enums.OrderStatus
+  }
+
+  export type OrderScalarRelationFilter = {
+    is?: OrderWhereInput
+    isNot?: OrderWhereInput
+  }
+
+  export type OrderTimelineEventCountOrderByAggregateInput = {
+    id?: SortOrder
+    orderId?: SortOrder
+    status?: SortOrder
+    message?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type OrderTimelineEventMaxOrderByAggregateInput = {
+    id?: SortOrder
+    orderId?: SortOrder
+    status?: SortOrder
+    message?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type OrderTimelineEventMinOrderByAggregateInput = {
+    id?: SortOrder
+    orderId?: SortOrder
+    status?: SortOrder
+    message?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type EnumOrderStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.OrderStatus | EnumOrderStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.OrderStatus[] | ListEnumOrderStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.OrderStatus[] | ListEnumOrderStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumOrderStatusWithAggregatesFilter<$PrismaModel> | $Enums.OrderStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumOrderStatusFilter<$PrismaModel>
+    _max?: NestedEnumOrderStatusFilter<$PrismaModel>
+  }
+
   export type EnumPaymentMethodFilter<$PrismaModel = never> = {
     equals?: $Enums.PaymentMethod | EnumPaymentMethodFieldRefInput<$PrismaModel>
     in?: $Enums.PaymentMethod[] | ListEnumPaymentMethodFieldRefInput<$PrismaModel>
@@ -17267,13 +19974,6 @@ export namespace Prisma {
     not?: NestedEnumPaymentStatusFilter<$PrismaModel> | $Enums.PaymentStatus
   }
 
-  export type EnumOrderStatusFilter<$PrismaModel = never> = {
-    equals?: $Enums.OrderStatus | EnumOrderStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.OrderStatus[] | ListEnumOrderStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.OrderStatus[] | ListEnumOrderStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumOrderStatusFilter<$PrismaModel> | $Enums.OrderStatus
-  }
-
   export type ShippingMethodNullableScalarRelationFilter = {
     is?: ShippingMethodWhereInput | null
     isNot?: ShippingMethodWhereInput | null
@@ -17282,6 +19982,16 @@ export namespace Prisma {
   export type PaymentNullableScalarRelationFilter = {
     is?: PaymentWhereInput | null
     isNot?: PaymentWhereInput | null
+  }
+
+  export type OrderTimelineEventListRelationFilter = {
+    every?: OrderTimelineEventWhereInput
+    some?: OrderTimelineEventWhereInput
+    none?: OrderTimelineEventWhereInput
+  }
+
+  export type OrderTimelineEventOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type OrderCountOrderByAggregateInput = {
@@ -17385,21 +20095,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumPaymentStatusFilter<$PrismaModel>
     _max?: NestedEnumPaymentStatusFilter<$PrismaModel>
-  }
-
-  export type EnumOrderStatusWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.OrderStatus | EnumOrderStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.OrderStatus[] | ListEnumOrderStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.OrderStatus[] | ListEnumOrderStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumOrderStatusWithAggregatesFilter<$PrismaModel> | $Enums.OrderStatus
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumOrderStatusFilter<$PrismaModel>
-    _max?: NestedEnumOrderStatusFilter<$PrismaModel>
-  }
-
-  export type OrderScalarRelationFilter = {
-    is?: OrderWhereInput
-    isNot?: OrderWhereInput
   }
 
   export type OrderItemCountOrderByAggregateInput = {
@@ -17593,6 +20288,64 @@ export namespace Prisma {
 
   export type CartItemSumOrderByAggregateInput = {
     quantity?: SortOrder
+  }
+
+  export type EnumTestimonialUserRoleFilter<$PrismaModel = never> = {
+    equals?: $Enums.TestimonialUserRole | EnumTestimonialUserRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.TestimonialUserRole[] | ListEnumTestimonialUserRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.TestimonialUserRole[] | ListEnumTestimonialUserRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumTestimonialUserRoleFilter<$PrismaModel> | $Enums.TestimonialUserRole
+  }
+
+  export type TestimonialCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    message?: SortOrder
+    rating?: SortOrder
+    image?: SortOrder
+    role?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type TestimonialAvgOrderByAggregateInput = {
+    rating?: SortOrder
+  }
+
+  export type TestimonialMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    message?: SortOrder
+    rating?: SortOrder
+    image?: SortOrder
+    role?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type TestimonialMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    message?: SortOrder
+    rating?: SortOrder
+    image?: SortOrder
+    role?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type TestimonialSumOrderByAggregateInput = {
+    rating?: SortOrder
+  }
+
+  export type EnumTestimonialUserRoleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.TestimonialUserRole | EnumTestimonialUserRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.TestimonialUserRole[] | ListEnumTestimonialUserRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.TestimonialUserRole[] | ListEnumTestimonialUserRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumTestimonialUserRoleWithAggregatesFilter<$PrismaModel> | $Enums.TestimonialUserRole
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumTestimonialUserRoleFilter<$PrismaModel>
+    _max?: NestedEnumTestimonialUserRoleFilter<$PrismaModel>
   }
 
   export type ReviewCreateNestedManyWithoutUserInput = {
@@ -18068,6 +20821,24 @@ export namespace Prisma {
     deleteMany?: ProductScalarWhereInput | ProductScalarWhereInput[]
   }
 
+  export type OrderCreateNestedOneWithoutOrderTimelineEventInput = {
+    create?: XOR<OrderCreateWithoutOrderTimelineEventInput, OrderUncheckedCreateWithoutOrderTimelineEventInput>
+    connectOrCreate?: OrderCreateOrConnectWithoutOrderTimelineEventInput
+    connect?: OrderWhereUniqueInput
+  }
+
+  export type EnumOrderStatusFieldUpdateOperationsInput = {
+    set?: $Enums.OrderStatus
+  }
+
+  export type OrderUpdateOneRequiredWithoutOrderTimelineEventNestedInput = {
+    create?: XOR<OrderCreateWithoutOrderTimelineEventInput, OrderUncheckedCreateWithoutOrderTimelineEventInput>
+    connectOrCreate?: OrderCreateOrConnectWithoutOrderTimelineEventInput
+    upsert?: OrderUpsertWithoutOrderTimelineEventInput
+    connect?: OrderWhereUniqueInput
+    update?: XOR<XOR<OrderUpdateToOneWithWhereWithoutOrderTimelineEventInput, OrderUpdateWithoutOrderTimelineEventInput>, OrderUncheckedUpdateWithoutOrderTimelineEventInput>
+  }
+
   export type UserCreateNestedOneWithoutOrderInput = {
     create?: XOR<UserCreateWithoutOrderInput, UserUncheckedCreateWithoutOrderInput>
     connectOrCreate?: UserCreateOrConnectWithoutOrderInput
@@ -18093,6 +20864,13 @@ export namespace Prisma {
     connect?: PaymentWhereUniqueInput
   }
 
+  export type OrderTimelineEventCreateNestedManyWithoutOrderInput = {
+    create?: XOR<OrderTimelineEventCreateWithoutOrderInput, OrderTimelineEventUncheckedCreateWithoutOrderInput> | OrderTimelineEventCreateWithoutOrderInput[] | OrderTimelineEventUncheckedCreateWithoutOrderInput[]
+    connectOrCreate?: OrderTimelineEventCreateOrConnectWithoutOrderInput | OrderTimelineEventCreateOrConnectWithoutOrderInput[]
+    createMany?: OrderTimelineEventCreateManyOrderInputEnvelope
+    connect?: OrderTimelineEventWhereUniqueInput | OrderTimelineEventWhereUniqueInput[]
+  }
+
   export type OrderItemUncheckedCreateNestedManyWithoutOrderInput = {
     create?: XOR<OrderItemCreateWithoutOrderInput, OrderItemUncheckedCreateWithoutOrderInput> | OrderItemCreateWithoutOrderInput[] | OrderItemUncheckedCreateWithoutOrderInput[]
     connectOrCreate?: OrderItemCreateOrConnectWithoutOrderInput | OrderItemCreateOrConnectWithoutOrderInput[]
@@ -18106,16 +20884,19 @@ export namespace Prisma {
     connect?: PaymentWhereUniqueInput
   }
 
+  export type OrderTimelineEventUncheckedCreateNestedManyWithoutOrderInput = {
+    create?: XOR<OrderTimelineEventCreateWithoutOrderInput, OrderTimelineEventUncheckedCreateWithoutOrderInput> | OrderTimelineEventCreateWithoutOrderInput[] | OrderTimelineEventUncheckedCreateWithoutOrderInput[]
+    connectOrCreate?: OrderTimelineEventCreateOrConnectWithoutOrderInput | OrderTimelineEventCreateOrConnectWithoutOrderInput[]
+    createMany?: OrderTimelineEventCreateManyOrderInputEnvelope
+    connect?: OrderTimelineEventWhereUniqueInput | OrderTimelineEventWhereUniqueInput[]
+  }
+
   export type EnumPaymentMethodFieldUpdateOperationsInput = {
     set?: $Enums.PaymentMethod
   }
 
   export type EnumPaymentStatusFieldUpdateOperationsInput = {
     set?: $Enums.PaymentStatus
-  }
-
-  export type EnumOrderStatusFieldUpdateOperationsInput = {
-    set?: $Enums.OrderStatus
   }
 
   export type UserUpdateOneRequiredWithoutOrderNestedInput = {
@@ -18160,6 +20941,20 @@ export namespace Prisma {
     update?: XOR<XOR<PaymentUpdateToOneWithWhereWithoutOrderInput, PaymentUpdateWithoutOrderInput>, PaymentUncheckedUpdateWithoutOrderInput>
   }
 
+  export type OrderTimelineEventUpdateManyWithoutOrderNestedInput = {
+    create?: XOR<OrderTimelineEventCreateWithoutOrderInput, OrderTimelineEventUncheckedCreateWithoutOrderInput> | OrderTimelineEventCreateWithoutOrderInput[] | OrderTimelineEventUncheckedCreateWithoutOrderInput[]
+    connectOrCreate?: OrderTimelineEventCreateOrConnectWithoutOrderInput | OrderTimelineEventCreateOrConnectWithoutOrderInput[]
+    upsert?: OrderTimelineEventUpsertWithWhereUniqueWithoutOrderInput | OrderTimelineEventUpsertWithWhereUniqueWithoutOrderInput[]
+    createMany?: OrderTimelineEventCreateManyOrderInputEnvelope
+    set?: OrderTimelineEventWhereUniqueInput | OrderTimelineEventWhereUniqueInput[]
+    disconnect?: OrderTimelineEventWhereUniqueInput | OrderTimelineEventWhereUniqueInput[]
+    delete?: OrderTimelineEventWhereUniqueInput | OrderTimelineEventWhereUniqueInput[]
+    connect?: OrderTimelineEventWhereUniqueInput | OrderTimelineEventWhereUniqueInput[]
+    update?: OrderTimelineEventUpdateWithWhereUniqueWithoutOrderInput | OrderTimelineEventUpdateWithWhereUniqueWithoutOrderInput[]
+    updateMany?: OrderTimelineEventUpdateManyWithWhereWithoutOrderInput | OrderTimelineEventUpdateManyWithWhereWithoutOrderInput[]
+    deleteMany?: OrderTimelineEventScalarWhereInput | OrderTimelineEventScalarWhereInput[]
+  }
+
   export type OrderItemUncheckedUpdateManyWithoutOrderNestedInput = {
     create?: XOR<OrderItemCreateWithoutOrderInput, OrderItemUncheckedCreateWithoutOrderInput> | OrderItemCreateWithoutOrderInput[] | OrderItemUncheckedCreateWithoutOrderInput[]
     connectOrCreate?: OrderItemCreateOrConnectWithoutOrderInput | OrderItemCreateOrConnectWithoutOrderInput[]
@@ -18182,6 +20977,20 @@ export namespace Prisma {
     delete?: PaymentWhereInput | boolean
     connect?: PaymentWhereUniqueInput
     update?: XOR<XOR<PaymentUpdateToOneWithWhereWithoutOrderInput, PaymentUpdateWithoutOrderInput>, PaymentUncheckedUpdateWithoutOrderInput>
+  }
+
+  export type OrderTimelineEventUncheckedUpdateManyWithoutOrderNestedInput = {
+    create?: XOR<OrderTimelineEventCreateWithoutOrderInput, OrderTimelineEventUncheckedCreateWithoutOrderInput> | OrderTimelineEventCreateWithoutOrderInput[] | OrderTimelineEventUncheckedCreateWithoutOrderInput[]
+    connectOrCreate?: OrderTimelineEventCreateOrConnectWithoutOrderInput | OrderTimelineEventCreateOrConnectWithoutOrderInput[]
+    upsert?: OrderTimelineEventUpsertWithWhereUniqueWithoutOrderInput | OrderTimelineEventUpsertWithWhereUniqueWithoutOrderInput[]
+    createMany?: OrderTimelineEventCreateManyOrderInputEnvelope
+    set?: OrderTimelineEventWhereUniqueInput | OrderTimelineEventWhereUniqueInput[]
+    disconnect?: OrderTimelineEventWhereUniqueInput | OrderTimelineEventWhereUniqueInput[]
+    delete?: OrderTimelineEventWhereUniqueInput | OrderTimelineEventWhereUniqueInput[]
+    connect?: OrderTimelineEventWhereUniqueInput | OrderTimelineEventWhereUniqueInput[]
+    update?: OrderTimelineEventUpdateWithWhereUniqueWithoutOrderInput | OrderTimelineEventUpdateWithWhereUniqueWithoutOrderInput[]
+    updateMany?: OrderTimelineEventUpdateManyWithWhereWithoutOrderInput | OrderTimelineEventUpdateManyWithWhereWithoutOrderInput[]
+    deleteMany?: OrderTimelineEventScalarWhereInput | OrderTimelineEventScalarWhereInput[]
   }
 
   export type OrderCreateNestedOneWithoutItemsInput = {
@@ -18350,6 +21159,10 @@ export namespace Prisma {
     upsert?: ProductUpsertWithoutCartItemInput
     connect?: ProductWhereUniqueInput
     update?: XOR<XOR<ProductUpdateToOneWithWhereWithoutCartItemInput, ProductUpdateWithoutCartItemInput>, ProductUncheckedUpdateWithoutCartItemInput>
+  }
+
+  export type EnumTestimonialUserRoleFieldUpdateOperationsInput = {
+    set?: $Enums.TestimonialUserRole
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -18534,6 +21347,23 @@ export namespace Prisma {
     _max?: NestedBoolFilter<$PrismaModel>
   }
 
+  export type NestedEnumOrderStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.OrderStatus | EnumOrderStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.OrderStatus[] | ListEnumOrderStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.OrderStatus[] | ListEnumOrderStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumOrderStatusFilter<$PrismaModel> | $Enums.OrderStatus
+  }
+
+  export type NestedEnumOrderStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.OrderStatus | EnumOrderStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.OrderStatus[] | ListEnumOrderStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.OrderStatus[] | ListEnumOrderStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumOrderStatusWithAggregatesFilter<$PrismaModel> | $Enums.OrderStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumOrderStatusFilter<$PrismaModel>
+    _max?: NestedEnumOrderStatusFilter<$PrismaModel>
+  }
+
   export type NestedEnumPaymentMethodFilter<$PrismaModel = never> = {
     equals?: $Enums.PaymentMethod | EnumPaymentMethodFieldRefInput<$PrismaModel>
     in?: $Enums.PaymentMethod[] | ListEnumPaymentMethodFieldRefInput<$PrismaModel>
@@ -18546,13 +21376,6 @@ export namespace Prisma {
     in?: $Enums.PaymentStatus[] | ListEnumPaymentStatusFieldRefInput<$PrismaModel>
     notIn?: $Enums.PaymentStatus[] | ListEnumPaymentStatusFieldRefInput<$PrismaModel>
     not?: NestedEnumPaymentStatusFilter<$PrismaModel> | $Enums.PaymentStatus
-  }
-
-  export type NestedEnumOrderStatusFilter<$PrismaModel = never> = {
-    equals?: $Enums.OrderStatus | EnumOrderStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.OrderStatus[] | ListEnumOrderStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.OrderStatus[] | ListEnumOrderStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumOrderStatusFilter<$PrismaModel> | $Enums.OrderStatus
   }
 
   export type NestedEnumPaymentMethodWithAggregatesFilter<$PrismaModel = never> = {
@@ -18575,14 +21398,21 @@ export namespace Prisma {
     _max?: NestedEnumPaymentStatusFilter<$PrismaModel>
   }
 
-  export type NestedEnumOrderStatusWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.OrderStatus | EnumOrderStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.OrderStatus[] | ListEnumOrderStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.OrderStatus[] | ListEnumOrderStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumOrderStatusWithAggregatesFilter<$PrismaModel> | $Enums.OrderStatus
+  export type NestedEnumTestimonialUserRoleFilter<$PrismaModel = never> = {
+    equals?: $Enums.TestimonialUserRole | EnumTestimonialUserRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.TestimonialUserRole[] | ListEnumTestimonialUserRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.TestimonialUserRole[] | ListEnumTestimonialUserRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumTestimonialUserRoleFilter<$PrismaModel> | $Enums.TestimonialUserRole
+  }
+
+  export type NestedEnumTestimonialUserRoleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.TestimonialUserRole | EnumTestimonialUserRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.TestimonialUserRole[] | ListEnumTestimonialUserRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.TestimonialUserRole[] | ListEnumTestimonialUserRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumTestimonialUserRoleWithAggregatesFilter<$PrismaModel> | $Enums.TestimonialUserRole
     _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumOrderStatusFilter<$PrismaModel>
-    _max?: NestedEnumOrderStatusFilter<$PrismaModel>
+    _min?: NestedEnumTestimonialUserRoleFilter<$PrismaModel>
+    _max?: NestedEnumTestimonialUserRoleFilter<$PrismaModel>
   }
 
   export type ReviewCreateWithoutUserInput = {
@@ -18635,6 +21465,7 @@ export namespace Prisma {
     items?: OrderItemCreateNestedManyWithoutOrderInput
     shippingMethod?: ShippingMethodCreateNestedOneWithoutOrdersInput
     payment?: PaymentCreateNestedOneWithoutOrderInput
+    OrderTimelineEvent?: OrderTimelineEventCreateNestedManyWithoutOrderInput
   }
 
   export type OrderUncheckedCreateWithoutUserInput = {
@@ -18659,6 +21490,7 @@ export namespace Prisma {
     cancellationReason?: string | null
     items?: OrderItemUncheckedCreateNestedManyWithoutOrderInput
     payment?: PaymentUncheckedCreateNestedOneWithoutOrderInput
+    OrderTimelineEvent?: OrderTimelineEventUncheckedCreateNestedManyWithoutOrderInput
   }
 
   export type OrderCreateOrConnectWithoutUserInput = {
@@ -19405,6 +22237,122 @@ export namespace Prisma {
     isFeatured?: BoolFilter<"Product"> | boolean
   }
 
+  export type OrderCreateWithoutOrderTimelineEventInput = {
+    id?: string
+    orderNumber: string
+    totalAmount: number
+    subtotal: number
+    shippingCost: number
+    tax: number
+    paymentMethod: $Enums.PaymentMethod
+    paymentStatus?: $Enums.PaymentStatus
+    shippingAddress: string
+    shippingCity: string
+    shippingState: string
+    shippingPostalCode: string
+    shippingCountry: string
+    status?: $Enums.OrderStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    trackingNumber?: string | null
+    cancellationReason?: string | null
+    user: UserCreateNestedOneWithoutOrderInput
+    items?: OrderItemCreateNestedManyWithoutOrderInput
+    shippingMethod?: ShippingMethodCreateNestedOneWithoutOrdersInput
+    payment?: PaymentCreateNestedOneWithoutOrderInput
+  }
+
+  export type OrderUncheckedCreateWithoutOrderTimelineEventInput = {
+    id?: string
+    orderNumber: string
+    userId: string
+    totalAmount: number
+    subtotal: number
+    shippingCost: number
+    tax: number
+    paymentMethod: $Enums.PaymentMethod
+    paymentStatus?: $Enums.PaymentStatus
+    shippingAddress: string
+    shippingCity: string
+    shippingState: string
+    shippingPostalCode: string
+    shippingCountry: string
+    shippingMethodId?: string | null
+    status?: $Enums.OrderStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    trackingNumber?: string | null
+    cancellationReason?: string | null
+    items?: OrderItemUncheckedCreateNestedManyWithoutOrderInput
+    payment?: PaymentUncheckedCreateNestedOneWithoutOrderInput
+  }
+
+  export type OrderCreateOrConnectWithoutOrderTimelineEventInput = {
+    where: OrderWhereUniqueInput
+    create: XOR<OrderCreateWithoutOrderTimelineEventInput, OrderUncheckedCreateWithoutOrderTimelineEventInput>
+  }
+
+  export type OrderUpsertWithoutOrderTimelineEventInput = {
+    update: XOR<OrderUpdateWithoutOrderTimelineEventInput, OrderUncheckedUpdateWithoutOrderTimelineEventInput>
+    create: XOR<OrderCreateWithoutOrderTimelineEventInput, OrderUncheckedCreateWithoutOrderTimelineEventInput>
+    where?: OrderWhereInput
+  }
+
+  export type OrderUpdateToOneWithWhereWithoutOrderTimelineEventInput = {
+    where?: OrderWhereInput
+    data: XOR<OrderUpdateWithoutOrderTimelineEventInput, OrderUncheckedUpdateWithoutOrderTimelineEventInput>
+  }
+
+  export type OrderUpdateWithoutOrderTimelineEventInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    orderNumber?: StringFieldUpdateOperationsInput | string
+    totalAmount?: FloatFieldUpdateOperationsInput | number
+    subtotal?: FloatFieldUpdateOperationsInput | number
+    shippingCost?: FloatFieldUpdateOperationsInput | number
+    tax?: FloatFieldUpdateOperationsInput | number
+    paymentMethod?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+    paymentStatus?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+    shippingAddress?: StringFieldUpdateOperationsInput | string
+    shippingCity?: StringFieldUpdateOperationsInput | string
+    shippingState?: StringFieldUpdateOperationsInput | string
+    shippingPostalCode?: StringFieldUpdateOperationsInput | string
+    shippingCountry?: StringFieldUpdateOperationsInput | string
+    status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    trackingNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    cancellationReason?: NullableStringFieldUpdateOperationsInput | string | null
+    user?: UserUpdateOneRequiredWithoutOrderNestedInput
+    items?: OrderItemUpdateManyWithoutOrderNestedInput
+    shippingMethod?: ShippingMethodUpdateOneWithoutOrdersNestedInput
+    payment?: PaymentUpdateOneWithoutOrderNestedInput
+  }
+
+  export type OrderUncheckedUpdateWithoutOrderTimelineEventInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    orderNumber?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    totalAmount?: FloatFieldUpdateOperationsInput | number
+    subtotal?: FloatFieldUpdateOperationsInput | number
+    shippingCost?: FloatFieldUpdateOperationsInput | number
+    tax?: FloatFieldUpdateOperationsInput | number
+    paymentMethod?: EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+    paymentStatus?: EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+    shippingAddress?: StringFieldUpdateOperationsInput | string
+    shippingCity?: StringFieldUpdateOperationsInput | string
+    shippingState?: StringFieldUpdateOperationsInput | string
+    shippingPostalCode?: StringFieldUpdateOperationsInput | string
+    shippingCountry?: StringFieldUpdateOperationsInput | string
+    shippingMethodId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    trackingNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    cancellationReason?: NullableStringFieldUpdateOperationsInput | string | null
+    items?: OrderItemUncheckedUpdateManyWithoutOrderNestedInput
+    payment?: PaymentUncheckedUpdateOneWithoutOrderNestedInput
+  }
+
   export type UserCreateWithoutOrderInput = {
     id?: string
     name: string
@@ -19510,6 +22458,30 @@ export namespace Prisma {
   export type PaymentCreateOrConnectWithoutOrderInput = {
     where: PaymentWhereUniqueInput
     create: XOR<PaymentCreateWithoutOrderInput, PaymentUncheckedCreateWithoutOrderInput>
+  }
+
+  export type OrderTimelineEventCreateWithoutOrderInput = {
+    id?: string
+    status: $Enums.OrderStatus
+    message?: string | null
+    createdAt?: Date | string
+  }
+
+  export type OrderTimelineEventUncheckedCreateWithoutOrderInput = {
+    id?: string
+    status: $Enums.OrderStatus
+    message?: string | null
+    createdAt?: Date | string
+  }
+
+  export type OrderTimelineEventCreateOrConnectWithoutOrderInput = {
+    where: OrderTimelineEventWhereUniqueInput
+    create: XOR<OrderTimelineEventCreateWithoutOrderInput, OrderTimelineEventUncheckedCreateWithoutOrderInput>
+  }
+
+  export type OrderTimelineEventCreateManyOrderInputEnvelope = {
+    data: OrderTimelineEventCreateManyOrderInput | OrderTimelineEventCreateManyOrderInput[]
+    skipDuplicates?: boolean
   }
 
   export type UserUpsertWithoutOrderInput = {
@@ -19623,6 +22595,33 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type OrderTimelineEventUpsertWithWhereUniqueWithoutOrderInput = {
+    where: OrderTimelineEventWhereUniqueInput
+    update: XOR<OrderTimelineEventUpdateWithoutOrderInput, OrderTimelineEventUncheckedUpdateWithoutOrderInput>
+    create: XOR<OrderTimelineEventCreateWithoutOrderInput, OrderTimelineEventUncheckedCreateWithoutOrderInput>
+  }
+
+  export type OrderTimelineEventUpdateWithWhereUniqueWithoutOrderInput = {
+    where: OrderTimelineEventWhereUniqueInput
+    data: XOR<OrderTimelineEventUpdateWithoutOrderInput, OrderTimelineEventUncheckedUpdateWithoutOrderInput>
+  }
+
+  export type OrderTimelineEventUpdateManyWithWhereWithoutOrderInput = {
+    where: OrderTimelineEventScalarWhereInput
+    data: XOR<OrderTimelineEventUpdateManyMutationInput, OrderTimelineEventUncheckedUpdateManyWithoutOrderInput>
+  }
+
+  export type OrderTimelineEventScalarWhereInput = {
+    AND?: OrderTimelineEventScalarWhereInput | OrderTimelineEventScalarWhereInput[]
+    OR?: OrderTimelineEventScalarWhereInput[]
+    NOT?: OrderTimelineEventScalarWhereInput | OrderTimelineEventScalarWhereInput[]
+    id?: StringFilter<"OrderTimelineEvent"> | string
+    orderId?: StringFilter<"OrderTimelineEvent"> | string
+    status?: EnumOrderStatusFilter<"OrderTimelineEvent"> | $Enums.OrderStatus
+    message?: StringNullableFilter<"OrderTimelineEvent"> | string | null
+    createdAt?: DateTimeFilter<"OrderTimelineEvent"> | Date | string
+  }
+
   export type OrderCreateWithoutItemsInput = {
     id?: string
     orderNumber: string
@@ -19645,6 +22644,7 @@ export namespace Prisma {
     user: UserCreateNestedOneWithoutOrderInput
     shippingMethod?: ShippingMethodCreateNestedOneWithoutOrdersInput
     payment?: PaymentCreateNestedOneWithoutOrderInput
+    OrderTimelineEvent?: OrderTimelineEventCreateNestedManyWithoutOrderInput
   }
 
   export type OrderUncheckedCreateWithoutItemsInput = {
@@ -19669,6 +22669,7 @@ export namespace Prisma {
     trackingNumber?: string | null
     cancellationReason?: string | null
     payment?: PaymentUncheckedCreateNestedOneWithoutOrderInput
+    OrderTimelineEvent?: OrderTimelineEventUncheckedCreateNestedManyWithoutOrderInput
   }
 
   export type OrderCreateOrConnectWithoutItemsInput = {
@@ -19758,6 +22759,7 @@ export namespace Prisma {
     user?: UserUpdateOneRequiredWithoutOrderNestedInput
     shippingMethod?: ShippingMethodUpdateOneWithoutOrdersNestedInput
     payment?: PaymentUpdateOneWithoutOrderNestedInput
+    OrderTimelineEvent?: OrderTimelineEventUpdateManyWithoutOrderNestedInput
   }
 
   export type OrderUncheckedUpdateWithoutItemsInput = {
@@ -19782,6 +22784,7 @@ export namespace Prisma {
     trackingNumber?: NullableStringFieldUpdateOperationsInput | string | null
     cancellationReason?: NullableStringFieldUpdateOperationsInput | string | null
     payment?: PaymentUncheckedUpdateOneWithoutOrderNestedInput
+    OrderTimelineEvent?: OrderTimelineEventUncheckedUpdateManyWithoutOrderNestedInput
   }
 
   export type ProductUpsertWithoutOrderItemInput = {
@@ -19861,6 +22864,7 @@ export namespace Prisma {
     user: UserCreateNestedOneWithoutOrderInput
     items?: OrderItemCreateNestedManyWithoutOrderInput
     shippingMethod?: ShippingMethodCreateNestedOneWithoutOrdersInput
+    OrderTimelineEvent?: OrderTimelineEventCreateNestedManyWithoutOrderInput
   }
 
   export type OrderUncheckedCreateWithoutPaymentInput = {
@@ -19885,6 +22889,7 @@ export namespace Prisma {
     trackingNumber?: string | null
     cancellationReason?: string | null
     items?: OrderItemUncheckedCreateNestedManyWithoutOrderInput
+    OrderTimelineEvent?: OrderTimelineEventUncheckedCreateNestedManyWithoutOrderInput
   }
 
   export type OrderCreateOrConnectWithoutPaymentInput = {
@@ -19925,6 +22930,7 @@ export namespace Prisma {
     user?: UserUpdateOneRequiredWithoutOrderNestedInput
     items?: OrderItemUpdateManyWithoutOrderNestedInput
     shippingMethod?: ShippingMethodUpdateOneWithoutOrdersNestedInput
+    OrderTimelineEvent?: OrderTimelineEventUpdateManyWithoutOrderNestedInput
   }
 
   export type OrderUncheckedUpdateWithoutPaymentInput = {
@@ -19949,6 +22955,7 @@ export namespace Prisma {
     trackingNumber?: NullableStringFieldUpdateOperationsInput | string | null
     cancellationReason?: NullableStringFieldUpdateOperationsInput | string | null
     items?: OrderItemUncheckedUpdateManyWithoutOrderNestedInput
+    OrderTimelineEvent?: OrderTimelineEventUncheckedUpdateManyWithoutOrderNestedInput
   }
 
   export type OrderCreateWithoutShippingMethodInput = {
@@ -19973,6 +22980,7 @@ export namespace Prisma {
     user: UserCreateNestedOneWithoutOrderInput
     items?: OrderItemCreateNestedManyWithoutOrderInput
     payment?: PaymentCreateNestedOneWithoutOrderInput
+    OrderTimelineEvent?: OrderTimelineEventCreateNestedManyWithoutOrderInput
   }
 
   export type OrderUncheckedCreateWithoutShippingMethodInput = {
@@ -19997,6 +23005,7 @@ export namespace Prisma {
     cancellationReason?: string | null
     items?: OrderItemUncheckedCreateNestedManyWithoutOrderInput
     payment?: PaymentUncheckedCreateNestedOneWithoutOrderInput
+    OrderTimelineEvent?: OrderTimelineEventUncheckedCreateNestedManyWithoutOrderInput
   }
 
   export type OrderCreateOrConnectWithoutShippingMethodInput = {
@@ -20363,6 +23372,7 @@ export namespace Prisma {
     items?: OrderItemUpdateManyWithoutOrderNestedInput
     shippingMethod?: ShippingMethodUpdateOneWithoutOrdersNestedInput
     payment?: PaymentUpdateOneWithoutOrderNestedInput
+    OrderTimelineEvent?: OrderTimelineEventUpdateManyWithoutOrderNestedInput
   }
 
   export type OrderUncheckedUpdateWithoutUserInput = {
@@ -20387,6 +23397,7 @@ export namespace Prisma {
     cancellationReason?: NullableStringFieldUpdateOperationsInput | string | null
     items?: OrderItemUncheckedUpdateManyWithoutOrderNestedInput
     payment?: PaymentUncheckedUpdateOneWithoutOrderNestedInput
+    OrderTimelineEvent?: OrderTimelineEventUncheckedUpdateManyWithoutOrderNestedInput
   }
 
   export type OrderUncheckedUpdateManyWithoutUserInput = {
@@ -20657,6 +23668,13 @@ export namespace Prisma {
     createdAt?: Date | string
   }
 
+  export type OrderTimelineEventCreateManyOrderInput = {
+    id?: string
+    status: $Enums.OrderStatus
+    message?: string | null
+    createdAt?: Date | string
+  }
+
   export type OrderItemUpdateWithoutOrderInput = {
     id?: StringFieldUpdateOperationsInput | string
     quantity?: IntFieldUpdateOperationsInput | number
@@ -20684,6 +23702,27 @@ export namespace Prisma {
     price?: FloatFieldUpdateOperationsInput | number
     size?: NullableStringFieldUpdateOperationsInput | string | null
     color?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OrderTimelineEventUpdateWithoutOrderInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+    message?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OrderTimelineEventUncheckedUpdateWithoutOrderInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+    message?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OrderTimelineEventUncheckedUpdateManyWithoutOrderInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+    message?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -20731,6 +23770,7 @@ export namespace Prisma {
     user?: UserUpdateOneRequiredWithoutOrderNestedInput
     items?: OrderItemUpdateManyWithoutOrderNestedInput
     payment?: PaymentUpdateOneWithoutOrderNestedInput
+    OrderTimelineEvent?: OrderTimelineEventUpdateManyWithoutOrderNestedInput
   }
 
   export type OrderUncheckedUpdateWithoutShippingMethodInput = {
@@ -20755,6 +23795,7 @@ export namespace Prisma {
     cancellationReason?: NullableStringFieldUpdateOperationsInput | string | null
     items?: OrderItemUncheckedUpdateManyWithoutOrderNestedInput
     payment?: PaymentUncheckedUpdateOneWithoutOrderNestedInput
+    OrderTimelineEvent?: OrderTimelineEventUncheckedUpdateManyWithoutOrderNestedInput
   }
 
   export type OrderUncheckedUpdateManyWithoutShippingMethodInput = {

@@ -2,14 +2,14 @@ import { useQuery } from "@tanstack/react-query";
 import { client } from "@/lib/rpc";
 
 
-export const useGetCategories = () => {
+export const useGetCollection = () => {
   return useQuery({
-    queryKey: ["categories"],
+    queryKey: ["collection"],
     queryFn: async () => {
-      const response = await client.api.categories.$get();
+      const response = await client.api.collection.$get();
 
       if (!response.ok) {
-        throw new Error("Failed to fetch categories");
+        throw new Error("Failed to fetch Collection");
       }
 
       return response.json();

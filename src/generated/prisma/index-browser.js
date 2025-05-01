@@ -169,6 +169,14 @@ exports.Prisma.CategoryScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.OrderTimelineEventScalarFieldEnum = {
+  id: 'id',
+  orderId: 'orderId',
+  status: 'status',
+  message: 'message',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.OrderScalarFieldEnum = {
   id: 'id',
   orderNumber: 'orderNumber',
@@ -241,6 +249,17 @@ exports.Prisma.CartItemScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.TestimonialScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  message: 'message',
+  rating: 'rating',
+  image: 'image',
+  role: 'role',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -261,6 +280,14 @@ exports.Role = exports.$Enums.Role = {
   MODERATOR: 'MODERATOR'
 };
 
+exports.OrderStatus = exports.$Enums.OrderStatus = {
+  PENDING: 'PENDING',
+  PROCESSING: 'PROCESSING',
+  SHIPPED: 'SHIPPED',
+  DELIVERED: 'DELIVERED',
+  CANCELLED: 'CANCELLED'
+};
+
 exports.PaymentMethod = exports.$Enums.PaymentMethod = {
   COD: 'COD',
   CARD: 'CARD'
@@ -272,12 +299,11 @@ exports.PaymentStatus = exports.$Enums.PaymentStatus = {
   FAILED: 'FAILED'
 };
 
-exports.OrderStatus = exports.$Enums.OrderStatus = {
-  PENDING: 'PENDING',
-  PROCESSING: 'PROCESSING',
-  SHIPPED: 'SHIPPED',
-  DELIVERED: 'DELIVERED',
-  CANCELLED: 'CANCELLED'
+exports.TestimonialUserRole = exports.$Enums.TestimonialUserRole = {
+  FASHION_ENTHUSIAST: 'FASHION_ENTHUSIAST',
+  CUSTOMER: 'CUSTOMER',
+  INFLUENCER: 'INFLUENCER',
+  OTHER: 'OTHER'
 };
 
 exports.Prisma.ModelName = {
@@ -286,12 +312,14 @@ exports.Prisma.ModelName = {
   Review: 'Review',
   Specification: 'Specification',
   Category: 'Category',
+  OrderTimelineEvent: 'OrderTimelineEvent',
   Order: 'Order',
   OrderItem: 'OrderItem',
   Payment: 'Payment',
   ShippingMethod: 'ShippingMethod',
   Cart: 'Cart',
-  CartItem: 'CartItem'
+  CartItem: 'CartItem',
+  Testimonial: 'Testimonial'
 };
 
 /**

@@ -2,14 +2,14 @@ import { useQuery } from "@tanstack/react-query";
 import { client } from "@/lib/rpc";
 
 
-export const useGetCategories = () => {
+export const useGetTestimonials = () => {
   return useQuery({
-    queryKey: ["categories"],
+    queryKey: ["testimonials"],
     queryFn: async () => {
-      const response = await client.api.categories.$get();
+      const response = await client.api.testimonials.$get();
 
       if (!response.ok) {
-        throw new Error("Failed to fetch categories");
+        throw new Error("Failed to fetch testimonials");
       }
 
       return response.json();
