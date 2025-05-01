@@ -1,5 +1,4 @@
 "use client";
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ChevronLeft, Truck } from "lucide-react";
 import React, { useEffect, useState } from "react";
@@ -8,27 +7,7 @@ import clsx from "clsx";
 import { setShipping } from "@/features/cart/state/cart-slice";
 import { Button } from "@/components/ui/button";
 import { setShippingMethod, setStep } from "../state/checkoutSlice";
-
-const shippingMethods = [
-  {
-    id: 1,
-    name: "Standard Shipping",
-    duration: "3-5 business days",
-    cost: 10.0,
-  },
-  {
-    id: 2,
-    name: "Express Shipping",
-    duration: "1-2 business days",
-    cost: 18.0,
-  },
-  {
-    id: 3,
-    name: "Overnight Shipping",
-    duration: "Next business day",
-    cost: 25.0,
-  },
-];
+import { useGetShippingMethods } from "../api/use-get-shipping-methods";
 
 function ShippingMethod() {
   const shippingInfo = useAppSelector((state) => state.checkout.shippingInfo);
@@ -36,9 +15,25 @@ function ShippingMethod() {
     (state) => state.checkout.shippingMethod
   );
   const dispatch = useAppDispatch();
-  const [selectedMethodId, setSelectedMethodId] = useState<number | null>(
-    () => selectedMethodFromState?.id ?? 1
+
+  const [selectedMethodId, setSelectedMethodId] = useState<string | null>(
+    selectedMethodFromState?.id ? String(selectedMethodFromState.id) : null
   );
+
+  const { data: shippingMethodsData } = useGetShippingMethods();
+
+  const shippingMethods = React.useMemo(() => {
+    return (
+      shippingMethodsData?.shippingMethods?.filter((method) => method.active) ||
+      []
+    );
+  }, [shippingMethodsData]);
+
+  useEffect(() => {
+    if (shippingMethods.length > 0 && !selectedMethodId) {
+      setSelectedMethodId(shippingMethods[0].id);
+    }
+  }, [shippingMethods, selectedMethodId]);
 
   const selectedMethod = shippingMethods.find((m) => m.id === selectedMethodId);
 
@@ -59,7 +54,14 @@ function ShippingMethod() {
 
   const handleContinuePayment = () => {
     if (selectedMethod) {
-      dispatch(setShippingMethod(selectedMethod));
+      dispatch(
+        setShippingMethod({
+          id: selectedMethod.id,
+          name: selectedMethod.name,
+          cost: selectedMethod.cost,
+          duration: selectedMethod.duration,
+        })
+      );
       dispatch(setStep("payment"));
     }
   };
@@ -129,12 +131,14 @@ function ShippingMethod() {
             ))}
           </div>
         </CardContent>
-        <div className=" flex flex-row justify-between">
+        <div className="flex flex-row justify-between mt-6">
           <Button variant="ghost" onClick={handleBack}>
-            <ChevronLeft />
+            <ChevronLeft className="mr-2 h-4 w-4" />
             Back to Shipping Info
           </Button>
-          <Button onClick={handleContinuePayment}>Continue to Payment</Button>
+          <Button onClick={handleContinuePayment} disabled={!selectedMethod}>
+            Continue to Payment
+          </Button>
         </div>
       </Card>
     </div>

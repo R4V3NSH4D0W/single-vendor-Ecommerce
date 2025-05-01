@@ -29,6 +29,7 @@ function ProductPicker({ product }: ProductPickerProps) {
     }
   };
 
+  // components/ProductCard.tsx
   const handleAddToCart = () => {
     if (
       (!selectedSize && isSizeAvailable) ||
@@ -37,16 +38,13 @@ function ProductPicker({ product }: ProductPickerProps) {
       toast.error("Please select options before adding to cart");
       return;
     }
+
     dispatch(
       addToCart({
-        id: product.id,
-        price: product.price,
-        name: product.name,
+        productId: product.id,
+        quantity: quantity,
         size: selectedSize,
         color: selectedColor,
-        image: product?.images[0],
-        quantity,
-        description: product.description,
       })
     );
   };

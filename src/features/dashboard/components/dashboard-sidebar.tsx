@@ -7,7 +7,15 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
-import { Home, Package, Plus, Tags } from "lucide-react";
+import {
+  ClipboardList,
+  Home,
+  Package,
+  Plus,
+  Receipt,
+  Tags,
+  Truck,
+} from "lucide-react";
 import Link from "next/link";
 
 interface DashBoardSideBarProps {
@@ -31,6 +39,24 @@ const SideBarItems = [
     name: "Categories Manager",
     href: "/dashboard/categories",
     icon: <Tags size={21} />,
+  },
+];
+
+const OrderManagementItems = [
+  {
+    name: "All Orders",
+    href: "/dashboard/orders",
+    icon: <ClipboardList size={21} />,
+  },
+  {
+    name: "Shipping Status",
+    href: "/dashboard/orders/shipping",
+    icon: <Truck size={21} />,
+  },
+  {
+    name: "Invoices",
+    href: "/dashboard/orders/invoices",
+    icon: <Receipt size={21} />,
   },
 ];
 
@@ -65,6 +91,29 @@ const DashBoardSideBar = ({ isOpen, onClose }: DashBoardSideBarProps) => {
             </Link>
           ))}
         </ul>
+        <div className=" p-4 flex flex-col">
+          <label className=" border-t border-b py-4">
+            Order&apos;s Management
+          </label>
+
+          <ul className=" mt-4">
+            {OrderManagementItems.map((orderManagement) => (
+              <Link
+                key={orderManagement.name}
+                href={orderManagement.href}
+                onClick={() => onClose()}
+              >
+                <li
+                  key={orderManagement.name}
+                  className="flex flex-row items-center justify-between space-y-4"
+                >
+                  <h1 className=" text-md">{orderManagement.name}</h1>
+                  {orderManagement.icon}
+                </li>
+              </Link>
+            ))}
+          </ul>
+        </div>
       </SheetContent>
     </Sheet>
   );

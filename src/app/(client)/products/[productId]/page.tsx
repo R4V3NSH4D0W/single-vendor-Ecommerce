@@ -13,7 +13,7 @@ import React from "react";
 function ProductDetailPage() {
   const id = useProductId();
   const { data: product, isLoading } = useGetProduct({ id });
-  console.log(product);
+
   if (isLoading) return <div>Loading...</div>;
   if (!product) return <div>Product not found</div>;
 

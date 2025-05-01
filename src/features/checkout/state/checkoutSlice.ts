@@ -1,41 +1,6 @@
-// checkoutSlice.ts
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { CheckoutState, PaymentInfo, ShippingInfo, ShippingMethod, Step } from "../types";
 
-type Step = "initial" | "shipping" | "payment" | "confirmation";
-
-interface ShippingInfo {
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  address: string;
-  city: string;
-  state: string;
-  zipCode: string;
-  country: string;
-}
-
-interface ShippingMethod {
-  id: number;
-  name: string;
-  duration: string;
-  cost: number;
-}
-
-interface PaymentInfo {
-  cardNumber?: string;
-  expiry?: string;
-  cvc?: string;
-  nameOnCard?: string;
-}
-
-interface CheckoutState {
-  currentStep: Step;
-  shippingInfo: ShippingInfo | null;
-  paymentInfo: PaymentInfo | null;
-  shippingMethod: ShippingMethod | null;
-  paymentMethod: 'card' | 'cod' | null;
-}
 
 const initialState: CheckoutState = {
   currentStep: "initial",
