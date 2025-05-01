@@ -4,7 +4,7 @@ import { Product } from "@/lib/types";
 import { User } from "lucide-react";
 import React from "react";
 import ReviewForm from "./review-form";
-import { formatDate } from "@/lib/utils";
+import { formatDate, toTitleCase } from "@/lib/utils";
 import { StarRating } from "@/features/review/components/star-rating";
 import { useCurrent } from "@/features/auth/api/use-current";
 import Link from "next/link";
@@ -107,7 +107,9 @@ function ProductTab({ product }: ProductTabProps) {
                         </div>
                         <div>
                           <div className="flex items-center">
-                            <h4 className="font-medium mr-2">{review.name}</h4>
+                            <h4 className="font-medium mr-2">
+                              {toTitleCase(review.name)}
+                            </h4>
                             {review.verified && (
                               <span className="bg-green-100 text-green-800 text-xs px-2 py-0.5 rounded">
                                 Verified Purchase

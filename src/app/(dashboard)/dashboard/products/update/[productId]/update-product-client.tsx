@@ -33,7 +33,7 @@ import { useProductId } from "@/features/product/hooks/use-product-id";
 
 function UpdateProductClient() {
   const id = useProductId();
-  console.log("id", id);
+
   const { data: product, isLoading: productLoading } = useGetProduct({
     id,
   });
@@ -89,7 +89,6 @@ function UpdateProductClient() {
   type ProductFormValues = z.infer<typeof ProductSchema>;
 
   const onSubmit = async (values: ProductFormValues) => {
-    console.log(values);
     const formData = new FormData();
     formData.append("id", id as string);
     formData.append("productName", values.productName);

@@ -1,37 +1,13 @@
-import { Star } from "lucide-react";
-import Image from "next/image";
+"use client";
 
-const testimonials = [
-  {
-    name: "Alex Johnson",
-    role: "Fashion Enthusiast",
-    quote:
-      "The quality of these products exceeded my expectations. The attention to detail and superior materials make them stand out from other brands I've tried.",
-    rating: 5,
-    image:
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=100",
-  },
-  {
-    name: "Sam Williams",
-    role: "Design Professional",
-    quote:
-      "I've been a loyal customer for years. The minimalist aesthetic and durability of their products make them worth every penny.",
-    rating: 5,
-    image:
-      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=100",
-  },
-  {
-    name: "Taylor Chen",
-    role: "Lifestyle Blogger",
-    quote:
-      "Their commitment to sustainability without compromising on style is why I keep coming back. These pieces seamlessly integrate into any wardrobe or home.",
-    rating: 5,
-    image:
-      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=100",
-  },
-];
+import { useGetTestimonials } from "@/features/testimonials/api/use-get-testimonials";
+import { Star } from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const Testimonials = () => {
+  const { data } = useGetTestimonials();
+  console.log(data);
+
   return (
     <section className="py-16 md:py-24 bg-secondary/30">
       <div className="container mx-auto px-4">
@@ -44,19 +20,24 @@ const Testimonials = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {testimonials.map((testimonial, index) => (
+          {data?.testimonials.map((testimonial, index) => (
             <div
               key={index}
               className="bg-background p-6 rounded-lg border border-border flex flex-col"
             >
               <div className="flex items-center space-x-4 mb-4">
-                <Image
-                  src={testimonial.image}
-                  alt={testimonial.name}
-                  height={40}
-                  width={40}
-                  className="h-12 w-12 rounded-full object-cover"
-                />
+                <Avatar className="h-12 w-12">
+                  {testimonial.image && (
+                    <AvatarImage
+                      src={testimonial.image}
+                      alt={testimonial.name}
+                      className="object-cover"
+                    />
+                  )}
+                  <AvatarFallback>
+                    {testimonial.name.charAt(0).toUpperCase()}
+                  </AvatarFallback>
+                </Avatar>
                 <div>
                   <h4 className="font-semibold">{testimonial.name}</h4>
                   <p className="text-sm text-muted-foreground">
@@ -72,7 +53,7 @@ const Testimonials = () => {
               </div>
 
               <p className="text-muted-foreground italic flex-grow">
-                &quot;{testimonial.quote}&quot;
+                &quot;{testimonial.message}&quot;
               </p>
             </div>
           ))}

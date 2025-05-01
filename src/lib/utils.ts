@@ -44,3 +44,10 @@ export function formatDate(isoDate: string): string {
     // hour12: true, 
   });
 }
+
+export const formatCurrency = (value: number) => {
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+  }).format(value);
+};

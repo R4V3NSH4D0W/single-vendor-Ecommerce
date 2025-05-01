@@ -1,7 +1,7 @@
 "use client";
 import { useIsMobile } from "@/hooks/use-mobile";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ShoppingBag, User, Menu, X } from "lucide-react";
 import { Button } from "./ui/button";
 import ThemeToggle from "./toogle-theme";
@@ -14,7 +14,7 @@ import { selectTotalItems } from "@/features/cart/state/cart-slice";
 const NAV_LINKS = [
   { id: 1, name: "Home", path: "/" },
   { id: 2, name: "Shop", path: "/products?sort=newest" },
-  { id: 3, name: "Collection", path: "/collection" },
+  // { id: 3, name: "Collection", path: "/collection" },
   { id: 4, name: "About", path: "/about" },
   { id: 6, name: "Contact", path: "/contact" },
 ];
@@ -25,7 +25,14 @@ function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const totalItems = useSelector(selectTotalItems);
 
+  const [hasMounted, setHasMounted] = useState(false);
+
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
+
   const { data: user } = useCurrent();
+
   return (
     <nav className="sticky top-0 z-50 bg-background/80 backdrop-blur-lg border-b">
       <div className="container mx-auto px-4">
@@ -69,20 +76,22 @@ function Navbar() {
 
             <ThemeToggle />
 
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setIsCartOpen(true)}
-              aria-label="Cart"
-              className="relative"
-            >
-              <ShoppingBag className="h-5 w-5" />
-              {totalItems > 0 && (
-                <span className="absolute -top-1 -right-1 bg-primary text-primary-foreground rounded-full h-5 w-5 flex items-center justify-center text-xs">
-                  {totalItems}
-                </span>
-              )}
-            </Button>
+            {user && (
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setIsCartOpen(true)}
+                aria-label="Cart"
+                className="relative"
+              >
+                <ShoppingBag className="h-5 w-5" />
+                {hasMounted && totalItems > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-primary text-primary-foreground rounded-full h-5 w-5 flex items-center justify-center text-xs">
+                    {totalItems}
+                  </span>
+                )}
+              </Button>
+            )}
             {isMobile && (
               <Button
                 variant="ghost"
@@ -116,7 +125,9 @@ function Navbar() {
           </div>
         )}
       </div>
+
       <CartDrawer isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
+
       {/* <SearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} /> */}
     </nav>
   );

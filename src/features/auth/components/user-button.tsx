@@ -12,6 +12,7 @@ import { useLogout } from "../api/use-logout";
 import { useCurrent } from "../api/use-current";
 import { Loader, LogOut } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
+import Link from "next/link";
 
 export const UserButton = () => {
   const { data: user, isLoading } = useCurrent();
@@ -49,16 +50,19 @@ export const UserButton = () => {
         sideOffset={10}
       >
         <div className=" flex flex-col items-center justify-center gap-2 px-2.5 py-4">
-          <Avatar className=" size-[52px] border">
-            <AvatarFallback className=" font-medium text-xl  flex items-center justify-center">
-              {avatarFallBack}
-            </AvatarFallback>
-          </Avatar>
+          <Link href="/account">
+            <Avatar className=" size-[52px] border">
+              <AvatarFallback className=" font-medium text-xl  flex items-center justify-center">
+                {avatarFallBack}
+              </AvatarFallback>
+            </Avatar>
+          </Link>
           <div className=" flex flex-col items-center justify-center">
             <p className=" text-sm font-medium">{name || "user"}</p>
             <p className=" text-xs ">{email}</p>
           </div>
         </div>
+
         <Separator className=" mb-1" />
         <DropdownMenuItem
           onClick={() => logout()}

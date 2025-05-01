@@ -1,8 +1,7 @@
 import { CartItem } from "@/features/cart/state/cart-slice";
 
-export const loadCartFromStorage = () => {
+export const loadCartFromStorage = (): CartItem[] => {
   if (typeof window === "undefined") return [];
-
   try {
     const cart = localStorage.getItem("cart");
     return cart ? JSON.parse(cart) : [];
@@ -14,10 +13,13 @@ export const loadCartFromStorage = () => {
 
 export const saveCartToStorage = (items: CartItem[]) => {
   if (typeof window === "undefined") return;
-
   try {
     localStorage.setItem("cart", JSON.stringify(items));
   } catch (err) {
     console.error("Failed to save cart:", err);
   }
+};
+
+export const clearCartFromStorage = () => {
+  localStorage.removeItem("cart");
 };

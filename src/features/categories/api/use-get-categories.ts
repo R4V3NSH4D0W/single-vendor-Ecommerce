@@ -4,7 +4,7 @@ import { client } from "@/lib/rpc";
 
 export const useGetCategories = () => {
   return useQuery({
-    queryKey: ["categories",],
+    queryKey: ["categories"],
     queryFn: async () => {
       const response = await client.api.categories.$get();
 
