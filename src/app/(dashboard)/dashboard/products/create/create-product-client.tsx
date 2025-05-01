@@ -30,9 +30,8 @@ import { SpecificationFields } from "@/features/dashboard/components/specificati
 import { useGetCategories } from "@/features/categories/api/use-get-categories";
 
 function AddProductClient() {
-  const { mutate, error } = useCreateProduct();
+  const { mutate } = useCreateProduct();
   const { data: categories } = useGetCategories();
-  console.log(error);
 
   const form = useForm<z.infer<typeof ProductSchema>>({
     resolver: zodResolver(ProductSchema),
@@ -67,7 +66,7 @@ function AddProductClient() {
 
   const onSubmit = async (values: ProductFormValues) => {
     const formData = new FormData();
-    console.log(values);
+
     formData.append("productName", values.productName);
     formData.append("productDescription", values.productDescription);
     formData.append("productPrice", values.productPrice.toString());

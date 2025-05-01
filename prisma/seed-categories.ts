@@ -1,5 +1,4 @@
-// prisma/seed-categories.ts
-import { PrismaClient } from '../src/generated/prisma'; // Adjust if needed
+import { PrismaClient } from '../src/generated/prisma'; 
 import cuid from 'cuid';
 
 const prisma = new PrismaClient();
@@ -18,14 +17,13 @@ async function main() {
       where: { value: category.value },
       update: {},
       create: {
-        id: cuid(), // ✅ using cuid here
+        id: cuid(),
         label: category.label,
         value: category.value,
       },
     });
   }
 
-  console.log("✅ Categories inserted successfully.");
 }
 
 main()

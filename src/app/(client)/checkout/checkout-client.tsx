@@ -1,5 +1,6 @@
 "use client";
 import CheckoutSteps from "@/features/checkout/components/checkout-steps";
+import OrderPlaced from "@/features/checkout/components/order-placed";
 import OrderSummeryCard from "@/features/checkout/components/order-summery-card";
 import PaymentOpionCard from "@/features/checkout/components/payment-option-card";
 import PreviewStepCard from "@/features/checkout/components/preview-step-card";
@@ -11,6 +12,7 @@ import React from "react";
 
 function CheckoutClinet() {
   const currentStep = useAppSelector((state) => state.checkout.currentStep);
+
   return (
     <div className=" container mx-auto p-4">
       <CheckoutSteps />
@@ -19,7 +21,8 @@ function CheckoutClinet() {
         {currentStep === "shipping" && <ShippingMethod />}
         {currentStep === "payment" && <PaymentOpionCard />}
         {currentStep === "confirmation" && <PreviewStepCard />}
-        <OrderSummeryCard />
+        {currentStep === "placedSuccessfully" && <OrderPlaced />}
+        {currentStep !== "placedSuccessfully" && <OrderSummeryCard />}
       </div>
     </div>
   );

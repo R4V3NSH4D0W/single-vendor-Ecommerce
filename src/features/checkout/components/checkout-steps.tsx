@@ -1,4 +1,5 @@
 "use client";
+
 import { cn } from "@/lib/utils";
 import { useAppSelector } from "@/store/hooks";
 import { Check } from "lucide-react";
@@ -12,9 +13,11 @@ const Steps = [
 
 function CheckoutSteps() {
   const currentStep = useAppSelector((state) => state.checkout.currentStep);
-  const currentStepIndex = Steps.findIndex(
-    (step) => step.value === currentStep
-  );
+
+  const isOrderPlaced = currentStep === "placedSuccessfully";
+  const currentStepIndex = isOrderPlaced
+    ? Steps.length
+    : Steps.findIndex((step) => step.value === currentStep);
 
   return (
     <div className="lg:px-60 mt-10">
@@ -29,17 +32,15 @@ function CheckoutSteps() {
                 <div
                   className={cn(
                     "w-8 h-8 flex justify-center items-center rounded-full",
-                    isActive
-                      ? "bg-accent-foreground text-background"
-                      : isCompleted
+                    isCompleted
                       ? "bg-green-500 text-white"
+                      : isActive
+                      ? "bg-accent-foreground text-background"
                       : "bg-accent text-muted-foreground"
                   )}
                 >
                   {isCompleted ? (
-                    <span className="text-sm">
-                      <Check size={16} />
-                    </span>
+                    <Check size={16} />
                   ) : (
                     <label className="text-sm">{step.id}</label>
                   )}
@@ -47,10 +48,10 @@ function CheckoutSteps() {
                 <p
                   className={cn(
                     "text-sm",
-                    isActive
-                      ? "text-accent-foreground"
-                      : isCompleted
+                    isCompleted
                       ? "text-green-500"
+                      : isActive
+                      ? "text-accent-foreground"
                       : "text-muted-foreground"
                   )}
                 >

@@ -15,6 +15,8 @@ import {
 } from "lucide-react";
 import { setStep } from "../state/checkoutSlice";
 import { Button } from "@/components/ui/button";
+import { UseCheckout } from "../api/use-checkout";
+import { toast } from "sonner";
 
 function PreviewStepCard() {
   const shippingInfo = useAppSelector((state) => state.checkout.shippingInfo);
@@ -25,18 +27,36 @@ function PreviewStepCard() {
   );
   const dispatch = useAppDispatch();
 
+  const { mutate } = UseCheckout();
+
   const handleBack = () => {
     dispatch(setStep("payment"));
   };
 
   const handleCheckout = async () => {
-    const orderPayload = {
+    if (!shippingInfo || !shippingMethod || !paymentMethod) {
+      toast.error(
+        "Please complete all checkout steps before placing the order."
+      );
+      return;
+    }
+    const basePaymentInfo = { paymentMethod };
+    const paymentPayload =
+      paymentMethod === "cod"
+        ? basePaymentInfo
+        : {
+            ...basePaymentInfo,
+            cardNumber: paymentInfo?.cardNumber,
+            expirationDate: paymentInfo?.expiry,
+            cvv: paymentInfo?.cvc,
+            nameOnCard: paymentInfo?.nameOnCard,
+          };
+    mutate({
       shippingInfo,
-      paymentInfo,
       shippingMethod,
       paymentMethod,
-    };
-    console.log(orderPayload);
+      paymentInfo: paymentPayload,
+    });
   };
 
   return (

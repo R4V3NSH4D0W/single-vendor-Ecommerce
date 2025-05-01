@@ -29,6 +29,7 @@ function SwitchImage({ product }: SwitchImageProps) {
           alt="Product Image"
           width={500}
           height={500}
+          priority={true}
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 flex items-center justify-between p-4">

@@ -5,8 +5,9 @@ import products from "@/features/product/server/route"
 import product from "@/features/dashboard/server/route"
 import categories from "@/features/categories/server/route"
 import review from "@/features/review/server/route"
-// import checkout from "@/features/checkout/server/route"
+import checkout from "@/features/checkout/server/route"
 import cart from "@/features/cart/server/route"
+import orders from "@/features/order/server/route"
 const app = new Hono().basePath("/api");
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -17,7 +18,8 @@ const routes =app
 .route("/categories",categories)
 .route("/reviews",review)
 .route("/cart",cart)
-// .route("/checkout",checkout)
+.route("/checkout",checkout)
+.route("/orders",orders)
 
 
 export const GET = handle(app)

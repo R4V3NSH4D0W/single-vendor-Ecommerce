@@ -20,9 +20,6 @@ function CategoriesClientPage() {
   const [categoryName, setCategoryName] = React.useState("");
   const [categoryValue, setCategoryValue] = React.useState("");
 
-  console.log(categoryName);
-  console.log(categoryValue);
-
   const generateSlug = (name: string) => {
     return name
       .toLowerCase()

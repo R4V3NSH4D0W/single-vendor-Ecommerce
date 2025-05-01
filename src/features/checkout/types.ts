@@ -1,5 +1,5 @@
 
-export type Step = "initial" | "shipping" | "payment" | "confirmation";
+export type Step = "initial" | "shipping" | "payment" | "confirmation"| "placedSuccessfully";
 
 export interface ShippingInfo {
     firstName: string;
@@ -14,7 +14,7 @@ export interface ShippingInfo {
   }
   
  export  interface ShippingMethod {
-    id: number;
+    id: string;
     name: string;
     duration: string;
     cost: number;

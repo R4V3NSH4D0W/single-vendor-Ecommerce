@@ -10,6 +10,7 @@ interface CartItemProps {
     price: number;
     quantity: number;
     image: string;
+    productId?: string;
     options?: Record<string, string>;
   };
   onUpdateQuantity: (id: string, quantity: number) => void;
@@ -31,7 +32,7 @@ const CartItem = ({ item, onUpdateQuantity, onRemove }: CartItemProps) => {
   return (
     <div className="flex py-4 border-b last:border-0 p-4">
       <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border">
-        <Link href={`/products/${item.id}`}>
+        <Link href={`/products/${item.productId}`}>
           <Image
             src={item.image}
             alt={item.name}

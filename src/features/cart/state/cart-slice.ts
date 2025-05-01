@@ -104,7 +104,6 @@ const cartSlice = createSlice({
   reducers: {
     clearCart: (state) => {
       state.items = [];
-      toast.success("Cart cleared");
     },
     setShipping: (state, action: PayloadAction<number>) => {
       state.shipping = action.payload;

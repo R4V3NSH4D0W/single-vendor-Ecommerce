@@ -1,138 +1,131 @@
-// // app/api/orders/route.ts
-// import { Hono } from "hono";
-// import { sessionMiddleware } from "@/lib/session-middleware";
-// import { z } from "zod";
-// import { zValidator } from "@hono/zod-validator";
-// import  prisma  from "@/lib/prisma";
-// import { PaymentInfo, ShippingInfo, ShippingMethod } from "../types";
+import { Hono } from "hono";
+import { sessionMiddleware } from "@/lib/session-middleware";
+import prisma from "@/lib/prisma";
 
-// const app = new Hono();
+const app = new Hono()
 
-// // Order schema using Redux types
-// const orderSchema = z.object({
-//   shippingInfo: z.custom<ShippingInfo>(),
-//   shippingMethod: z.custom<ShippingMethod>(),
-//   paymentMethod: z.enum(['card', 'cod']),
-//   paymentInfo: z.custom<PaymentInfo | null>().optional(),
-// });
+.post("/", sessionMiddleware, async (c) => {
+  const user = c.get("user");
+  if (!user) {
+    return c.json({ error: "Unauthorized" }, 401);
+  }
 
-// app.post(
-//   '/',
-//   sessionMiddleware,
-//   zValidator('json', orderSchema),
-//   async (c) => {
-//     try {
-//       const user = c.get("user");
-//       if (!user) return c.json({ error: "Unauthorized" }, 401);
+  const { shippingInfo, paymentInfo, shippingMethod } = await c.req.json();
 
-//       const { 
-//         shippingInfo,
-//         shippingMethod,
-//         paymentMethod,
-//         paymentInfo
-//       } = c.req.valid('json');
+  const cart = await prisma.cart.findUnique({
+    where: { userId: user.id },
+    include: {
+      items: {
+        include: { product: true },
+      },
+    },
+  });
 
-//       // Get cart items
-//       const cartItems = await prisma.cartItem.findMany({
-//         where: { userId: user.id },
-//         include: { product: true },
-//       });
+  if (!cart || cart.items.length === 0) {
+    return c.json({ message: "Cart is empty" }, 400);
+  }
 
-//       if (cartItems.length === 0) {
-//         return c.json({ error: "Cart is empty" }, 400);
-//       }
+  const shipping = await prisma.shippingMethod.findUnique({
+    where: { id: shippingMethod.id },
+  });
 
-//       // Calculate totals
-//       const subtotal = cartItems.reduce(
-//         (acc, item) => acc + (item.product.price * item.quantity),
-//         0
-//       );
+  if (!shipping) {
+    return c.json({ message: "Invalid shipping method" }, 400);
+  }
 
-//       const tax = subtotal * 0.08;
-//       const total = subtotal + shippingMethod.cost + tax;
+  const subtotal = cart.items.reduce(
+    (acc, item) => acc + item.product.price * item.quantity,
+    0
+  );
+  const shippingCost = shippingMethod.cost;
+  const tax = subtotal * 0.08;
+  const totalAmount = subtotal + shippingCost + tax;
 
-//       // Stock validation
-//       const stockValid = cartItems.every(
-//         item => item.product.stock >= item.quantity
-//       );
-      
-//       if (!stockValid) {
-//         return c.json({ error: "Insufficient stock" }, 400);
-//       }
+  for (const item of cart.items) {
+    if (item.product.stock < item.quantity) {
+      return c.json(
+        { message: `Insufficient stock for ${item.product.name}` },
+        400
+      );
+    }
+  }
 
-//       // Create order transaction
-//       const order = await prisma.$transaction(async (prisma) => {
-//         // Create order
-//         const order = await prisma.order.create({
-//           data: {
-//             user: { connect: { id: user.id } },
-//             totalAmount: total,
-//             subtotal,
-//             shippingCost: shippingMethod.cost,
-//             tax,
-//             paymentMethod,
-//             shippingAddress: shippingInfo.address,
-//             shippingCity: shippingInfo.city,
-//             shippingState: shippingInfo.state,
-//             shippingPostalCode: shippingInfo.zipCode,
-//             shippingCountry: shippingInfo.country,
-//             status: 'PENDING',
-//             items: {
-//               create: cartItems.map(item => ({
-//                 productId: item.productId,
-//                 quantity: item.quantity,
-//                 price: item.product.price,
-//                 size: item.size,
-//                 color: item.color
-//               }))
-//             }
-//           }
-//         });
+  try {
+    const order = await prisma.order.create({
+      data: {
+        orderNumber: `ORD-${Date.now()}`,
+        userId: user.id,
+        subtotal,
+        totalAmount,
+        tax,
+        shippingCost,
+        shippingMethodId: shippingMethod.id,
+        shippingAddress: shippingInfo.address,
+        shippingCity: shippingInfo.city,
+        shippingState: shippingInfo.state,
+        shippingPostalCode: shippingInfo.zipCode,
+        shippingCountry: shippingInfo.country,
+        paymentMethod: paymentInfo.paymentMethod === "card" ? "CARD" : "COD",
+        items: {
+          create: cart.items.map((item) => ({
+            productId: item.productId,
+            quantity: item.quantity,
+            price: item.product.price,
+            size: item.size,
+            color: item.color,
+          })),
+        },
+        ...(paymentInfo.paymentMethod === "card" && paymentInfo.cardNumber && {
+          payment: {
+            create: {
+              amount: totalAmount,
+              method: "CARD",
+              transactionId: paymentInfo.cardNumber,
+              last4Digits: paymentInfo.cardNumber.slice(-4),
+              expirationDate: paymentInfo.expirationDate,
+              status: "COMPLETED",
+            },
+          },
+        }),
+      },
+    });
 
-//         // Handle payment
-//         if (paymentMethod === 'card' && paymentInfo) {
-//           await prisma.payment.create({
-//             data: {
-//               orderId: order.id,
-//               amount: total,
-//               method: 'CARD',
-//               last4Digits: paymentInfo.cardNumber?.slice(-4) || '',
-//               expirationDate: paymentInfo.expiry,
-//               status: 'COMPLETED'
-//             }
-//           });
-//         }
+    // ✅ Decrease stock for each product
+    for (const item of cart.items) {
+      await prisma.product.update({
+        where: { id: item.productId },
+        data: {
+          stock: {
+            decrement: item.quantity,
+          },
+        },
+      });
+    }
 
-//         // Update product stock
-//         await Promise.all(
-//           cartItems.map(item =>
-//             prisma.product.update({
-//               where: { id: item.productId },
-//               data: { stock: { decrement: item.quantity } }
-//             })
-//           )
-//         );
+    // ✅ Clear the cart
+    await prisma.cartItem.deleteMany({
+      where: { cartId: cart.id },
+    });
 
-//         // Clear cart
-//         await prisma.cartItem.deleteMany({
-//           where: { userId: user.id }
-//         });
+    return c.json({ message: "Order placed successfully", order });
+  } catch (error) {
+    console.error("Error placing order:", error);
+    return c.json({ message: "Error placing order" }, 500);
+  }
+})
 
-//         return order;
-//       });
+.get("/shipping-methods", async (c) => {
+  try {
+    const shippingMethods = await prisma.shippingMethod.findMany({
+      where: { active: true },
+      orderBy: { cost: "asc" },
+    });
 
-//       return c.json({
-//         success: true,
-//         orderId: order.id,
-//         total,
-//         paymentStatus: paymentMethod === 'cod' ? 'PENDING' : 'COMPLETED'
-//       });
+    return c.json({ shippingMethods });
+  } catch (error) {
+    console.error("Error fetching shipping methods:", error);
+    return c.json({ error: "Failed to fetch shipping methods" }, 500);
+  }
+});
 
-//     } catch (error) {
-//       console.error("Order error:", error);
-//       return c.json({ error: "Order failed" }, 500);
-//     }
-//   }
-// );
-
-// export default app;
+export default app;
