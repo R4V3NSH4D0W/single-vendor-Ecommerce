@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { addToCart } from "@/features/cart/state/cart-slice";
+import { useWishlistToggle } from "@/lib/helpers";
 import { Product } from "@/lib/types";
 import { useAppDispatch } from "@/store/hooks";
 import { Heart, ShoppingBag } from "lucide-react";
@@ -22,6 +23,8 @@ function ProductPicker({ product }: ProductPickerProps) {
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedColor, setSelectedColor] = useState("");
   const [quantity, setQuantity] = useState(1);
+  const { isInWishlist, isAdding, isRemoving, handleWishlistToggle } =
+    useWishlistToggle({ productId: product.id });
 
   const handleQuantityChange = (newQuantity: number) => {
     if (newQuantity > 0 && newQuantity <= product.stock) {
@@ -125,8 +128,18 @@ function ProductPicker({ product }: ProductPickerProps) {
           {isInStock ? "Add to Cart" : "Out of Stock"}
         </Button>
 
-        <Button variant="outline" size="icon" className="h-12 w-12">
-          <Heart className="h-5 w-5" />
+        <Button
+          variant="outline"
+          size="icon"
+          disabled={isAdding || isRemoving}
+          className="h-12 w-12"
+          onClick={handleWishlistToggle}
+        >
+          <Heart
+            className={`h-4 w-4 ${
+              isInWishlist ? "fill-red-500  text-red-500" : "stroke-current"
+            }`}
+          />
         </Button>
       </div>
     </>

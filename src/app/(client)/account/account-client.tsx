@@ -1,7 +1,11 @@
 "use client";
+import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useGetOrder } from "@/features/order/api/use-get-order";
+import { useDeleteFromWishlist } from "@/features/wishlist/api/use-delete-from-wishlist";
+import { useWishlist } from "@/features/wishlist/api/use-wishlist";
 import { formatDate } from "@/lib/utils";
+import Image from "next/image";
 import Link from "next/link";
 
 import React from "react";
@@ -12,6 +16,18 @@ interface AccountClientPageProps {
 
 function AccountClientPage({ name }: AccountClientPageProps) {
   const { data: orders } = useGetOrder();
+  const { data: wishlist } = useWishlist();
+
+  const { mutate, isPending } = useDeleteFromWishlist();
+
+  const handelDeleteWishlist = (e: React.MouseEvent, id: string) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    mutate({
+      productId: id,
+    });
+  };
 
   return (
     <div className="container mx-auto px-4 py-12 md:py-16">
@@ -112,6 +128,60 @@ function AccountClientPage({ name }: AccountClientPageProps) {
                 >
                   Start Shopping
                 </Link>
+              </div>
+            )}
+          </div>
+        </TabsContent>
+        <TabsContent value="wishlist">
+          <div className="space-y-6">
+            <h2 className="text-xl font-semibold">My Wishlist</h2>
+            {(wishlist?.items ?? []).length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {wishlist?.items.map((item) => (
+                  <Link href={`/products/${item.product.id}`} key={item.id}>
+                    <div className="flex border border-border rounded-md p-4">
+                      <div className="relative h-24 w-24">
+                        <Image
+                          src={item.product.images[0]}
+                          alt={item.product.name}
+                          layout="fill"
+                          objectFit="cover"
+                          className="rounded-md"
+                        />
+                      </div>
+
+                      <div className="ml-4 flex flex-col flex-1">
+                        <h3 className="font-medium">{item.product.name}</h3>
+                        <p className="text-muted-foreground mb-2">
+                          ${item.product.price.toFixed(2)}
+                        </p>
+                        <div className="mt-auto flex space-x-2">
+                          {/* <button className="px-3 py-1 bg-primary text-primary-foreground text-sm rounded-md hover:bg-primary/90 transition-colors">
+                          Add to Cart
+                        </button> */}
+                          <Button
+                            onClick={(e) =>
+                              handelDeleteWishlist(e, item.product.id)
+                            }
+                            disabled={isPending}
+                            className="px-3 cursor-pointer py-1 bg-secondary text-secondary-foreground text-sm rounded-md hover:bg-secondary/90 transition-colors"
+                          >
+                            Remove from Wishlist
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-12">
+                <p className="text-muted-foreground mb-4">
+                  Your wishlist is empty.
+                </p>
+                {/* <a href="/products" className="text-primary hover:text-primary/80 transition-colors">
+                    Discover Products
+                  </a> */}
               </div>
             )}
           </div>
