@@ -8,7 +8,7 @@ const nextConfig: NextConfig = {
     return config;
   },
   images: {
-    domains: ["images.unsplash.com", "localhost"],
+    domains: ["images.unsplash.com", "localhost","59cqvp91-3000.inc1.devtunnels.ms"],
   },
 };
 
