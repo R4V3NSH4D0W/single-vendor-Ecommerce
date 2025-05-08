@@ -6,32 +6,53 @@ import { client } from "@/lib/rpc";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
-type ResponseType = InferResponseType<typeof client.api.auth.login["$post"]>;
+type ResponseType = {
+  message: string;
+  token: string;
+  user: {
+    id: string;
+    email: string;
+    name: string;
+  };
+};
+
 type RequestType = InferRequestType<typeof client.api.auth.login["$post"]>;
 
 export const useLogin = () => {
   const router = useRouter();
-  const queryclient = useQueryClient();
+  const queryClient = useQueryClient();
 
   const mutation = useMutation<ResponseType, Error, RequestType>({
     mutationFn: async ({ json }) => {
       const response = await client.api.auth.login["$post"]({ json });
-      console.log("login Response",response);
-      if(!response.ok){
-        console.log("login error",response);
-        throw new Error("Failed to log in");
-    }
-      return await response.json();
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(
+          "error" in errorData
+            ? errorData.error
+            : errorData?.message || "Login failed"
+        );
+      }
+
+      const result: ResponseType = await response.json();
+
+      if (!result.token) {
+        throw new Error("Invalid login response: Missing token");
+      }
+
+      return result;
     },
-    onSuccess: () => {
-      toast.success("Logged in")
+    onSuccess: (data) => {
+      toast.success("Logged in");
+      console.log("Token:", data.token); // optional debug
       router.refresh();
-      queryclient.invalidateQueries({ queryKey: ["current"] });
+      queryClient.invalidateQueries({ queryKey: ["current"] });
     },
-    onError:(error)=>{
-      console.log("login error",error);
-      toast.error("Failed to log in");
-    }
+    onError: (error) => {
+      console.error("login error", error);
+      toast.error(error.message || "Failed to log in");
+    },
   });
 
   return mutation;
