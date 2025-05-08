@@ -43,9 +43,8 @@ export const useLogin = () => {
 
       return result;
     },
-    onSuccess: (data) => {
+    onSuccess: () => {
       toast.success("Logged in");
-      console.log("Token:", data.token); // optional debug
       router.refresh();
       queryClient.invalidateQueries({ queryKey: ["current"] });
     },

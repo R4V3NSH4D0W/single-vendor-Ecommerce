@@ -40,7 +40,7 @@ export async function imageStorage(file: File | Buffer): Promise<SavedImage> {
     return {
       filename,
       path: filePath,
-      url: `http://localhost:3000/api/products/images/${filename}`
+      url: `${process.env.NEXT_PUBLIC_APP_URL}/api/products/images/${filename}`
     };
   } catch (err) {
     console.error('Error saving image:', err);
