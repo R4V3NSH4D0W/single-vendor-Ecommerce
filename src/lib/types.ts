@@ -47,3 +47,36 @@ export interface Review {
     isFeatured: boolean;
     createdAt: string;
   };
+
+
+// types.ts
+
+export interface WishlistProduct {
+  id: string;
+  name: string;
+  price: number;
+  images: string[];
+}
+
+export interface WishlistItem {
+  id: string;
+  product: WishlistProduct;
+}
+
+export interface WishListResponseData {
+  wishlistId: string;
+  items: WishlistItem[];
+}
+
+export interface WishListSuccessResponse {
+  success: true;
+  data: WishListResponseData;
+}
+
+export interface WishListErrorResponse {
+  success: false;
+  error: string;
+}
+
+export type WishListResponse = WishListSuccessResponse | WishListErrorResponse;
+export type ParsedWishListData = WishListResponseData; 

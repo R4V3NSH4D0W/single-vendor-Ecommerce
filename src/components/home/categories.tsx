@@ -19,7 +19,7 @@ const Categories = () => {
         <div className="text-center max-w-lg mx-auto mb-12">
           <h1 className="text-3xl font-bold mb-4">Shop by Category</h1>
           <p className="text-muted-foreground">
-            Explore our curated collections of premium essentials designed for
+            Explore our curated collections of premium essentials d esigned for
             modern living
           </p>
         </div>

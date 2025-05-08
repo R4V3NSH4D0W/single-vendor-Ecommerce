@@ -19,7 +19,7 @@ function OrderPlaced() {
         </p>
 
         <div className="flex gap-4">
-          <Link href="/orders">
+          <Link href="/account">
             <Button variant="ghost">View My Orders</Button>
           </Link>
           <Link href="/">

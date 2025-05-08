@@ -260,6 +260,20 @@ exports.Prisma.TestimonialScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.WishlistScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.WishlistItemScalarFieldEnum = {
+  id: 'id',
+  wishlistId: 'wishlistId',
+  productId: 'productId',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -319,7 +333,9 @@ exports.Prisma.ModelName = {
   ShippingMethod: 'ShippingMethod',
   Cart: 'Cart',
   CartItem: 'CartItem',
-  Testimonial: 'Testimonial'
+  Testimonial: 'Testimonial',
+  Wishlist: 'Wishlist',
+  WishlistItem: 'WishlistItem'
 };
 
 /**

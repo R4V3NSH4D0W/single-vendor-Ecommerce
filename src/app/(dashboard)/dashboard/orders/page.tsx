@@ -124,7 +124,26 @@ export default function OrdersPage() {
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end">
-                    <DropdownMenuItem onClick={() => setSelectedOrder(order)}>
+                    <DropdownMenuItem
+                      onClick={() =>
+                        setSelectedOrder({
+                          ...order,
+                          items: order.items.map((item) => ({
+                            ...item,
+                            images: item.product.images || [],
+                          })),
+                          payment:
+                            order.payment === null
+                              ? undefined
+                              : {
+                                  transactionId:
+                                    order.payment.transactionId ?? undefined,
+                                  last4Digits:
+                                    order.payment.last4Digits ?? undefined,
+                                },
+                        })
+                      }
+                    >
                       View Details
                     </DropdownMenuItem>
 

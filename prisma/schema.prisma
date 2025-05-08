@@ -26,6 +26,8 @@ model User {
   Order Order[]
 
   Cart Cart[]
+
+  Wishlist Wishlist[]
 }
 
 model Product {
@@ -50,6 +52,7 @@ model Product {
   isFeatured      Boolean         @default(false) @map("productIsFeatured")
   OrderItem       OrderItem[]
   CartItem        CartItem[]
+  WishlistItem    WishlistItem[]
 
   @@map("products")
 }
@@ -238,4 +241,27 @@ model Testimonial {
   role      TestimonialUserRole @default(CUSTOMER)
   createdAt DateTime            @default(now())
   updatedAt DateTime            @updatedAt
+}
+
+model Wishlist {
+  id        String         @id @default(cuid())
+  user      User           @relation(fields: [userId], references: [id])
+  userId    String         @unique
+  items     WishlistItem[]
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+
+  @@map("wishlists")
+}
+
+model WishlistItem {
+  id         String   @id @default(cuid())
+  wishlist   Wishlist @relation(fields: [wishlistId], references: [id])
+  wishlistId String
+  product    Product  @relation(fields: [productId], references: [id])
+  productId  String
+  createdAt  DateTime @default(now())
+
+  @@unique([wishlistId, productId])
+  @@map("wishlist_items")
 }
