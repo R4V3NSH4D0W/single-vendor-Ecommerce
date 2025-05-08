@@ -7,6 +7,11 @@ const app = new Hono()
 
 // Sales Overview
 .get("/sales-overview", sessionMiddleware, async (c) => {
+  const user =c.get("user");
+  if(!user || user.role !== "ADMIN"){
+    return c.json({ success: false, error: 'Unauthorized' }, 403);
+  }
+  
   try {
     const { period = "month" } = c.req.query();
     const { startDate, endDate } = getDateRange(period);
@@ -42,7 +47,12 @@ const app = new Hono()
 })
 
 // Customer Lifetime Value (CLV)
-.get('/clv', async (c) => {
+.get('/clv',sessionMiddleware, async (c) => {
+  const user =c.get("user");
+  if(!user || user.role !== "ADMIN"){
+    return c.json({ success: false, error: 'Unauthorized' }, 403);
+  }
+  
   try {
     const result = await prisma.order.groupBy({
       by: ['userId'],
@@ -63,7 +73,12 @@ const app = new Hono()
 })
 
 // Geographic Distribution
-.get('/distribution', async (c) => {
+.get('/distribution',sessionMiddleware, async (c) => {
+  const user =c.get("user");
+  if(!user || user.role !== "ADMIN"){
+    return c.json({ success: false, error: 'Unauthorized' }, 403);
+  }
+  
   try {
     const data = await prisma.order.groupBy({
       by: ['shippingState'],
@@ -110,7 +125,12 @@ const app = new Hono()
 //   })
 
 // Inventory Turnover
-.get('/inventory-turnover', async (c) => {
+.get('/inventory-turnover',sessionMiddleware, async (c) => {
+  const user =c.get("user");
+  if(!user || user.role !== "ADMIN"){
+    return c.json({ success: false, error: 'Unauthorized' }, 403);
+  }
+  
     try {
       const now = new Date();
       const startOfYear = new Date(now.getFullYear(), 0, 1);
@@ -142,7 +162,12 @@ const app = new Hono()
   
 
 // Cart Abandonment Rate
-.get('/abandonment', async (c) => {
+.get('/abandonment',sessionMiddleware, async (c) => {
+  const user =c.get("user");
+  if(!user || user.role !== "ADMIN"){
+    return c.json({ success: false, error: 'Unauthorized' }, 403);
+  }
+  
   try {
     const [totalCarts, convertedCarts] = await Promise.all([
       prisma.cart.count(),
@@ -167,7 +192,12 @@ const app = new Hono()
 })
 
 // Cohort Retention
-.get('/cohort', async (c) => {
+.get('/cohort',sessionMiddleware, async (c) => {
+  const user =c.get("user");
+  if(!user || user.role !== "ADMIN"){
+    return c.json({ success: false, error: 'Unauthorized' }, 403);
+  }
+  
   try {
     const cohorts = await prisma.$queryRaw<
       { cohort_month: Date; total_users: bigint; retained_users: bigint }[]
@@ -222,7 +252,12 @@ const app = new Hono()
 //     }
 //   })
 // Spending Clusters
-.get('/spending-clusters', async (c) => {
+.get('/spending-clusters',sessionMiddleware, async (c) => {
+  const user =c.get("user");
+  if(!user || user.role !== "ADMIN"){
+    return c.json({ success: false, error: 'Unauthorized' }, 403);
+  }
+  
   try {
     const segments = await prisma.$queryRaw<
       { segment: string; customers: bigint }[]
@@ -280,7 +315,12 @@ const app = new Hono()
     return c.json({ error: "Failed to fetch acquisition data" }, 500);
   }
 })
-.get('/most-purchased', async (c) => {
+.get('/most-purchased',sessionMiddleware, async (c) => {
+  const user =c.get("user");
+  if(!user || user.role !== "ADMIN"){
+    return c.json({ success: false, error: 'Unauthorized' }, 403);
+  }
+  
     try {
       const data = await prisma.$queryRaw<
         Array<{
@@ -313,7 +353,12 @@ const app = new Hono()
     }
   })
 
-  .get('/most-wishlisted', async (c) => {
+  .get('/most-wishlisted',sessionMiddleware, async (c) => {
+    const user =c.get("user");
+    if(!user || user.role !== "ADMIN"){
+      return c.json({ success: false, error: 'Unauthorized' }, 403);
+    }
+    
     try {
       const data = await prisma.$queryRaw<
         Array<{

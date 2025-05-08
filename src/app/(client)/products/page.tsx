@@ -1,13 +1,6 @@
 import ProductContents from "@/features/product/components/product-contents";
 import ProductSidebar from "@/features/product/components/products-sidebar";
-import React from "react";
-
-// const sortOptions = [
-//   { value: "featured", label: "Featured" },
-//   { value: "newest", label: "Newest" },
-//   { value: "price-asc", label: "Price: Low to High" },
-//   { value: "price-desc", label: "Price: High to Low" },
-// ];
+import React, { Suspense } from "react";
 
 function ProductsPage() {
   return (
@@ -19,8 +12,16 @@ function ProductsPage() {
         Browse our collection of our premium essentials
       </p>
       <div className=" flex flex-col md:flex-row gap-6 mt-8">
-        <ProductSidebar />
-        <ProductContents />
+        <Suspense
+          fallback={
+            <div className="p-4 text-center text-muted-foreground">
+              Loading products...
+            </div>
+          }
+        >
+          <ProductSidebar />
+          <ProductContents />
+        </Suspense>
       </div>
     </div>
   );
