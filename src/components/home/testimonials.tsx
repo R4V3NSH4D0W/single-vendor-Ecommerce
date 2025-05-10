@@ -6,7 +6,6 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const Testimonials = () => {
   const { data } = useGetTestimonials();
-  console.log(data);
 
   return (
     <section className="py-16 md:py-24 bg-secondary/30">

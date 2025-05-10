@@ -25,7 +25,6 @@ export default function OrderDetail() {
   const id = params?.orderId as string;
 
   const { data, isLoading, error } = useGetOrderByID(id);
-  console.log(data);
 
   if (isLoading) {
     return (

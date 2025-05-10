@@ -9,7 +9,7 @@ export const deleteImageFromStorage = async (imageUrl: string) => {
     const filePath = path.join(IMAGE_FOLDER, fileName);
 
     await fs.unlink(filePath);
-    console.log(`✅ Deleted image: ${filePath}`);
+
   } catch (error) {
     console.error(`❌ Error deleting image ${imageUrl}:`, error);
   }
