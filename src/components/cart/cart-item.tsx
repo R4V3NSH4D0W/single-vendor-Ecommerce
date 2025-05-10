@@ -18,7 +18,6 @@ interface CartItemProps {
 }
 
 const CartItem = ({ item, onUpdateQuantity, onRemove }: CartItemProps) => {
-  console.log(item);
   const handleDecrement = () => {
     if (item.quantity > 1) {
       onUpdateQuantity(item.id, item.quantity - 1);

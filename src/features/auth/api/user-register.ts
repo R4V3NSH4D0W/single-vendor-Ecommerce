@@ -27,12 +27,12 @@ export const useRegister =()=>{
         },
         onSuccess:()=>{
             toast.success("registered successfully");
-            router.refresh();
+            router.push("/signin");
             queryclient.invalidateQueries({queryKey:["current"]});
 
         },
-        onError:()=>{
-            toast.error("Failed to Register")
+        onError:(error)=>{
+            toast.error(error.message || "Failed to register");
         }
     })
     return mutation;
