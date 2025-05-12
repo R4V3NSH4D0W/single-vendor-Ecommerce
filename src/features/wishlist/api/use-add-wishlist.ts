@@ -17,7 +17,7 @@ export const useAddWishList = () => {
         },
       });
       if (!response.ok) {
-        console.log(response)
+    
         throw new Error("Failed to Add to Wishlist ");
       }
 

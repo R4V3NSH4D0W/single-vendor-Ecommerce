@@ -28,6 +28,8 @@ model User {
   Cart Cart[]
 
   Wishlist Wishlist[]
+
+  OTPVerification OTPVerification[]
 }
 
 model Product {
@@ -264,4 +266,26 @@ model WishlistItem {
 
   @@unique([wishlistId, productId])
   @@map("wishlist_items")
+}
+
+enum OTPType {
+  EMAIL_VERIFICATION
+  PASSWORD_RESET
+  LOGIN_OTP
+}
+
+model OTPVerification {
+  id        String   @id @default(cuid())
+  user      User?    @relation(fields: [userId], references: [id])
+  userId    String?
+  email     String
+  code      String
+  type      OTPType  @default(EMAIL_VERIFICATION)
+  expiresAt DateTime
+  verified  Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([email])
+  @@index([code])
 }

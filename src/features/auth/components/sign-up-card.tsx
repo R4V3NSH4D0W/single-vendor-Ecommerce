@@ -19,8 +19,14 @@ import Link from "next/link";
 import { RegisterSchema } from "../schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRegister } from "../api/user-register";
+import { useDispatch } from "react-redux";
+import { setRegisterData } from "../state/register-slice";
+import { useRouter } from "next/navigation";
+import { OTPType } from "../state/forgot-password-slice";
 
 function SignUpCard() {
+  const dispatch = useDispatch();
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const { mutate, isPending } = useRegister();
 
@@ -33,7 +39,13 @@ function SignUpCard() {
     },
   });
   const onSubmit = (value: z.infer<typeof RegisterSchema>) => {
-    mutate({ json: value });
+    dispatch(
+      setRegisterData({
+        ...value,
+        purpose: OTPType.EMAIL_VERIFICATION,
+      })
+    );
+    router.push("/verify");
   };
 
   return (

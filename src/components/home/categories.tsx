@@ -9,8 +9,7 @@ import React from "react";
 const Categories = () => {
   const { data } = useGetCategory();
   const { data: Collection } = useGetCollection();
-  console.log("COllection", Collection);
-  // Limit to the first 3 categories
+
   const displayedCategories = data?.categories.slice(0, 3);
 
   return (

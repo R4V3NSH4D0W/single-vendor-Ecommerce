@@ -274,6 +274,17 @@ exports.Prisma.WishlistItemScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.OTPVerificationScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  email: 'email',
+  code: 'code',
+  type: 'type',
+  expiresAt: 'expiresAt',
+  verified: 'verified',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -320,6 +331,12 @@ exports.TestimonialUserRole = exports.$Enums.TestimonialUserRole = {
   OTHER: 'OTHER'
 };
 
+exports.OTPType = exports.$Enums.OTPType = {
+  EMAIL_VERIFICATION: 'EMAIL_VERIFICATION',
+  PASSWORD_RESET: 'PASSWORD_RESET',
+  LOGIN_OTP: 'LOGIN_OTP'
+};
+
 exports.Prisma.ModelName = {
   User: 'User',
   Product: 'Product',
@@ -335,7 +352,8 @@ exports.Prisma.ModelName = {
   CartItem: 'CartItem',
   Testimonial: 'Testimonial',
   Wishlist: 'Wishlist',
-  WishlistItem: 'WishlistItem'
+  WishlistItem: 'WishlistItem',
+  OTPVerification: 'OTPVerification'
 };
 
 /**

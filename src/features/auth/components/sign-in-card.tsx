@@ -104,9 +104,11 @@ function SignInCard() {
                   Remember me
                 </span>
               </label>
-              <a href="#" className="text-sm text-primary hover:underline">
-                Forgot password?
-              </a>
+              <Link href={"/forgot-password"}>
+                <span className=" text-sm text-primary font-bold cursor-pointer">
+                  Forgot Password?
+                </span>
+              </Link>
             </div>
             <Button size="lg" className=" w-full" disabled={isPending}>
               Login

@@ -21,7 +21,7 @@ const app = new Hono()
 
       const body = await c.req.json();
 
-      console.log("body",body)
+    
       const parsed = WishlistSchema.safeParse(body);
       if(!parsed.success){
         return c.json({success:false, error:"invalid Input"},400)

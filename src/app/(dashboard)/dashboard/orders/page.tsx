@@ -38,7 +38,6 @@ import { OrderStatus } from "@/generated/prisma";
 export default function OrdersPage() {
   const [search, setSearch] = useState("");
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
-  console.log("selected ORder", selectedOrder);
   const [deleteOrderId, setDeleteOrderId] = useState<string | null>(null);
 
   const { data: orders, isLoading } = useOrders(search);
