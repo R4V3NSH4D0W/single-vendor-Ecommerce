@@ -8,6 +8,7 @@ import {
 
 import { useAppDispatch } from "@/store/hooks";
 import { ArrowLeft, Mail } from "lucide-react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
@@ -28,14 +29,12 @@ function ForgotPassword() {
 
   return (
     <div className="max-w-md mx-auto p-6 rounded-lg border border-border bg-card">
-      <button
-        // onClick={handleBackToLogin}
-        className="flex items-center text-sm text-muted-foreground hover:text-primary mb-6"
-      >
-        <ArrowLeft className="h-4 w-4 mr-1" />
-        Back to login
-      </button>
-
+      <Link href="/signin">
+        <label className="flex items-center text-sm text-muted-foreground hover:text-primary mb-6">
+          <ArrowLeft className="h-4 w-4 mr-1" />
+          Back to login
+        </label>
+      </Link>
       <h2 className="text-2xl font-bold mb-4 text-center">
         Reset Your Password
       </h2>
