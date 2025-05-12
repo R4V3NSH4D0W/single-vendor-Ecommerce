@@ -1,6 +1,6 @@
 import { Hono } from "hono";
 import { zValidator } from "@hono/zod-validator";
-import { LoginSchema, RegisterSchema } from "../schema";
+import { LoginSchema, RegisterSchema, ResetPasswordSchema } from "../schema";
 import Jwt from "jsonwebtoken";
 import { deleteCookie, setCookie } from "hono/cookie";
 
@@ -228,7 +228,45 @@ const app = new Hono()
       return c.json({ error: 'Internal server error' }, 500);
     }
   }
-);
+)
+.post(
+  "/reset-password",
+  zValidator("json", ResetPasswordSchema),
+  async (c) => {
+    const { email, otpCode, newPassword } = c.req.valid("json");
+
+    try {
+      const otpVerification = await prisma.oTPVerification.findFirst({
+        where: {
+          email,
+          code: otpCode,
+          type: OTPType.PASSWORD_RESET,
+          verified: true,
+          expiresAt: {
+            gt: new Date(),
+          },
+        },
+      });
+
+      if (!otpVerification) {
+        return c.json({ error: "Invalid or expired OTP" }, 400);
+      }
+
+      const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+      const user = await prisma.user.update({
+        where: { email },
+        data: { password: hashedPassword },
+      });
+
+      return c.json({ message: "Password reset successfully", userId: user.id });
+    } catch (error) {
+      console.error("Password reset error:", error);
+      return c.json({ error: "Internal server error" }, 500);
+    }
+  }
+)
+
 
 
   

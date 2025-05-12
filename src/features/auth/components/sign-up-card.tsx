@@ -22,6 +22,7 @@ import { useRegister } from "../api/user-register";
 import { useDispatch } from "react-redux";
 import { setRegisterData } from "../state/register-slice";
 import { useRouter } from "next/navigation";
+import { OTPType } from "../state/forgot-password-slice";
 
 function SignUpCard() {
   const dispatch = useDispatch();
@@ -38,8 +39,13 @@ function SignUpCard() {
     },
   });
   const onSubmit = (value: z.infer<typeof RegisterSchema>) => {
-    dispatch(setRegisterData(value));
-    router.push("/verify-otp");
+    dispatch(
+      setRegisterData({
+        ...value,
+        purpose: OTPType.EMAIL_VERIFICATION,
+      })
+    );
+    router.push("/verify");
   };
 
   return (

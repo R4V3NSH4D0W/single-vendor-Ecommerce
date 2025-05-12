@@ -19,8 +19,6 @@ interface VerifyOtpData {
 export const useGenerateOtp = () => {
   return useMutation({
     mutationFn: async ({ email, type }: GenerateOtpData) => {
-        console.log("email", email);
-        console.log("type", type);
       const response = await client.api.auth.otp["generate"].$post({
         json: {
           email,
@@ -28,21 +26,20 @@ export const useGenerateOtp = () => {
         },
       });
 
+      const data = await response.json();
+
       if (!response.ok) {
-        console.log("response", response);
-        throw new Error("Failed to send OTP");
+        throw new Error((data as any)?.error || (data as any)?.message || "Failed to send OTP");
       }
 
-      return response.json();
-    },
-    onSuccess: () => {
-      toast.success("OTP sent successfully");
+      return data;
     },
     onError: (error: Error) => {
       toast.error(error.message || "An error occurred");
     },
   });
 };
+
 
 
 export const useVerifyOtp = () => {
