@@ -14,6 +14,38 @@ enum Role {
   MODERATOR
 }
 
+enum OrderStatus {
+  PENDING
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+enum PaymentMethod {
+  COD
+  CARD
+}
+
+enum PaymentStatus {
+  PENDING
+  COMPLETED
+  FAILED
+}
+
+enum TestimonialUserRole {
+  FASHION_ENTHUSIAST
+  CUSTOMER
+  INFLUENCER
+  OTHER
+}
+
+enum OTPType {
+  EMAIL_VERIFICATION
+  PASSWORD_RESET
+  LOGIN_OTP
+}
+
 model User {
   id        String   @id @default(cuid())
   name      String
@@ -23,13 +55,31 @@ model User {
   reviews   Review[]
   createdAt DateTime @default(now())
 
+  Order           Order[]
+  Cart            Cart[]
+  Wishlist        Wishlist[]
+  OTPVerification OTPVerification[]
+  addresses       Address[]
+}
+
+model Address {
+  id         String   @id @default(cuid())
+  user       User     @relation(fields: [userId], references: [id])
+  userId     String
+  label      String? // e.g., "Home", "Work"
+  street     String
+  city       String
+  state      String
+  postalCode String
+  country    String
+  isDefault  Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
   Order Order[]
 
-  Cart Cart[]
-
-  Wishlist Wishlist[]
-
-  OTPVerification OTPVerification[]
+  @@index([userId])
+  @@map("addresses")
 }
 
 model Product {
@@ -93,25 +143,6 @@ model Category {
   createdAt DateTime  @default(now())
 }
 
-enum OrderStatus {
-  PENDING
-  PROCESSING
-  SHIPPED
-  DELIVERED
-  CANCELLED
-}
-
-enum PaymentMethod {
-  COD
-  CARD
-}
-
-enum PaymentStatus {
-  PENDING
-  COMPLETED
-  FAILED
-}
-
 model OrderTimelineEvent {
   id        String      @id @default(cuid())
   order     Order       @relation(fields: [orderId], references: [id])
@@ -136,13 +167,10 @@ model Order {
   tax                Float
   paymentMethod      PaymentMethod
   paymentStatus      PaymentStatus        @default(PENDING)
-  shippingAddress    String
-  shippingCity       String
-  shippingState      String
-  shippingPostalCode String
-  shippingCountry    String
   shippingMethod     ShippingMethod?      @relation(fields: [shippingMethodId], references: [id])
   shippingMethodId   String?
+  address            Address?             @relation(fields: [shippingAddressId], references: [id])
+  shippingAddressId  String?
   status             OrderStatus          @default(PENDING)
   createdAt          DateTime             @default(now())
   updatedAt          DateTime             @updatedAt
@@ -227,13 +255,6 @@ model CartItem {
   @@map("cart_items")
 }
 
-enum TestimonialUserRole {
-  FASHION_ENTHUSIAST
-  CUSTOMER
-  INFLUENCER
-  OTHER
-}
-
 model Testimonial {
   id        String              @id @default(cuid())
   name      String
@@ -266,12 +287,6 @@ model WishlistItem {
 
   @@unique([wishlistId, productId])
   @@map("wishlist_items")
-}
-
-enum OTPType {
-  EMAIL_VERIFICATION
-  PASSWORD_RESET
-  LOGIN_OTP
 }
 
 model OTPVerification {
