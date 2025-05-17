@@ -1,6 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import AddressesTab from "@/features/address/components/addresses-tab";
 import { useGetOrder } from "@/features/order/api/use-get-order";
 import { useDeleteFromWishlist } from "@/features/wishlist/api/use-delete-from-wishlist";
 import { useWishlist } from "@/features/wishlist/api/use-wishlist";
@@ -185,6 +186,9 @@ function AccountClientPage({ name }: AccountClientPageProps) {
               </div>
             )}
           </div>
+        </TabsContent>
+        <TabsContent value="addresses">
+          <AddressesTab />
         </TabsContent>
       </Tabs>
     </div>

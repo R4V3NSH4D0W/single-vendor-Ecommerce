@@ -12,6 +12,7 @@ import collection from "@/features/collections/server/route"
 import testimonials from "@/features/testimonials/server/route"
 import wishlist from "@/features/wishlist/server/route"
 import analytics from "@/features/analytics/server/route";
+import addresses from "@/features/address/server/route"
 const app = new Hono().basePath("/api");
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -28,6 +29,7 @@ const routes =app
 .route("testimonials",testimonials)
 .route("/wishlist",wishlist)
 .route("/analytics",analytics)
+.route("/addresses",addresses)
 
 
 export const GET = handle(app)

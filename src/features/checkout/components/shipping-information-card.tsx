@@ -19,10 +19,12 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { setShippingInfo, setStep } from "../state/checkoutSlice";
+import { useGetAddress } from "@/features/address/api/use-address";
 
 function ShippingInformationCard() {
   const dispatch = useAppDispatch();
   const shippingInfo = useAppSelector((state) => state.checkout.shippingInfo);
+  const { data, isPending } = useGetAddress();
   const form = useForm<z.infer<typeof shippingInformationSchema>>({
     resolver: zodResolver(shippingInformationSchema),
     defaultValues: {
@@ -48,8 +50,13 @@ function ShippingInformationCard() {
 
   if (!hasMounted) return null;
 
+  const AddressCard = () => {
+    return <div>card</div>;
+  };
+
   return (
     <div className="p-0  w-full lg:w-[60%]">
+      <AddressCard />
       <Form {...form}>
         <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
           <Card className="bg-transparent border-0 shadow-none w-full">

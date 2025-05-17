@@ -126,6 +126,20 @@ exports.Prisma.UserScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.AddressScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  label: 'label',
+  street: 'street',
+  city: 'city',
+  state: 'state',
+  postalCode: 'postalCode',
+  country: 'country',
+  isDefault: 'isDefault',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.ProductScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -187,12 +201,8 @@ exports.Prisma.OrderScalarFieldEnum = {
   tax: 'tax',
   paymentMethod: 'paymentMethod',
   paymentStatus: 'paymentStatus',
-  shippingAddress: 'shippingAddress',
-  shippingCity: 'shippingCity',
-  shippingState: 'shippingState',
-  shippingPostalCode: 'shippingPostalCode',
-  shippingCountry: 'shippingCountry',
   shippingMethodId: 'shippingMethodId',
+  shippingAddressId: 'shippingAddressId',
   status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
@@ -339,6 +349,7 @@ exports.OTPType = exports.$Enums.OTPType = {
 
 exports.Prisma.ModelName = {
   User: 'User',
+  Address: 'Address',
   Product: 'Product',
   Review: 'Review',
   Specification: 'Specification',
