@@ -54,10 +54,20 @@ function OTPVerificationPage() {
 
   useEffect(() => {
     if (userEmail && purpose && !hasSentOtpRef.current) {
-      generateOtp({
-        email: userEmail,
-        type: purpose as "EMAIL_VERIFICATION" | "PASSWORD_RESET" | "LOGIN_OTP",
-      });
+      generateOtp(
+        {
+          email: userEmail,
+          type: purpose as
+            | "EMAIL_VERIFICATION"
+            | "PASSWORD_RESET"
+            | "LOGIN_OTP",
+        },
+        {
+          onSuccess: () => {
+            toast.success("OTP sent successfully");
+          },
+        }
+      );
       hasSentOtpRef.current = true;
     }
   }, [userEmail, purpose, generateOtp]);
@@ -122,10 +132,20 @@ function OTPVerificationPage() {
     setOtp("");
 
     if (userEmail && purpose) {
-      generateOtp({
-        email: userEmail,
-        type: purpose as "EMAIL_VERIFICATION" | "PASSWORD_RESET" | "LOGIN_OTP",
-      });
+      generateOtp(
+        {
+          email: userEmail,
+          type: purpose as
+            | "EMAIL_VERIFICATION"
+            | "PASSWORD_RESET"
+            | "LOGIN_OTP",
+        },
+        {
+          onSuccess: () => {
+            toast.success("OTP sent successfully");
+          },
+        }
+      );
     }
   };
 
@@ -158,7 +178,7 @@ function OTPVerificationPage() {
                     value={otp}
                     onChange={(value) => setOtp(value)}
                   >
-                    <InputOTPGroup>
+                    <InputOTPGroup className=" gap-2">
                       {Array.from({ length: otpLength }).map((_, index) => (
                         <InputOTPSlot key={index} index={index} />
                       ))}
