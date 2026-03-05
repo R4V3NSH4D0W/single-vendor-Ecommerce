@@ -2721,10 +2721,10 @@ hasown@^2.0.2:
   dependencies:
     function-bind "^1.1.2"
 
-hono@^4.7.6:
-  version "4.7.6"
-  resolved "https://registry.yarnpkg.com/hono/-/hono-4.7.6.tgz#3b577a825de3bf97b27705d918890a660726835e"
-  integrity sha512-564rVzELU+9BRqqx5k8sT2NFwGD3I3Vifdb6P7CmM6FiarOSY+fDC+6B+k9wcCb86ReoayteZP2ki0cRLN1jbw==
+hono@^4.12.4:
+  version "4.12.4"
+  resolved "https://registry.yarnpkg.com/hono/-/hono-4.12.4.tgz#fcfb5a064b90d5203dd41231e0d5a67262fc1729"
+  integrity sha512-ooiZW1Xy8rQ4oELQ++otI2T9DsKpV0M6c6cO6JGx4RTfav9poFFLlet9UMXHZnoM1yG0HWGlQLswBGX3RZmHtg==
 
 ignore@^5.2.0, ignore@^5.3.1:
   version "5.3.2"
